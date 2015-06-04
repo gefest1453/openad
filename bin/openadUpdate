@@ -1,0 +1,19 @@
+#!/bin/sh
+echo ERROR cannot update\; this is a source tar-file install based on the following component versions:
+echo ' 
+../OpenAD                                      svn:247
+Open64                                         svn:917
+OpenADFortTk                                   svn:1127
+OpenAnalysis                                   svn:454
+xercesc                                        svn:48
+xaifBooster                                    svn:156
+xaif                                           svn:62
+angel                                          svn:90
+boost/boost                                    svn:66620
+RevolveF9X                                     hg:56046883e55e
+Examples                                       hg:8626ab6e2128
+OpenADFortTk/tools/SourceProcessing            svn:1126
+Regression                                     hg:c48c7a716a50
+OpenADFortTk/Regression                        hg:1b4c6f62a461
+OpenADFortTk/tools/SourceProcessing/Regression hg:18a00f156e5c
+'
