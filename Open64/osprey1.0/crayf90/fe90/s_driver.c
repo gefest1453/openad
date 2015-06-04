@@ -5429,7 +5429,7 @@ void	global_name_semantics(int	def_ga_idx,
 			      int	attr_idx)
 
 {
-   uint			act_file_line;
+   unsigned int			act_file_line;
    int			arg_attr_idx;
    int			def_arg_idx;
    boolean		def_defined;

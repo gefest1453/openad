@@ -1,1 +1,1 @@
-/home/stas0/mitgcm_mgi/OpenAD/Open64/osprey1.0/targ_ia64_ia64_linux/include/../../include/cmplrs/fb.h
+/home/stas0/OPENAD/Open64/osprey1.0/targ_ia64_ia64_linux/include/../../include/cmplrs/fb.h
