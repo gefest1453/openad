@@ -50,7 +50,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cassert>
-
+#include <strings.h>
 #include <list>
 
 using namespace std;
