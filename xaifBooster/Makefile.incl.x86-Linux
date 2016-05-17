@@ -8,7 +8,7 @@
 # level directory of the xaifBooster distribution.
 # ========== end copyright notice =====================
 export CC = g++
-export CCFLAGS=-g -pedantic -ansi -Wall -Winline -Wredundant-decls
+export CCFLAGS=-g -std=gnu++98 -Wall -Winline -Wredundant-decls 
 export MAKEDEPEND=$(CC) $(IPATH) -M
 export AR=ar
 export ARFLAGS=-ruv

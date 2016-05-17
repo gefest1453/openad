@@ -7,20 +7,23 @@ SHELL = /bin/sh
 WD := $(shell pwd)
 
 PLATFORM := $(shell cd $(WD)/config; ./hpcplatform)
-PLATFORM :=x86_64-Linux
 ifeq ($(PLATFORM),)
-   echo $(PLATFORM)
-   $(error "Unknown/unsupported platform")
+  $(error "Unknown/unsupported platform")
 endif
 
 # xercesc platform
+
+ifeq ($(PLATFORM),x86_64-Cygwin)
+  XERCESPLATFORM = CYGWIN
+endif
+
 ifeq ($(PLATFORM),x86-Cygwin)
   XERCESPLATFORM = CYGWIN
 endif
 ifeq ($(PLATFORM),x86-Linux)
   XERCESPLATFORM = LINUX
 endif
-ifeq ($(PLATFORM), x86_64-Linux)
+ifeq ($(PLATFORM),x86_64-Linux)
   XERCESPLATFORM = LINUX
 endif
 ifeq ($(PLATFORM),ia64-Linux)

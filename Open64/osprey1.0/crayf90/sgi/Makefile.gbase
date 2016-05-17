@@ -419,7 +419,7 @@ $(MFEF90_EXE): $(OBJECTS) $(LIBRARIES)
 	echo char \* mfef90_compiler_build_date = \" `date` \"\;> compiler_build_date.c
 	$(CC) -c  compiler_build_date.c
 	$(C++F) -o $@ $(OBJECTS) compiler_build_date.o \
-	  $(TARG_COMUTIL_DIR)/libcomutil.a $(LDFLAGS)
+	  $(TARG_COMUTIL_DIR)/libcomutil.a -static $(LDFLAGS)
 #
 # eraxxon: Because Cygwin and MacOS do not support gencat, for the
 # time being we are replacing catgetmsg() et al. with our own implementation

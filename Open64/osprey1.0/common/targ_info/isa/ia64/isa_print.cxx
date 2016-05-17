@@ -53,7 +53,7 @@
 // as shown in the ISA manual
 /////////////////////////////////////
 //
-#define __XSI_VISIBLE 900
+
 #include <stddef.h>
 #include <string.h>
 #include "topcode.h"

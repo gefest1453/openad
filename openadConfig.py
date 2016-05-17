@@ -91,14 +91,15 @@ class openadConfig:
                                  'x86-MacOS'   : 'targ_ia32_ia64_linux',
                                  'x86_64-Linux': 'targ_ia64_ia64_linux',
                                  'x86-Cygwin'  : 'targ_ia32_ia64_linux',
-                                 'x86_64-Cygwin': 'targ_ia32_ia64_linux',
+                                 'x86_64-Cygwin'  : 'targ_ia32_ia64_linux',
                                  'ia64-Linux'  : 'targ_ia64_ia64_linux',
                                  'mips-IRIX64' : 'targ_mips_irix',
                                  'sparc-SunOS' : 'targ_sparc_solaris'}
     
     #Generate canonical platform
     get_platform = 'cd '+OpenADRoot+'/config && ./hpcplatform'
-    self.platform='x86_64-Linux'
+    p = subprocess.Popen(get_platform, shell=True,stdout=subprocess.PIPE)
+    self.platform=(p.stdout.read()).rstrip()
     o64targ = platformToOpen64TargTable[self.platform]
     self.RootEnvVars = {
        'OPEN64ROOT':os.path.join(os.environ['OPEN64_BASE'],'osprey1.0',o64targ),

@@ -40,14 +40,14 @@
 //
 /////////////////////////////////////
 //
-#define __XSI_VISIBLE 900
+
 #include <cstddef>
 #include <cstdlib>
 #include <cstdarg>
 #include <cstdio>
 #include <cassert>
 #include <cstring>
-#include <string.h>
+
 #include <vector>
 #include <list>
 

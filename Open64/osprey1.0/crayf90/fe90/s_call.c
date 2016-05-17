@@ -11219,7 +11219,7 @@ static void check_call_for_global_def(int	list_idx,
 				      int	num_dargs)
 
 {
-   unsigned int			act_file_line;
+   uint			act_file_line;
    int			ga_idx;
    int			gl_idx;
    char			line_name[256];
@@ -11466,7 +11466,7 @@ static	void	ntr_ref_in_global_tbl(int	 list_idx,
 
          kwd_idx		= arg_info_list[info_idx].kwd;
          GA_NAME_IDX(arg_idx)	= str_pool_idx + 1;
-         GA_NAME_LEN(arg_idx)	= (unsigned int) CN_INT_TO_C(TYP_IDX(
+         GA_NAME_LEN(arg_idx)	= (uint) CN_INT_TO_C(TYP_IDX(
                                                      CN_TYPE_IDX(kwd_idx))); 
          name_id		= &(CN_CONST(kwd_idx));
          word_len		= WORD_LEN(GN_NAME_LEN(arg_idx)) + EXTRA_WORD;

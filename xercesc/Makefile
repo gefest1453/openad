@@ -82,6 +82,11 @@ CONF_STATIC_ONLY=-s
 ifeq ($(PLATFORM),alpha-OSF1)
   XERCESPLATFORM = tru64
 endif
+
+ifeq ($(PLATFORM),x86_64-Cygwin)
+  XERCESPLATFORM = cygwin
+endif
+
 ifeq ($(PLATFORM),x86-Cygwin)
   XERCESPLATFORM = cygwin
 endif

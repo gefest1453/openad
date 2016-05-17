@@ -115,6 +115,8 @@ case $1 in
   # Cygwin
   i386*-*-cygwin* | i686*-*-cygwin*)
     cononical_host="x86-Cygwin" ;;
+  x86_64*-*-cygwin* )
+    cononical_host="x86_64-Cygwin" ;;
 
   # IRIX
   mips*-*-irix*)
