@@ -12,7 +12,7 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Id: has_xxx.hpp 63518 2010-07-02 08:32:03Z agurtovoy $
-// $Date: 2010-07-02 03:32:03 -0500 (Fri, 02 Jul 2010) $
+// $Date: 2010-07-02 11:32:03 +0300 (Пт, 02 июл 2010) $
 // $Revision: 63518 $
 
 #include <boost/mpl/aux_/config/overload_resolution.hpp>

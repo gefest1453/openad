@@ -304,10 +304,7 @@
 /*****************************************************************************/
 
 
-/*typedef unsigned long int ulong;
-typedef unsigned short int ushort;*/
-typedef unsigned int uint;
-typedef unsigned int u_int;
+/*****************************************************************************/
 
 # ifdef _PVP_PVP
 #	define _ENABLE_FEI     			1

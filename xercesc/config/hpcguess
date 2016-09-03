@@ -2,11 +2,15 @@
 # Testing: set -x: line by line (set -n: syntax)
 # set -x
 
-##########################################################
-# This file is part of OpenAD released under the LGPL.   #
-# The full COPYRIGHT notice can be found in the top      #
-# level directory of the OpenAD distribution             #
-##########################################################
+## **************************************************************************
+##
+## File: 
+##    hpcguess: see usage.
+##
+## Author:
+##    Written by Nathan Tallent, Rice University.
+##    
+## **************************************************************************
 
 #############################################################################
 
@@ -115,8 +119,6 @@ case $1 in
   # Cygwin
   i386*-*-cygwin* | i686*-*-cygwin*)
     cononical_host="x86-Cygwin" ;;
-  x86_64*-*-cygwin* )
-    cononical_host="x86_64-Cygwin" ;;
 
   # IRIX
   mips*-*-irix*)

@@ -14,7 +14,7 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Id: sequence_wrapper.hpp 49271 2008-10-11 06:46:00Z agurtovoy $
-// $Date: 2008-10-11 01:46:00 -0500 (Sat, 11 Oct 2008) $
+// $Date: 2008-10-11 09:46:00 +0300 (Сб, 11 окт 2008) $
 // $Revision: 49271 $
 
 #   include <boost/mpl/aux_/config/ctps.hpp>

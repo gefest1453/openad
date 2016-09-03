@@ -12,7 +12,7 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Id: bitor.hpp 63520 2010-07-02 08:59:55Z agurtovoy $
-// $Date: 2010-07-02 03:59:55 -0500 (Fri, 02 Jul 2010) $
+// $Date: 2010-07-02 11:59:55 +0300 (Пт, 02 июл 2010) $
 // $Revision: 63520 $
 
 // agurt, 23/jan/10: workaround a conflict with <iso646.h> header's 

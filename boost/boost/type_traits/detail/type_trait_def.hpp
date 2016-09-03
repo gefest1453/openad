@@ -8,7 +8,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 // $Source$
-// $Date: 2004-09-02 10:41:37 -0500 (Thu, 02 Sep 2004) $
+// $Date: 2004-09-02 18:41:37 +0300 (Чт, 02 сен 2004) $
 // $Revision: 24874 $
 
 #include <boost/type_traits/detail/template_arity_spec.hpp>

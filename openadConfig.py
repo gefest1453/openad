@@ -91,7 +91,6 @@ class openadConfig:
                                  'x86-MacOS'   : 'targ_ia32_ia64_linux',
                                  'x86_64-Linux': 'targ_ia64_ia64_linux',
                                  'x86-Cygwin'  : 'targ_ia32_ia64_linux',
-                                 'x86_64-Cygwin'  : 'targ_ia32_ia64_linux',
                                  'ia64-Linux'  : 'targ_ia64_ia64_linux',
                                  'mips-IRIX64' : 'targ_mips_irix',
                                  'sparc-SunOS' : 'targ_sparc_solaris'}

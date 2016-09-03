@@ -12,11 +12,6 @@ ifeq ($(PLATFORM),)
 endif
 
 # xercesc platform
-
-ifeq ($(PLATFORM),x86_64-Cygwin)
-  XERCESPLATFORM = CYGWIN
-endif
-
 ifeq ($(PLATFORM),x86-Cygwin)
   XERCESPLATFORM = CYGWIN
 endif

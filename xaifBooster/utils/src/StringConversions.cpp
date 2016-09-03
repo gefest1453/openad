@@ -43,7 +43,7 @@ namespace xaifBooster {
     float value;
     char *remainder=NULL;
     errno=0;
-    value=float(strtod(aValue.c_str(),&remainder));
+    value=strtof(aValue.c_str(),&remainder);
     if (errno) {
       THROW_LOGICEXCEPTION_MACRO("StringConversions::convertToFloat: "  
 				 << "the string "

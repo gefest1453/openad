@@ -12,7 +12,7 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Id: inserter_algorithm.hpp 55648 2009-08-18 05:16:53Z agurtovoy $
-// $Date: 2009-08-18 00:16:53 -0500 (Tue, 18 Aug 2009) $
+// $Date: 2009-08-18 08:16:53 +0300 (Вт, 18 авг 2009) $
 // $Revision: 55648 $
 
 #include <boost/mpl/back_inserter.hpp>

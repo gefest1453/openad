@@ -21,7 +21,7 @@ BUILD_VARIANT  = DEFAULT
 BUILD_SB       = NO
 
 
-CFLAGS += -D_POSIX_SOURCE -D_BSD_SOURCE -std=c99
+#CFLAGS += -D_POSIX_SOURCE -D_BSD_SOURCE
 #CXXFLAGS += -D_POSIX_SOURCE -D_BSD_SOURCE
 
 #-----------------------------------------------------------------------

@@ -52,9 +52,6 @@ endif
 ifeq ($(PLATFORM),x86-Cygwin)
 include $(XAIFBOOSTERROOT)/$(ROOTDIR)/Makefile.incl.x86-Linux
 endif
-ifeq ($(PLATFORM),x86_64-Cygwin)
-include $(XAIFBOOSTERROOT)/$(ROOTDIR)/Makefile.incl.x86-Linux
-endif
 ifeq ($(PLATFORM),x86-Linux)
 include $(XAIFBOOSTERROOT)/$(ROOTDIR)/Makefile.incl.$(PLATFORM)
 endif

@@ -60,7 +60,7 @@ namespace xaifBooster {
       aNewConstant_p->setFromString(toString());
       break;
     case SymbolType::CHAR_STYPE : 
-      aNewConstant_p->setchar(getchar0());
+      aNewConstant_p->setchar(getchar());
       break;
     default: 
       THROW_LOGICEXCEPTION_MACRO("Constant::createCopyOfMyself: cannot handle " <<

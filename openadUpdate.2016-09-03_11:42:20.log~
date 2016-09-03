@@ -1,0 +1,57 @@
+*****************************************************************************
+
+cd /home/stas/OpenAD/. && svn update > /home/stas/OpenAD/RunCmd-out.tmp~ 2>&1
+Updating '.':
+Restored 'runTimeSupport/simple/ad_template.split.f'
+Restored 'runTimeSupport/simple/OAD_trace.f90'
+Restored 'runTimeSupport/simple/ad_template.trace.f'
+Restored 'runTimeSupport/simple/OAD_cp.f90'
+Restored 'runTimeSupport/simple/ad_template.joint.f'
+Restored 'runTimeSupport/simple/ad_inline.f'
+Restored 'runTimeSupport/simple/OAD_tape.f90'
+Restored 'runTimeSupport/simple/OAD_rev.f90'
+At revision 247.
+*****************************************************************************
+
+cd /home/stas/OpenAD/Open64 && svn update > /home/stas/OpenAD/RunCmd-out.tmp~ 2>&1
+Updating '.':
+At revision 917.
+*****************************************************************************
+
+cd /home/stas/OpenAD/OpenADFortTk && svn update > /home/stas/OpenAD/RunCmd-out.tmp~ 2>&1
+Updating '.':
+At revision 1127.
+*****************************************************************************
+
+cd /home/stas/OpenAD/OpenAnalysis && svn update > /home/stas/OpenAD/RunCmd-out.tmp~ 2>&1
+Updating '.':
+At revision 454.
+*****************************************************************************
+
+cd /home/stas/OpenAD/xercesc && svn update > /home/stas/OpenAD/RunCmd-out.tmp~ 2>&1
+Updating '.':
+At revision 48.
+*****************************************************************************
+
+cd /home/stas/OpenAD/xaifBooster && svn update > /home/stas/OpenAD/RunCmd-out.tmp~ 2>&1
+Updating '.':
+At revision 157.
+*****************************************************************************
+
+cd /home/stas/OpenAD/xaif && svn update > /home/stas/OpenAD/RunCmd-out.tmp~ 2>&1
+Updating '.':
+At revision 62.
+*****************************************************************************
+
+cd /home/stas/OpenAD/angel && svn update > /home/stas/OpenAD/RunCmd-out.tmp~ 2>&1
+Updating '.':
+At revision 90.
+*****************************************************************************
+
+cd /home/stas/OpenAD/boost/boost && svn update > /home/stas/OpenAD/RunCmd-out.tmp~ 2>&1
+Updating '.':
+At revision 86799.
+*****************************************************************************
+
+cd /home/stas/OpenAD && hg clone http://mercurial.mcs.anl.gov//ad/RevolveF9X /home/stas/OpenAD/RevolveF9X > /home/stas/OpenAD/RunCmd-out.tmp~ 2>&1
+sh: hg: команда не найдена

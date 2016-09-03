@@ -1,11 +1,19 @@
 #!/bin/sh
 # Testing: set -x: line by line (set -n: syntax)
 # set -x
-##########################################################
-# This file is part of OpenAD released under the LGPL.   #
-# The full COPYRIGHT notice can be found in the top      #
-# level directory of the OpenAD distribution             #
-##########################################################
+
+# $Header: /Volumes/cvsrep/developer/shared/config/hpcautotouch,v 1.2 2004/09/29 21:07:37 eraxxon Exp $
+
+## **************************************************************************
+##
+## File: 
+##    $Source: /Volumes/cvsrep/developer/shared/config/hpcautotouch,v $
+##    cf. README.auto
+##
+## Author:
+##    Written by Nathan Tallent, Rice University.
+##    
+## **************************************************************************
 
 #############################################################################
 
@@ -73,10 +81,10 @@ f_getoptions $*
 #find . -name aclocal.m4  | xargs /bin/touch
 
 # We sleep for a moment to ensure relative timestamp differences
-find . -name aclocal.m4   -exec /bin/touch '{}' \;
+find . -name aclocal.m4   -exec touch '{}' \;
 sleep 1
 #find . -name config.h.in  -exec /bin/touch '{}' \;
-find . -name configure    -exec /bin/touch '{}' \;
+find . -name configure    -exec touch '{}' \;
 sleep 1
-find . -name Makefile.in  -exec /bin/touch '{}' \;
+find . -name Makefile.in  -exec touch '{}' \;
 

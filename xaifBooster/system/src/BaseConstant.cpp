@@ -76,7 +76,7 @@ namespace xaifBooster {
     myValue.c=c;
   } 
 
-  char BaseConstant::getchar0()const { 
+  char BaseConstant::getchar()const { 
     if (myType!=SymbolType::CHAR_STYPE)
       THROW_LOGICEXCEPTION_MACRO("BaseConstant::getint typs is " + 
 				 SymbolType::toString(myType));
@@ -140,7 +140,7 @@ namespace xaifBooster {
       oss << myOriginalStringRep.c_str();
       break;
     case SymbolType::CHAR_STYPE : 
-      oss << getchar0();
+      oss << getchar();
       break;
     default: 
       THROW_LOGICEXCEPTION_MACRO("BaseConstant::toString: cannot handle " 

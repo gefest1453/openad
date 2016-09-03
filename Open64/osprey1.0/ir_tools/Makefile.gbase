@@ -267,7 +267,7 @@ VPATH = $(BUILD_BASE) $(COMMON_COM_DIR) $(COMMON_COM_TARG_DIR)
 #  Build executables
 #----------------------------------------------------------------------
 $(IR_B2A_EXE): $(OBJECTS) ir_a2b.o
-	$(C++F) -Xlinker  --allow-multiple-definition  -o $(IR_B2A_EXE) ir_a2b.o $(OBJECTS)   $(LDFLAGS) 
+	$(C++F) -o $(IR_B2A_EXE) ir_a2b.o $(OBJECTS) $(LDFLAGS)
 
 $(IR_A2B_EXE): $(IR_B2A_EXE)
 	ln -sf $(IR_B2A_EXE) $(IR_A2B_EXE)
@@ -276,8 +276,8 @@ $(IR_SEL_EXE): $(IR_B2A_EXE)
 	ln -sf $(IR_B2A_EXE) $(IR_SEL_EXE)
 
 $(IR_SIZE_EXE): $(OBJECTS) ir_size.o $(IR_B2A_EXE)
-	$(C++F) -Xlinker  --allow-multiple-definition -o $(IR_SIZE_EXE) ir_size.o $(OBJECTS) $(LDFLAGS)
+	$(C++F) -o $(IR_SIZE_EXE) ir_size.o $(OBJECTS) $(LDFLAGS)
 
 ir_walker: $(OBJECTS) ir_walker.o
-	$(C++F) -Xlinker  --allow-multiple-definition -o ir_walker ir_walker.o $(OBJECTS) $(LDFLAGS)
+	$(C++F) -o ir_walker ir_walker.o $(OBJECTS) $(LDFLAGS)
 

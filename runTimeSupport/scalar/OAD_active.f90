@@ -35,19 +35,19 @@
           real(w2f__8)  :: d =0.0d0
         end type
         interface saxpy
-          !module procedure saxpy_d0_a0_a0
+          module procedure saxpy_d0_a0_a0
           module procedure saxpy_l0_a0_a0
           module procedure saxpy_i0_a0_a0
-          !module procedure saxpy_d0_a0_a1
-          !module procedure saxpy_d0_a1_a1
-          !module procedure saxpy_d0_a2_a2
-          !module procedure saxpy_d1_a0_a1
-          !module procedure saxpy_d1_a1_a1 
+          module procedure saxpy_d0_a0_a1
+          module procedure saxpy_d0_a1_a1
+          module procedure saxpy_d0_a2_a2
+          module procedure saxpy_d1_a0_a1
+          module procedure saxpy_d1_a1_a1 
           module procedure saxpy_l1_a1_a1 
           module procedure saxpy_i1_a1_a1
           module procedure saxpy_a1_a1_a1
-          !module procedure saxpy_d2_a0_a2
-          !module procedure saxpy_d2_a2_a2
+          module procedure saxpy_d2_a0_a2
+          module procedure saxpy_d2_a2_a2
           module procedure saxpy_r0_a0_a0
           module procedure saxpy_r0_a1_a1
           module procedure saxpy_r1_a0_a1
@@ -89,40 +89,40 @@
         end interface
 
         interface sax
-          !module procedure sax_d0_a0_a0 
+          module procedure sax_d0_a0_a0 
           module procedure sax_l0_a0_a0
           module procedure sax_i0_a0_a0
-          !module procedure sax_d0_a0_a1
-          !module procedure sax_d0_a0_a2
-          !module procedure sax_d0_a1_a1
-          !module procedure sax_d0_a2_a2
-          !module procedure sax_d0_a3_a3
-          !module procedure sax_d1_a0_a1
-          !module procedure sax_d1_a1_a1 
+          module procedure sax_d0_a0_a1
+          module procedure sax_d0_a0_a2
+          module procedure sax_d0_a1_a1
+          module procedure sax_d0_a2_a2
+          module procedure sax_d0_a3_a3
+          module procedure sax_d1_a0_a1
+          module procedure sax_d1_a1_a1 
           module procedure sax_l1_a1_a1 
           module procedure sax_i1_a1_a1
-          !module procedure sax_d2_a0_a2
-          !module procedure sax_d2_a2_a2
+          module procedure sax_d2_a0_a2
+          module procedure sax_d2_a2_a2
           module procedure sax_r0_a0_a0
         end interface
 
         interface oad_convert
-          !module procedure convert_d0_a0
-          !module procedure convert_d1_a1
-          !module procedure convert_d2_a2
-          !module procedure convert_d3_a3
-          !module procedure convert_d4_a4
-          !module procedure convert_d5_a5
-          !module procedure convert_d6_a6
-          !module procedure convert_d7_a7
-          !module procedure convert_a0_d0
-          !module procedure convert_a1_d1
-          !module procedure convert_a2_d2
-          !module procedure convert_a3_d3
-          !module procedure convert_a4_d4
-          !module procedure convert_a5_d5
-          !module procedure convert_a6_d6
-          !module procedure convert_a7_d7
+          module procedure convert_d0_a0
+          module procedure convert_d1_a1
+          module procedure convert_d2_a2
+          module procedure convert_d3_a3
+          module procedure convert_d4_a4
+          module procedure convert_d5_a5
+          module procedure convert_d6_a6
+          module procedure convert_d7_a7
+          module procedure convert_a0_d0
+          module procedure convert_a1_d1
+          module procedure convert_a2_d2
+          module procedure convert_a3_d3
+          module procedure convert_a4_d4
+          module procedure convert_a5_d5
+          module procedure convert_a6_d6
+          module procedure convert_a7_d7
           module procedure convert_r0_a0
           module procedure convert_r1_a1
           module procedure convert_r2_a2
@@ -142,31 +142,31 @@
         end interface
 
         interface oad_allocateMatching
-          !module procedure allocateMatching_d1_d1
-          !module procedure allocateMatching_a1_d1
-          !module procedure allocateMatching_d1_a1
+          module procedure allocateMatching_d1_d1
+          module procedure allocateMatching_a1_d1
+          module procedure allocateMatching_d1_a1
           module procedure allocateMatching_a1_a1
-          !module procedure allocateMatching_d2_d2
-          !module procedure allocateMatching_a2_d2
-          !module procedure allocateMatching_d2_a2
+          module procedure allocateMatching_d2_d2
+          module procedure allocateMatching_a2_d2
+          module procedure allocateMatching_d2_a2
           module procedure allocateMatching_a2_a2
-          !module procedure allocateMatching_d3_d3
-          !module procedure allocateMatching_a3_d3
-          !module procedure allocateMatching_d3_a3
+          module procedure allocateMatching_d3_d3
+          module procedure allocateMatching_a3_d3
+          module procedure allocateMatching_d3_a3
           module procedure allocateMatching_a3_a3
           module procedure allocateMatching_a4_a4
-          !module procedure allocateMatching_d4_a4
-          !module procedure allocateMatching_d5_d5
-          !module procedure allocateMatching_a5_d5
-          !module procedure allocateMatching_d5_a5
+          module procedure allocateMatching_d4_a4
+          module procedure allocateMatching_d5_d5
+          module procedure allocateMatching_a5_d5
+          module procedure allocateMatching_d5_a5
           module procedure allocateMatching_a5_a5
-          !module procedure allocateMatching_d6_d6
-          !module procedure allocateMatching_a6_d6
-          !module procedure allocateMatching_d6_a6
+          module procedure allocateMatching_d6_d6
+          module procedure allocateMatching_a6_d6
+          module procedure allocateMatching_d6_a6
           module procedure allocateMatching_a6_a6
           module procedure allocateMatching_r1_r1
-          !module procedure allocateMatching_d1_r1
-          !module procedure allocateMatching_r1_d1
+          module procedure allocateMatching_d1_r1
+          module procedure allocateMatching_r1_d1
           module procedure allocateMatching_a1_r1
           module procedure allocateMatching_r1_a1
           module procedure allocateMatching_a2_r2
@@ -179,22 +179,22 @@
         end interface 
 
         interface oad_shapeTest
-          !module procedure shapeTest_a1_d1
+          module procedure shapeTest_a1_d1
           module procedure shapeTest_a1_a1
-          !module procedure shapeTest_d1_a1
-          !module procedure shapeTest_a2_d2
+          module procedure shapeTest_d1_a1
+          module procedure shapeTest_a2_d2
           module procedure shapeTest_a2_a2
-          !module procedure shapeTest_d2_a2
+          module procedure shapeTest_d2_a2
           module procedure shapeTest_a3_a3
-          !module procedure shapeTest_d3_a3
+          module procedure shapeTest_d3_a3
           module procedure shapeTest_a4_a4
-          !module procedure shapeTest_d4_a4
+          module procedure shapeTest_d4_a4
           module procedure shapeTest_a5_a5
           module procedure shapeTest_d5_a5
-          !module procedure shapeTest_a5_d5
+          module procedure shapeTest_a5_d5
           module procedure shapeTest_a6_a6
-          !module procedure shapeTest_d6_a6
-          !module procedure shapeTest_a6_d6
+          module procedure shapeTest_d6_a6
+          module procedure shapeTest_a6_d6
           module procedure shapeTest_r1_a1
           module procedure shapeTest_r2_a2
           module procedure shapeTest_a1_r1

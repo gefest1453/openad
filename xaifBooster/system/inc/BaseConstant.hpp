@@ -33,7 +33,7 @@ namespace xaifBooster {
     double getdouble()const;
     int getint()const;
     bool getbool()const;
-    char getchar0()const;
+    char getchar()const;
     void setdouble(double);
     void setint(int);
     void setbool(bool);

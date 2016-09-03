@@ -11,7 +11,7 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Id: O1_size_impl.hpp 49267 2008-10-11 06:19:02Z agurtovoy $
-// $Date: 2008-10-11 01:19:02 -0500 (Sat, 11 Oct 2008) $
+// $Date: 2008-10-11 09:19:02 +0300 (Сб, 11 окт 2008) $
 // $Revision: 49267 $
 
 #include <boost/mpl/O1_size_fwd.hpp>

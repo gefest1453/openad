@@ -899,7 +899,7 @@ ifeq ($(BUILD_OS), SOLARIS)
 	$(C++F) $(STD_DSO_LOADOPTS) $(BE_DSO_COMMON_LIBS) \
 	  -G -o $@ $(BE_DSO_OPTS)
 else
-	$(C++F) $(BE_DSO_COMMON_LIBS) -shared  -o $@ $(BE_DSO_OPTS) -Xlinker "--allow-multiple-definition"
+	$(C++F) $(BE_DSO_COMMON_LIBS) -shared -o $@ $(BE_DSO_OPTS)
 endif
 endif
 

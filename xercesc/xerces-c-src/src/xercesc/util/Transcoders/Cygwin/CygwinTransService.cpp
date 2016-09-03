@@ -269,27 +269,17 @@ CygwinTransService::CygwinTransService()
     const unsigned int nameBufSz = 1024;
     char nameBuf[nameBufSz + 1];
     unsigned int subIndex = 0;
-        unsigned long theSize;
-#ifdef __x86_64__
-unsigned    int theSize0;
-#endif    
+    unsigned long theSize;
     while (true)
     {
         // Get the name of the next key
-#ifdef __x86_64__
-theSize0=nameBufSz;
-#endif
         theSize = nameBufSz;
         if (::RegEnumKeyExA
         (
             charsetKey
             , subIndex
             , nameBuf
-#ifndef __x86_64__
             , &theSize
-#else 
-	    ,&theSize0
-#endif
             , 0, 0, 0, 0) == ERROR_NO_MORE_ITEMS)
         {
             break;
@@ -319,19 +309,11 @@ theSize0=nameBufSz;
             //  interested in. There should be a code page entry and an
             //  IE entry.
             //
-#ifndef __x86_64__
             unsigned long theType;
-#else
-            unsigned int theType;
-#endif
             unsigned int CPId;
             unsigned int IEId;
 
-	theSize = sizeof(unsigned int);            
-#ifdef __x86_64__
-	theSize0 = sizeof(unsigned int);
-        LPDWORD theSize1=&theSize0;
-#endif
+            theSize = sizeof(unsigned int);
             if (::RegQueryValueExA
             (
                 encodingKey
@@ -339,11 +321,7 @@ theSize0=nameBufSz;
                 , 0
                 , &theType
                 , (unsigned char*)&CPId
-#ifndef __x86_64__                 
                 , &theSize) != ERROR_SUCCESS)
-#else
-                , theSize1) != ERROR_SUCCESS)
-#endif
             {
                 XMLPlatformUtils::panic(PanicHandler::Panic_NoTransService);
             }
@@ -355,11 +333,6 @@ theSize0=nameBufSz;
             if (::IsValidCodePage(CPId))
             {
                 theSize = sizeof(unsigned int);
-#ifdef __x86_64__
-	theSize0 = sizeof(unsigned int);
-        LPDWORD theSize1=&theSize0;
-#endif
-
                 if (::RegQueryValueExA
                 (
                     encodingKey
@@ -367,12 +340,7 @@ theSize0=nameBufSz;
                     , 0
                     , &theType
                     , (unsigned char*)&IEId
-#ifndef __x86_64__                 
-                , &theSize) != ERROR_SUCCESS)
-#else
-                , theSize1) != ERROR_SUCCESS)
-#endif
-
+                    , &theSize) != ERROR_SUCCESS)
                 {
                     XMLPlatformUtils::panic(PanicHandler::Panic_NoTransService);
                 }
@@ -399,21 +367,12 @@ theSize0=nameBufSz;
     {
         // Get the name of the next key
         theSize = nameBufSz;
-#ifdef __x86_64__
-	theSize0 = sizeof(unsigned int);
-        LPDWORD theSize1=&theSize0;
-#endif
-
         if (::RegEnumKeyExA
         (
             charsetKey
             , subIndex
             , nameBuf
-#ifndef __x86_64__
             , &theSize
-#else
-            , theSize1
-#endif
             , 0, 0, 0, 0) == ERROR_NO_MORE_ITEMS)
         {
             break;
@@ -660,14 +619,8 @@ bool CygwinTransService::isAlias(const   HKEY            encodingKey
                     ,       char* const     aliasBuf
                     , const unsigned int    nameBufSz )
 {
-
-#ifndef __x86_64__ 
     unsigned long theType;
     unsigned long theSize = nameBufSz;
-#else
-    unsigned int theType;
-    unsigned int theSize = nameBufSz;
-#endif
     return (::RegQueryValueExA
     (
         encodingKey

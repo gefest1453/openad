@@ -15,7 +15,7 @@
 // See http://www.boost.org/libs/mpl for documentation.
 
 // $Id: quote.hpp 49272 2008-10-11 06:50:46Z agurtovoy $
-// $Date: 2008-10-11 01:50:46 -0500 (Sat, 11 Oct 2008) $
+// $Date: 2008-10-11 09:50:46 +0300 (Сб, 11 окт 2008) $
 // $Revision: 49272 $
 
 #if !defined(BOOST_MPL_PREPROCESSING_MODE)

@@ -1,0 +1,13 @@
+Compiling OpenAnalysis on 09/03/16 at  1:51:53 MSK
+Compile started by stas
+OADIR:='/home/stas/OpenAD/OpenAnalysis'
+CXXFLAGS:=''
+CCFLAGS:=''
+CXX:='g++'
+CC:='cc'
+CXXLD:=''
+CCLD:=''
+PLATFORM:='x86-Cygwin'
+CXX version => 'g++ (GCC) 5.4.0 Copyright (C) 2015 Free Software Foundation, Inc. Это свободно распространяемое программное обеспечение. Условия копирования приведены в исходных текстах. Без гарантии каких-либо качеств, включая  коммерческую ценность и применимость для каких-либо целей.'
+COMPILE_SUCCESFUL='yes'
+Compilation finished on 09/03/16 at  1:53:51 MSK
