@@ -4,8 +4,8 @@ F90C=gfortran
 CXX=g++
 LINK=$(F90C)
 CPP_FLAGS       =
-FFLAGS      	= -O2 -ffree-line-length-512  $(CPP_FLAGS) 
-F90FLAGS      	= -O2 -ffree-line-length-512  $(CPP_FLAGS) 
+FFLAGS      	= -O2 -ffree-line-length-512  $(CPP_FLAGS)
+F90FLAGS      	= -O2 -ffree-line-length-512  $(CPP_FLAGS)
 .SUFFIXES: .o .f .p .F .c .d .ff90 .f90 .FF90 .F90 .F95 .flowdir .flow .f95 .f03 
 all: tabulate adjoint
 

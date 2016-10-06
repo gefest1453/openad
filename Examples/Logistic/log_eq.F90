@@ -2,6 +2,7 @@
    contains
 subroutine  ad_cost(x0,k,l,dt,N,summ)
 doubleprecision x0,k,l,dt,r,x,time,xop,summ,x1
+doubleprecision f(4)
 character*8,parameter::fnam="./1.txt"
 integer N
 !$openad INDEPENDENT(x0)
@@ -11,13 +12,15 @@ open(file=fnam,unit=111,action='read')
 
 x=x0;summ=0
 do i=1,N
-r=logistic(x,k,l)
-x1=x+dt*r
-x=x+dt*(r+logistic(x1,k,l))/2.0
+f(1)=logistic(x,k,l)
+f(2)=logistic(x+.5*dt*f(1),k,l)
+f(3)=logistic(x+.5*dt*f(2),k,l)
+f(4)=logistic(x+dt*f(3),k,l)
+x=x+(dt/6)*(f(1)+f(4)+2*(f(2)+f(3)))
 read (111,*) time,xop
 summ=summ+(xop-x)**2
 enddo
-
+!summ=(xop-x)**2
 !$openad DEPENDENT(summ)
 close(111)
 
@@ -31,12 +34,14 @@ end function
   subroutine tabulate(x0,k,l,dt,N)
 real*8,intent(in)::x0,k,l,dt
 integer,intent(in):: N
-real*8:: x,r,x1
+real*8:: x,r,x1,f(4)
 x=x0
 do i=1,N
-r=logistic(x,k,l)
-x1=x+dt*r
-x=x+dt*(r+logistic(x1,k,l))/2.0
+f(1)=logistic(x,k,l)
+f(2)=logistic(x+.5*dt*f(1),k,l)
+f(3)=logistic(x+.5*dt*f(2),k,l)
+f(4)=logistic(x+dt*f(3),k,l)
+x=x+(dt/6)*(f(1)+f(4)+2*(f(2)+f(3)))
 print *,i*dt,x
 enddo
 
