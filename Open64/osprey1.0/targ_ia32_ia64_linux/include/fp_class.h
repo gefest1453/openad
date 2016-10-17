@@ -1,1 +1,1 @@
-/home/stas/OpenAD/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../include/fp_class.h
+/home/stas/openad/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../include/fp_class.h

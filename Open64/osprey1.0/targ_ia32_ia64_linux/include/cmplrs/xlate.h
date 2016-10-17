@@ -1,1 +1,1 @@
-/home/stas/OpenAD/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../include/cmplrs/xlate.h
+/home/stas/openad/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../include/cmplrs/xlate.h
