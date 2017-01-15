@@ -2,77 +2,77 @@ module line_searchs
 
 
   use norma0
-private compute1,compute2
-interface compute
-module procedure compute1,compute2
-end interface
+  private compute1,compute2
+  interface compute
+     module procedure compute1,compute2
+  end interface compute
 contains
-recursive function h_mul(k,nn,nmax,yy,xx,x0) result(ret)
-  use norma0
-!  use prog_bar
-integer,intent(in)::k,nn,nmax
-double precision,dimension(nmax,nn)::yy,xx
-doubleprecision::ret(nn),ret0(nn),ret1(nn),alpha
-doubleprecision,intent(in)::x0(nn)
+  recursive function h_mul(k,nn,nmax,yy,xx,x0) result(ret)
+    use norma0
+    !  use prog_bar
+    integer,intent(in)::k,nn,nmax
+    double precision,dimension(nmax,nn)::yy,xx
+    doubleprecision::ret(nn),ret0(nn),ret1(nn),alpha
+    doubleprecision,intent(in)::x0(nn)
 
-integer m,n,p
+    integer m,n,p
 
-if (k.eq.1) then
-ret=x0;
-else
-ret=x0;
-	do m=1,nn
-	ret0(m)=0
-		do n=1,nn
-			ret0(m)=ret0(m)+(xx(k,n)-xx(k-1,n))*x0(n)
-		enddo
-         ret0(m)=ret0(m)*(xx(k,m)-xx(k-1,m))
-	enddo
-	ret1=h_mul(k-1,nn,nmax,yy,xx,yy(k-1,:))
-	alpha=((xx(k,:)-xx(k-1,:)).x.yy(k-1,:))
-	ret=ret+ret0*(1+yy(k-1,:).x.ret1/alpha)/alpha
-	ret0=0
-	do m=1,nn
-	do n=1,nn
-	ret0(m)=ret0(m)+ret1(m)*yy(k-1,n)+ret1(n)*yy(k-1,m)
-	enddo
-	enddo
-	ret=ret+ret0/alpha
-endif
-end function
+    if (k.eq.1) then
+       ret=x0;
+    else
+       ret=x0;
+       do m=1,nn
+          ret0(m)=0
+          do n=1,nn
+             ret0(m)=ret0(m)+(xx(k,n)-xx(k-1,n))*x0(n)
+          enddo
+          ret0(m)=ret0(m)*(xx(k,m)-xx(k-1,m))
+       enddo
+       ret1=h_mul(k-1,nn,nmax,yy,xx,yy(k-1,:))
+       alpha=((xx(k,:)-xx(k-1,:)).x.yy(k-1,:))
+       ret=ret+ret0*(1+yy(k-1,:).x.ret1/alpha)/alpha
+       ret0=0
+       do m=1,nn
+          do n=1,nn
+             ret0(m)=ret0(m)+ret1(m)*yy(k-1,n)+ret1(n)*yy(k-1,m)
+          enddo
+       enddo
+       ret=ret+ret0/alpha
+    endif
+  end function h_mul
 
-subroutine compute1(x,f,grad)
-use OAD_active
-use OAD_tape
-use OAD_rev
-use w2f__types
-use log_eq
-doubleprecision ::dt,f,x(3),grad(3)
-  type(active) :: X0
-  type(active) :: K
-  type(active) :: L
-  type(active) ::ad_cost0
-integer N
-N=30
-dt=0.01
-x0%v=x(1)
-x0%d=0
-l%v=x(2)
-l%d=0
-k%v=x(3)
-k%d=0
-AD_COST0%d=1.0
-call tape_init()
-our_rev_mode%tape=.TRUE.
-call AD_COST(X0, K, L, DT, N, AD_COST0)
-f=ad_cost0%v
-grad(1)=x0%d*0.0
-grad(2)=l%d
-grad(3)=k%d
-end subroutine
+  subroutine compute1(x,f,grad)
+    use OAD_active
+    use OAD_tape
+    use OAD_rev
+    use w2f__types
+    use log_eq
+    doubleprecision ::dt,f,x(3),grad(3)
+    type(active) :: X0
+    type(active) :: K
+    type(active) :: L
+    type(active) ::ad_cost0
+    integer N
+    N=30
+    dt=0.01
+    x0%v=x(1)
+    x0%d=0
+    l%v=x(2)
+    l%d=0
+    k%v=x(3)
+    k%d=0
+    AD_COST0%d=1.0
+    call tape_init()
+    our_rev_mode%tape=.TRUE.
+    call AD_COST(X0, K, L, DT, N, AD_COST0)
+    f=ad_cost0%v
+    grad(1)=x0%d
+    grad(2)=l%d
+    grad(3)=k%d
+  end subroutine compute1
 
   subroutine compute2(nn,x0,f,grad,ctrlname,costname,direction)
-  !USE GRID
+    !USE GRID
     implicit none
     integer,intent(in)::nn
     double precision::x0(nn),direction(nn)
@@ -89,14 +89,14 @@ end subroutine
        endif
     enddo
 
-!#ifdef DEBUG
+    !#ifdef DEBUG
     !call system("del d:/intel/inp.txt  ")
-	!call system("del d:/intel/out.txt  ")
-if (size(x0).eq.3) then
-    call compute1(x0,f,grad)
-else
-stop
-endif
+    !call system("del d:/intel/out.txt  ")
+    if (size(x0).eq.3) then
+       call compute1(x0,f,grad)
+    else
+       stop
+    endif
 
 
     if (my_is_nan(f)) then
@@ -167,48 +167,48 @@ endif
     ffa=grada.x.direction;g0=ffa
     write(0,114) "initial a " ,a,fa,ffa,norma(direction)
 
-777    call compute(nn,x0+eps0*direction,fb,gradb,ctrlname,costname,direction)
+777 call compute(nn,x0+eps0*direction,fb,gradb,ctrlname,costname,direction)
     ffb=gradb.x.direction;
     write(0,114) "initial b " ,b,fb,ffb,norma(gradb)
     c=-(ffa*b-ffb*a)/(ffb-ffa)
     call compute(nn,x0+c*direction,fc,gradc,ctrlname,costname,direction)
     ffc=gradc.x.direction;
     write(0,111) "val c " ,c,fc,ffc
-!    if ((fc<fb).and.(ffc>0).and.(ffa<0)) then
-!		c0=davidon(a,c,fa,fc,ffa,ffc)     else
-		c0=davidon(a,b,fa,fb,ffa,ffb)
-!    endif
+    !    if ((fc<fb).and.(ffc>0).and.(ffa<0)) then
+    !		c0=davidon(a,c,fa,fc,ffa,ffc)     else
+    c0=davidon(a,b,fa,fb,ffa,ffb)
+    !    endif
     call compute(nn,x0+c0*direction,fc0,gradc0,ctrlname,costname,direction)
     ffc0=gradc0.x.direction;
     write(0,111) "val c0 " ,c,fc,ffc
     if ((fc.eq.min(fa,fb,fc,fc0,f0)).and.wolfe_condition(f0,g0,fc,ffc,c)) then
-			grad0=gradc;
-			x0=x0+c*direction
-			;f0=fc;
-			if_exceed=.false.
+       grad0=gradc;
+       x0=x0+c*direction
+       ;f0=fc;
+       if_exceed=.false.
     elseif ((fc0.eq.min(fa,fb,fc,fc0,f0)).and.wolfe_condition(f0,g0,fc0,ffc0,c0)) then
-			grad0=gradc0;x0=x0+c0*direction;f0=fc0;if_exceed=.false.
+       grad0=gradc0;x0=x0+c0*direction;f0=fc0;if_exceed=.false.
     elseif ((fb.eq.min(fa,fb,fc,fc0,f0)).and.wolfe_condition(f0,g0,fb,ffb,b)) then
-			grad0=gradb;x0=x0+b*direction;f0=fb;if_exceed=.false.
+       grad0=gradb;x0=x0+b*direction;f0=fb;if_exceed=.false.
     elseif ((fc<f0).and.wolfe_condition(f0,g0,fc,ffc,c)) then
-			grad0=gradc;x0=x0+c*direction;f0=fc;if_exceed=.false.    
+       grad0=gradc;x0=x0+c*direction;f0=fc;if_exceed=.false.    
     elseif ((fc0<f0).and.wolfe_condition(f0,g0,fc0,ffc0,c0)) then
-			grad0=gradc0;x0=x0+c0*direction;f0=fc0;if_exceed=.false.
-	elseif ((fb<f0).and.wolfe_condition(f0,g0,fb,ffb,b)) then
-			grad0=gradb;x0=x0+b*direction;f0=fb;if_exceed=.false.
-	elseif ((fc0<min(fa,fb,fc,f0))) then
-			grad0=gradc0;x0=x0+c0*direction;f0=fc0;if_exceed=.true.
-	elseif ((fc<min(fa,fb,fc0,f0))) then
-			grad0=gradc;x0=x0+c*direction;f0=fc;if_exceed=.true.
-	elseif (fb<min(fa,f0,fc,fc0)) then
-	       grad0=gradb;x0=x0+b*direction;f0=fb;if_exceed=.true.
-	 else 
-	       eps0=eps0/10
-          goto 777
-	  endif
-	  ncomp=ncomp+counter;
+       grad0=gradc0;x0=x0+c0*direction;f0=fc0;if_exceed=.false.
+    elseif ((fb<f0).and.wolfe_condition(f0,g0,fb,ffb,b)) then
+       grad0=gradb;x0=x0+b*direction;f0=fb;if_exceed=.false.
+    elseif ((fc0<min(fa,fb,fc,f0))) then
+       grad0=gradc0;x0=x0+c0*direction;f0=fc0;if_exceed=.true.
+    elseif ((fc<min(fa,fb,fc0,f0))) then
+       grad0=gradc;x0=x0+c*direction;f0=fc;if_exceed=.true.
+    elseif (fb<min(fa,f0,fc,fc0)) then
+       grad0=gradb;x0=x0+b*direction;f0=fb;if_exceed=.true.
+    else 
+       eps0=eps0/10
+       goto 777
+    endif
+    ncomp=ncomp+counter;
   end subroutine LINE_SEARCH2
-    subroutine LINE_SEARCH0(NN,X0,GRAD0,F0,DIRECTION,EPS0,NITER,ctrlname,costname,if_restart,if_exceed,ncomp)
+  subroutine LINE_SEARCH0(NN,X0,GRAD0,F0,DIRECTION,EPS0,NITER,ctrlname,costname,if_restart,if_exceed,ncomp)
     use norma0
     implicit none
     integer ,intent(in)::nn
@@ -224,7 +224,7 @@ endif
     character(len=9):: ctrlname,costname
 111 FORMAT (A,E19.11E2,E19.11E2,E19.11E2)
 112 FORMAT (i3,A,E19.11E2,E19.11E2,E19.11E2)
-     gamma=1.0
+    gamma=1.0
 10  a=0;b=eps0;grada=grad0;fa=f0;if_suff=.false.;counter=1
     do i=1,nn
        if (my_is_nan(x0(i)).or.my_is_nan(grad0(i))) then
@@ -233,17 +233,17 @@ endif
     enddo
     ffa=gamma*(grada.x.(direction));g0=ffa
     if (ffa>0) then 
-      gamma=-1.0;
-      goto 10
+       gamma=-1.0;
+       goto 10
     endif
-    
+
     write(0,111) "initial a " ,a,fa,ffa
 
     !    call compute(nn,x0,fa,grada,ctrlname,costname,direction)
     call compute(nn,x0+eps0*gamma*direction,fb,gradb,ctrlname,costname,direction)
     ffb=gradb.x.direction;
     write(0,111) "initial b " ,b,fb,ffb
-  
+
 30  do while(((ffb*ffa.ge.0)))
        if (ffa.eq.ffb) then
           b0=b*10
@@ -256,8 +256,8 @@ endif
           endif
        endif
        if ((fb<fa).and.(ffb<0)) then
-           a=b;fa=fb;grada=gradb;ffa=ffb
-    endif
+          a=b;fa=fb;grada=gradb;ffa=ffb
+       endif
        write(0,'(a,E16.8E2)')"Приближение изоляции минимума",b0
        b=b0
 
@@ -268,7 +268,7 @@ endif
        counter=counter+1
     enddo
 
- 40   if_suff=(((fa<0.9*f0).and.(wolfe_condition0(grada,direction))).or.((wolfe_condition0(gradb,direction)).and.(fb<0.9*f0)))
+40  if_suff=(((fa<0.9*f0).and.(wolfe_condition0(grada,direction))).or.((wolfe_condition0(gradb,direction)).and.(fb<0.9*f0)))
     do  while((.not. if_suff))
        c=davidon(a,b,fa,fb,ffa,ffb)
 
@@ -283,7 +283,7 @@ endif
        else
           c=-(ffa*b-ffb*a)/(ffb-ffa)
           if (((c-a)*(c-b)>0)) then
-          c=0.5*(2*a*(fb-fa)-ffa*(b**2-a**2))/(fb-fa-ffa*(b-a))
+             c=0.5*(2*a*(fb-fa)-ffa*(b**2-a**2))/(fb-fa-ffa*(b-a))
           endif
           if ((my_is_nan(c)).or.(min(abs(a-c),abs(b-c))<1e-12*abs(a-b)).or.((c-a)*(c-b)>0)) then
              c=(a+b)/2
@@ -305,22 +305,22 @@ endif
           if (ffa*ffc<0) then
              b=c;gradb=gradc;ffb=ffc;fb=fc
           else
-              if (fc>fa) then 
-				C0=davidon(a,C,fa,fC,ffa,ffC)
-				call compute(nn,x0+c0*gamma*direction,fc0,gradc0,ctrlname,costname,direction) 
+             if (fc>fa) then 
+                C0=davidon(a,C,fa,fC,ffa,ffC)
+                call compute(nn,x0+c0*gamma*direction,fc0,gradc0,ctrlname,costname,direction) 
                 ffc0=gradc0.x.direction;
-                 IF ((FC0<min(fb,FA)).AND.(FFA*FFC0>0)) THEN
+                IF ((FC0<min(fb,FA)).AND.(FFA*FFC0>0)) THEN
                    if (c0<a) then
-                    B=a;GRADB=GRADa;FFB=FFa;FB=Fa
+                      B=a;GRADB=GRADa;FFB=FFa;FB=Fa
                    endif
                    A=C0;GRADA=GRADC0;FFA=FFC0;FA=FC0
-                 ELSEIF (FFB*FFC0>0) THEN
+                ELSEIF (FFB*FFC0>0) THEN
                    B=C0;GRADB=GRADC0;FFB=FFC0;FB=FC0
-                 
-                 ENDIF
-              else
-                  a=c;grada=gradc;ffa=ffc;fa=fc
-              endif    
+
+                ENDIF
+             else
+                a=c;grada=gradc;ffa=ffc;fa=fc
+             endif
           endif
 
        else
@@ -350,9 +350,9 @@ endif
 
 
 
-  ncomp=ncomp+counter
+    ncomp=ncomp+counter
   END SUBROUTINE LINE_SEARCH0
-  
+
   subroutine LINE_SEARCH1(NN,X0,GRAD0,F0,DIRECTION,EPS0,NITER,ctrlname,costname,if_restart,if_exceed,ncomp)
     use norma0
     implicit none
@@ -369,7 +369,7 @@ endif
     character(len=9):: ctrlname,costname
 111 FORMAT (A,E19.11E2,E19.11E2,E19.11E2)
 112 FORMAT (i3,A,E19.11E2,E19.11E2,E19.11E2)
-     gamma=1.0
+    gamma=1.0
 10  a=0;b=eps0;grada=grad0;fa=f0;if_suff=.false.;counter=1
     do i=1,nn
        if (my_is_nan(x0(i)).or.my_is_nan(grad0(i))) then
@@ -378,10 +378,10 @@ endif
     enddo
     ffa=gamma*(grada.x.(direction));g0=ffa
     if (ffa>0) then 
-      gamma=-1.0;
-      goto 10
+       gamma=-1.0;
+       goto 10
     endif
-    
+
     write(0,111) "initial a " ,a,fa,ffa
     if (if_restart) then
        INQUIRE (FILE='linesearch.sav', EXIST=I_EXIST) 
@@ -409,7 +409,7 @@ endif
              ffb=gradb.x.direction
              goto 30
           elseif (i.eq.2) then
-                       call restore_res(nn,a,grada,fa,'a',if_restart)
+             call restore_res(nn,a,grada,fa,'a',if_restart)
              if (.not.if_restart) then
                 write(0,'(a)')"Точка восстановления не найдена. Перезапуск"
                 goto 10
@@ -434,7 +434,7 @@ endif
        endif
 
     else
-!       call  dump_res(nn,0.0,grad0,f0,'a')
+       !       call  dump_res(nn,0.0,grad0,f0,'a')
        call system("sync")
     endif
 
@@ -456,8 +456,8 @@ endif
           endif
        endif
        if ((fb<fa).and.(ffb<0)) then
-           a=b;fa=fb;grada=gradb;ffa=ffb
-    endif
+          a=b;fa=fb;grada=gradb;ffa=ffb
+       endif
        write(0,'(a,E16.8E2)')"Приближение изоляции минимума",b0
        b=b0
 
@@ -474,7 +474,7 @@ endif
        call system("sync")
     enddo
 
- 40   if_suff=(((fa<0.9*f0).and.(wolfe_condition(f0,g0,fa,ffa,a))).or.((wolfe_condition(f0,g0,fb,ffb,b)).and.(fb<0.9*f0)))
+40  if_suff=(((fa<0.9*f0).and.(wolfe_condition(f0,g0,fa,ffa,a))).or.((wolfe_condition(f0,g0,fb,ffb,b)).and.(fb<0.9*f0)))
     do  while((.not. if_suff))
        c=davidon(a,b,fa,fb,ffa,ffb)
 
@@ -489,7 +489,7 @@ endif
        else
           c=-(ffa*b-ffb*a)/(ffb-ffa)
           if (((c-a)*(c-b)>0)) then
-          c=0.5*(2*a*(fb-fa)-ffa*(b**2-a**2))/(fb-fa-ffa*(b-a))
+             c=0.5*(2*a*(fb-fa)-ffa*(b**2-a**2))/(fb-fa-ffa*(b-a))
           endif
           if ((my_is_nan(c)).or.(min(abs(a-c),abs(b-c))<1e-12*abs(a-b)).or.((c-a)*(c-b)>0)) then
              c=(a+b)/2
@@ -511,22 +511,22 @@ endif
           if (ffa*ffc<0) then
              b=c;gradb=gradc;ffb=ffc;fb=fc
           else
-              if (fc>fa) then 
-				C0=davidon(a,C,fa,fC,ffa,ffC)
-				call compute(nn,x0+c0*gamma*direction,fc0,gradc0,ctrlname,costname,direction) 
+             if (fc>fa) then 
+                C0=davidon(a,C,fa,fC,ffa,ffC)
+                call compute(nn,x0+c0*gamma*direction,fc0,gradc0,ctrlname,costname,direction) 
                 ffc0=gradc0.x.direction;
-                 IF ((FC0<min(fb,FA)).AND.(FFA*FFC0>0)) THEN
+                IF ((FC0<min(fb,FA)).AND.(FFA*FFC0>0)) THEN
                    if (c0<a) then
-                    B=a;GRADB=GRADa;FFB=FFa;FB=Fa
+                      B=a;GRADB=GRADa;FFB=FFa;FB=Fa
                    endif
                    A=C0;GRADA=GRADC0;FFA=FFC0;FA=FC0
-                 ELSEIF (FFB*FFC0>0) THEN
+                ELSEIF (FFB*FFC0>0) THEN
                    B=C0;GRADB=GRADC0;FFB=FFC0;FB=FC0
-                 
-                 ENDIF
-              else
-                  a=c;grada=gradc;ffa=ffc;fa=fc
-              endif    
+
+                ENDIF
+             else
+                a=c;grada=gradc;ffa=ffc;fa=fc
+             endif
           endif
 
        else
@@ -565,7 +565,7 @@ endif
     call system("rm *.txt")
     call system("rm linesearch.sav")
     call system("sync")
-  ncomp=ncomp+counter
+    ncomp=ncomp+counter
   END SUBROUTINE LINE_SEARCH1
   subroutine LINE_SEARCH3(NN,X0,GRAD0,F0,DIRECTION,EPS0,NITER,ctrlname,costname,if_restart,if_exceed,ncomp)
     use norma0
@@ -583,8 +583,8 @@ endif
     character(len=9):: ctrlname,costname
 111 FORMAT (A,E19.11E2,E19.11E2,E19.11E2)
 112 FORMAT (i3,A,E19.11E2,E19.11E2,E19.11E2)
-     gamma=1.0
-101  a=0;b=eps0;grada=grad0;fa=f0;if_exceed=.false.;counter=1
+    gamma=1.0
+101 a=0;b=eps0;grada=grad0;fa=f0;if_exceed=.false.;counter=1
     do i=1,nn
        if (my_is_nan(x0(i)).or.my_is_nan(grad0(i))) then
           print *,i,x0(i),grad0(i)
@@ -592,12 +592,12 @@ endif
     enddo
     ffa=gamma*(grada.x.(direction));g0=ffa
     if (ffa>0) then 
-      gamma=-1.0;
-      goto 101
+       gamma=-1.0;
+       goto 101
     endif
-    
+
     write(0,111) "initial a " ,a,fa,ffa
-    
+
     !    call compute(nn,x0,fa,grada,ctrlname,costname,direction)
     call compute(nn,x0+eps0*gamma*direction,fb,gradb,ctrlname,costname,direction)
     ffb=gamma*(gradb.x.direction);
@@ -605,41 +605,41 @@ endif
     call system("sync")
     if ((fb.le.f0)) then
 
-                  if (fb.eq.f0) then
-                      return
-                  endif
+       if (fb.eq.f0) then
+          return
+       endif
 
- 		f0=fb;grad0=gradb;x0=x0+b*gamma*direction;eps0=b*gamma
- 		if_exceed=.true.
-		return
-	 endif
+       f0=fb;grad0=gradb;x0=x0+b*gamma*direction;eps0=b*gamma
+       if_exceed=.true.
+       return
+    endif
 
 401 if (ffb>0) then
-   c=davidon(a,b,fa,fb,ffa,ffb)
- else
-   c=a+0.2*(b-a)
-endif
+       c=davidon(a,b,fa,fb,ffa,ffb)
+    else
+       c=a+0.2*(b-a)
+    endif
 
-call compute(nn,x0+c*gamma*direction,fc,gradc,ctrlname,costname,direction)
-   ffc=gamma*(gradc.x.direction);
-       write(0,111) "a " ,a,fa,ffa
-       write(0,111) "b " ,b,fb,ffb
-       write(0,111) "c " ,c,fc,ffc
+    call compute(nn,x0+c*gamma*direction,fc,gradc,ctrlname,costname,direction)
+    ffc=gamma*(gradc.x.direction);
+    write(0,111) "a " ,a,fa,ffa
+    write(0,111) "b " ,b,fb,ffb
+    write(0,111) "c " ,c,fc,ffc
     if ((fc<f0)) then
 
- 		f0=fc;grad0=gradc;x0=x0+c*gamma*direction;eps0=c*gamma
-		return
-	 endif
- b=c;gradb=gradc;ffb=ffc;fb=fc
+       f0=fc;grad0=gradc;x0=x0+c*gamma*direction;eps0=c*gamma
+       return
+    endif
+    b=c;gradb=gradc;ffb=ffc;fb=fc
 
 
 
 
-goto 401
+    goto 401
 
 
   END SUBROUTINE LINE_SEARCH3
-  
+
   DOUBLEPRECISION function davidon(a,b,fa,fb,ffa,ffb)
     ! f1 - f(x1),f3 -f'(x3)
     ! f2 -f(x2),f4 -f'(x4)
@@ -705,7 +705,7 @@ goto 401
        Ak(i)=summ
     enddo
   end function Ak
-    subroutine dump_res(nn,x,grad,f,pref)
+  subroutine dump_res(nn,x,grad,f,pref)
     integer,intent(in)::nn
     double precision,intent(in)::x,grad(nn),f
     character(len=*)::pref
@@ -773,8 +773,8 @@ goto 401
 100 ifsucc=.false.
     return
   end subroutine restore_res
-  
-    end module
+
+end module line_searchs
     module lb2
          
       INTEGER LP,MP

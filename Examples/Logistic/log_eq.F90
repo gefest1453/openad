@@ -18,8 +18,10 @@ f(3)=logistic(x+.5*dt*f(2),k,l)
 f(4)=logistic(x+dt*f(3),k,l)
 x=x+(dt/6)*(f(1)+f(4)+2*(f(2)+f(3)))
 read (111,*) time,xop
-summ=summ+(xop-x)**2
+
 enddo
+!!print *,'aaa',dt*N,time,xop,x
+summ=summ+(xop-x)**2
 !summ=(xop-x)**2
 !$openad DEPENDENT(summ)
 close(111)

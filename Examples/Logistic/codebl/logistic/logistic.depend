@@ -1,3 +1,21 @@
 # depslib dependency file v1.0
 1484494458 source:/home/stas/openad/Examples/Logistic/codebl/logistic/main.f95
 
+1484498097 source:/home/stas/openad/Examples/Logistic/work/log_eq.pre.xb.x2w.w2f.post.f90
+
+1484498117 source:/home/stas/openad/Examples/Logistic/work/Main1.f90
+
+1484498432 source:/home/stas/openad/Examples/Logistic/work/norma.F90
+
+1484498089 source:/home/stas/openad/Examples/Logistic/work/OAD_active.f90
+
+1484498089 source:/home/stas/openad/Examples/Logistic/work/OAD_cp.f90
+
+1484498089 source:/home/stas/openad/Examples/Logistic/work/OAD_rev.f90
+
+1484498089 source:/home/stas/openad/Examples/Logistic/work/OAD_tape.f90
+
+1484498089 source:/home/stas/openad/Examples/Logistic/work/w2f__types.f90
+
+1484498083 source:/home/stas/openad/Examples/Logistic/work/line_search.F90
+
