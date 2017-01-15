@@ -28,9 +28,12 @@ x=x0;summ=0
 do i=1,N
 call ad_cost_work(x,k,l,dt,i,xop)
 read (111,*) time,xop
+if (i.eq.20) then
+summ=summ+(xop-x)**2
+endif
 enddo
 !!print *,'aaa',dt*N,time,xop,x
-summ=summ+(xop-x)**2
+
 !summ=(xop-x)**2
 !$openad DEPENDENT(summ)
 close(111)
