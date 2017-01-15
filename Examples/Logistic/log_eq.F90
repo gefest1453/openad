@@ -3,7 +3,7 @@
 subroutine  ad_cost(x0,k,l,dt,N,summ)
 doubleprecision x0,k,l,dt,r,x,time,xop,summ,x1
 doubleprecision f(4)
-character*8,parameter::fnam="./1.txt"
+character*128,parameter::fnam="./out.txt"
 integer N
 !$openad INDEPENDENT(x0)
 !$openad INDEPENDENT(k)
