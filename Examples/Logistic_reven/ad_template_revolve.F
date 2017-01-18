@@ -31,7 +31,7 @@
          revStatsFCounters%__SRNAME__=revStatsFCounters%__SRNAME__+1
          currIter=0
          jointCPcount=cp_fNumber()
-         initialized=rvInit(n_max,revStatsRevolveCPcount,
+         initialized=rvInit(n,revStatsRevolveCPcount,
      +                      errorMsg,theAction)
          IF (.NOT.initialized) WRITE(*,'(A,A)') 'Error: ', errorMsg
          do while (theAction%actionFlag/=rvDone)

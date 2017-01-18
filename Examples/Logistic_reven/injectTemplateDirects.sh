@@ -6,7 +6,7 @@ do
   srName=${i%%\(*}
   echo "/^ *SUBROUTINE $srName(/i\\" >> temp.sed
   case "$srName" in 
-    "box_model_loop" ) 
+    "AD_COST" ) 
       echo "c\$openad XXX Template ad_template.revolve.f" >> temp.sed
       ;;
     *) 

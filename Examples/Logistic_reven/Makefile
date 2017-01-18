@@ -55,7 +55,7 @@ revolve.f90: ${REVOLVEF9XROOT}/revolve.f90
 %.o : %.f
 	${F90C} -o $@ -c $< 
 
-adjoint1:ad_template.split.f $(FILES:.f90=.o ) 
+adjoint1:ad_template.split.f revolve.o $(FILES:.f90=.o ) 
 		 $(LINK) $(FILES:.f90=.o) -o adjoint1
 		
 
