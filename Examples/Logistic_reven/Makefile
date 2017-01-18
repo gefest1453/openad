@@ -55,11 +55,7 @@ revolve.f90: ${REVOLVEF9XROOT}/revolve.f90
 %.o : %.f
 	${F90C} -o $@ -c $< 
 
-<<<<<<< HEAD
 adjoint1:ad_template.split.f $(FILES:.f90=.o )  OAD_tape.f90 line_search.f90 OAD_cp.f90
-=======
-adjoint1:ad_template.split.f revolve.o $(FILES:.f90=.o ) 
->>>>>>> 27a5c90e901fdd9f81254b5e2f468cd6a6b93e6f
 		 $(LINK) $(FILES:.f90=.o) -o adjoint1
 		
 
