@@ -104,7 +104,7 @@ def makeSubroutinizedMaxOrMin(newUnit,aKey,aTypeClass,indent,aRanks):
     maxRank=0
     argArrIndx=0
     for arg in xrange(0,2):
-        mods=[App('intent',['in'])]
+        mods=[App('intent',['inout'])]
         dArgs=[Zslice() for  i in xrange(1,aRanks[arg]+1)]
         if aRanks[arg]>0 :
             mods.append(App('dimension',dArgs))
@@ -168,7 +168,7 @@ def makeSubroutinizedMaxvalOrMinval(newUnit,aKey,aTypeClass,indent,aRanks):
     newUnit.uinfo = fs.SubroutineStmt(__makeNameImpl(aKey,aTypeClass,aRanks),
                                       ['a','r'],
                                       lead=indent)
-    mods=[App('intent',['in'])]
+    mods=[App('intent',['inout'])]
     dArgs=[Zslice() for  i in xrange(1,aRanks[0]+1)]
     if aRanks[0]>0 :
         mods.append(App('dimension',dArgs))
