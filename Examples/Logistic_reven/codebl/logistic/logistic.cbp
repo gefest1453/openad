@@ -36,9 +36,11 @@
 		<Unit filename="../../work/OAD_cp.f90" />
 		<Unit filename="../../work/OAD_rev.f90" />
 		<Unit filename="../../work/OAD_tape.f90" />
-		<Unit filename="../../work/line_search.F90" />
+		<Unit filename="../../work/line_search.f90" />
 		<Unit filename="../../work/log_eq.pre.xb.x2w.w2f.post.f90" />
 		<Unit filename="../../work/norma.F90" />
+		<Unit filename="../../work/revStats.F90" />
+		<Unit filename="../../work/revolve.f90" />
 		<Unit filename="../../work/w2f__types.f90" />
 		<Extensions>
 			<code_completion />
