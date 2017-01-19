@@ -47,6 +47,8 @@ contains
     use OAD_rev
     use w2f__types
     use log_eq
+    use revstats
+    implicit none
     doubleprecision ::dt,f,x(3),grad(3)
     type(active) :: X0
     type(active) :: K
@@ -56,7 +58,7 @@ contains
     N=30
   revStatsRevolveCPcount=N
   call oad_tape_init()
-  call revStatsInit()
+!  call revStatsInit()
     dt=0.01
     x0%v=x(1)
     x0%d=0

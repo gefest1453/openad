@@ -330,7 +330,11 @@ CONTAINS
      ELSE IF ((ourCEnd-ourCStart)==1) THEN
         ourCEnd = ourCEnd - 1
         ourPrevCEnd = ourCEnd
-        IF ((ourRWCP>=0) .AND. (ourStepOf(ourRWCP)==ourCStart)) ourRWCP = ourRWCP - 1
+        IF ((ourRWCP>=0)) THEN
+        IF( (ourStepOf(ourRWCP)==ourCStart)) THEN 
+        ourRWCP = ourRWCP - 1
+        ENDIF
+        ENDIF
         IF (.NOT.ourFirstUTurned) THEN
            rvNextAction%actionFlag = rvFirstUTurn
            ourFirstUTurned = .TRUE.

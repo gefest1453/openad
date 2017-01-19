@@ -1,17 +1,17 @@
      module log_eq
    contains
-subroutine  ad_cost(x0,k,l,dt,N,summ)
+subroutine  ad_cost(x,k,l,dt,Nstep,summ)
 implicit none
-doubleprecision x0,k,l,dt,r,x,time,xop,summ,x1
-integer N,i
+doubleprecision x,k,l,dt,r,time,xop,summ,x1
+integer Nstep,step0
 
-!$openad INDEPENDENT(x0)
+!$openad INDEPENDENT(x)
 !$openad INDEPENDENT(k)
 !$openad INDEPENDENT(l)
 
-do i=1,N
-call ad_cost_work(x0,k,l,dt,i,summ)
-read (111,*) time,xop
+do step0=1,Nstep
+call ad_cost_work(x,k,l,dt,step0,summ)
+!read (111,*) time,xop
 
 enddo
 !!print *,'aaa',dt*N,time,xop,x
@@ -28,7 +28,7 @@ double precision :: x,k,l,dt,xop0,time
 double precision summ
 integer step,i,j
 doubleprecision f(4)
-character*128,parameter::fnam="~/out.txt"
+character*128,parameter::fnam="./out.txt"
 open(file=fnam,unit=111,action='read')
 do i=1,step
 read(111,*)time,xop0

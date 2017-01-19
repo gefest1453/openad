@@ -4,8 +4,8 @@ F90C=gfortran
 CXX=g++
 LINK=$(F90C)
 CPP_FLAGS       =
-FFLAGS      	= -O0 -g -ffree-line-length-132  $(CPP_FLAGS)
-F90FLAGS      	= -O0 -g -ffree-line-length-132  $(CPP_FLAGS)
+FFLAGS      	= -O0 -g -ffree-line-length-132 -fimplicit-none $(CPP_FLAGS) 
+F90FLAGS      	= -O0 -g -ffree-line-length-132   -fimplicit-none $(CPP_FLAGS)
 .SUFFIXES: .o .f .p .F .c .d .ff90 .f90 .FF90 .F90 .F95 .flowdir .flow .f95 .f03 
 all: tabulate adjoint
 
@@ -42,16 +42,14 @@ log_eq.pre.xb.x2w.w2f.post.f90: numCore.pre.xb.x2w.w2f.td.f ad_template.f revSta
 	-i ${OPENADROOT}/runTimeSupport/cpToFile/ad_inline.f		\
 	--outputFormat=free -o $@ $<
 		
- w2f__types.f90: ${OPENADROOT}/runTimeSupport/all/w2f__types.f90
-	cp -f $< $@
-OAD_active.f90: ${OPENADROOT}/runTimeSupport/scalar/OAD_active.f90
-	cp -f $< $@
-OAD_rev.f90: ${OPENADROOT}/runTimeSupport/simple/OAD_rev.f90
-	cp -f $< $@
-revolve.f90: ${REVOLVEF9XROOT}/revolve.f90
-	cp -f $< $@
-%.f90: ${OPENADROOT}/runTimeSupport/cpToFile/%.f90
-	cp -f $< $@
+w2f__types.f90: ../w2f__types.F90
+	cat $< |cpp -traditional -P $(CPP_FLAGS) -D OPENAD > $@
+OAD_active.f90: ../OAD_active.F90
+		cat $< |cpp -traditional -P $(CPP_FLAGS) -D OPENAD > $@
+OAD_rev.f90: ../OAD_rev.F90
+		cat $< |cpp -traditional -P $(CPP_FLAGS) -D OPENAD > $@
+revolve.f90: ../revolve.F90
+		cat $< |cpp -traditional -P $(CPP_FLAGS) -D OPENAD > $@
 %.o : %.f
 	${F90C} -o $@ -c $< 
 

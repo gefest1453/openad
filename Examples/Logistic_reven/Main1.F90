@@ -299,7 +299,7 @@ subroutine restore_data(nn,x0)
 end subroutine restore_data
 subroutine load_state(nn,nmax,istart,grad,x0,d,x,g,rho,alpha,q,r,beta)
   integer,intent(inout)::nn,istart,nmax
-  doubleprecision,intent(inout):: grad(nn),x0(nn),d(nn)
+  doubleprecision,intent(inout):: grad(nn),x0(nn),d(nn),beta
   doubleprecision,intent(inout):: x(nmax+1,nn),g(nmax+1,nn),rho(nmax+1),alpha(nmax+1),q(nn),r(nn)
   open(file='main.sav',action='read',unit=177)
   read(177,*),istart
@@ -318,7 +318,7 @@ subroutine load_state(nn,nmax,istart,grad,x0,d,x,g,rho,alpha,q,r,beta)
 end subroutine load_state
 subroutine save_state(nn,nmax,istart,grad,x0,d,x,g,rho,alpha,q,r,beta)
   integer::nn,istart,nmax
-  doubleprecision grad(nn),x0(nn),d(nn)
+  doubleprecision grad(nn),x0(nn),d(nn),beta
   doubleprecision x(nmax+1,nn),g(nmax+1,nn),rho(nmax+1),alpha(nmax+1),q(nn),r(nn)
   open(file='main.sav',status='REPLACE',action='write',unit=177)
   write(177,*),istart
