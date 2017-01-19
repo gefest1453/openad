@@ -56,7 +56,7 @@ contains
     N=30
   revStatsRevolveCPcount=N
   call oad_tape_init()
-  call OAD_revPlain()
+  call revStatsInit()
     dt=0.01
     x0%v=x(1)
     x0%d=0
@@ -65,16 +65,31 @@ contains
     k%v=x(3)
     k%d=0
     AD_COST0%d=1.0
-  
-     call OAD_revTape()
-    call AD_COST(X0, K, L, DT, N, AD_COST0)
-     call OAD_revAdjoint()
+    AD_COST0%v=0.0
+       our_rev_mode%arg_store=.FALSE.
+     our_rev_mode%arg_restore=.FALSE.
+     our_rev_mode%res_store=.FALSE.
+     our_rev_mode%res_restore=.FALSE.
+     our_rev_mode%plain=.FALSE.
+     our_rev_mode%tape=.TRUE.
+     our_rev_mode%adjoint=.TRUE.
      call AD_COST(X0, K, L, DT, N, AD_COST0)
-    
-    f=ad_cost0%v
+     
     grad(1)=x0%d
     grad(2)=l%d
     grad(3)=k%d
+    
+    AD_COST0%d=1.0
+    AD_COST0%v=0.0
+       our_rev_mode%arg_store=.FALSE.
+     our_rev_mode%arg_restore=.FALSE.
+     our_rev_mode%res_store=.FALSE.
+     our_rev_mode%res_restore=.FALSE.
+     our_rev_mode%plain=.TRUE.
+     our_rev_mode%tape=.FALSE.
+     our_rev_mode%adjoint=.FALSE.
+     call AD_COST(X0, K, L, DT, N, AD_COST0)
+    f=AD_COST0%v
   end subroutine compute1
 
   subroutine compute2(nn,x0,f,grad,ctrlname,costname,direction)

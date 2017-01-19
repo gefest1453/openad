@@ -36,7 +36,7 @@ numCore.pre.xb.x2w.w2f.f: numCore.pre.xb.x2w.B
 numCore.pre.xb.x2w.w2f.td.f: numCore.pre.xb.x2w.w2f.f injectTemplateDirects.sh
 	./injectTemplateDirects.sh $< $@
 # postprocess 
-log_eq.pre.xb.x2w.w2f.post.f90: numCore.pre.xb.x2w.w2f.td.f ad_template.f revStats.o 
+log_eq.pre.xb.x2w.w2f.post.f90: numCore.pre.xb.x2w.w2f.td.f ad_template.f revStats.o revolve.o
 	${OPENADFORTTK_BASE}/tools/SourceProcessing/postProcess.py -m r \
 	--infoUnitFile=w2f__types.f90 \
 	-i ${OPENADROOT}/runTimeSupport/cpToFile/ad_inline.f		\
@@ -55,7 +55,7 @@ revolve.f90: ${REVOLVEF9XROOT}/revolve.f90
 %.o : %.f
 	${F90C} -o $@ -c $< 
 
-adjoint1:ad_template.split.f $(FILES:.f90=.o )  OAD_tape.f90 line_search.f90 OAD_cp.f90
+adjoint1:ad_template.split.f $(FILES:.f90=.o )  OAD_tape.f90 line_search.f90 OAD_cp.f90 revolve.f90
 		 $(LINK) $(FILES:.f90=.o) -o adjoint1
 		
 
@@ -95,4 +95,4 @@ log_eq.f90:log_eq.F90
 	mkdir -p source1
 	cp $< ./source1
 .PHONY. clean:
-		 rm -rf ./work ./*.o  ./*.d ./*.mod ./*.exe ./*.f90  *.f95 ./oad_output ./oad_work *whirl adal* *.xaif *.B numericalCore* 
+		 rm -rf ./work ./*.o ./*.f  ./*.d ./*.mod ./*.exe ./*.f90  *.f95 ./oad_output ./oad_work *whirl adal* *.xaif *.B numericalCore*  ./tabulate
