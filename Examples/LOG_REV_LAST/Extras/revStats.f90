@@ -16,7 +16,9 @@ integer :: &
        box_robert_filter=0, &  
        box_cycle_fields=0, &
        box_update=0, &
-       box_timestep=0
+       box_timestep=0, &
+       logistic=0,&
+       oad_s_logistic=0
 end type   
 
 type(fCountersType), save, public :: revStatsFCounters

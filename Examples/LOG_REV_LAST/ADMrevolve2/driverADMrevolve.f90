@@ -18,9 +18,10 @@ program boxmodel_adm_driver
   read (*,*) revStatsRevolveCPcount
   write(*,*) "adjoint model, joint mode"
   call oad_tape_init()
-  do i=1,2*kdim
+!  do i=1,kdim
+    xx%v=0
      call revStatsInit()
-     do j=1,2*kdim
+     do j=1,kdim
         call zero_deriv(xx(j))
      end do
      call OAD_revPlain()
@@ -30,27 +31,29 @@ program boxmodel_adm_driver
         call zero_deriv(tnew(j))
         call zero_deriv(snew(j))
      enddo
-     if (i>kdim) then
-        do j=1,kdim
-           if (j==i-kdim) then
-              snew(j)%d=1
-           end if
-        end do
-     else
-        do j=1,kdim
-           if (j==i) then
-              tnew(j)%d=1
-           end if
-        end do
-     end if
+     snew(1)%d=1.0
+!     if (i>kdim) then
+!        do j=1,kdim
+!           if (j==i-kdim) then
+!              snew(j)%d=1
+!           end if
+!        end do
+!     else
+!        do j=1,kdim
+!           if (j==i) then
+!              tnew(j)%d=1
+!           end if
+!        end do
+!     end if
      call OAD_revTape()
      call box_model_body
+     print *,snew(1)
      call OAD_revAdjoint()
      call box_model_body
-     do j=1,2*kdim
-        write(*,'(2(A,I1),A,EN26.16E3)') "F(",i,",",j,")=",xx(j)%d
+     do j=1,kdim
+        write(*,*) "F(",i,",",j,")=",xx(j)%d
      end do
-  end do
+!  end do
   call revStatsDump()
 
-end program boxmodel_adm_driver
+   end program 
