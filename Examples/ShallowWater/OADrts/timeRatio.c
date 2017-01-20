@@ -1,1 +1,0 @@
-/home/stas/OpenAD/runTimeSupport/metrics/timeRatio.c

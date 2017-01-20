@@ -55,7 +55,7 @@ contains
     type(active) :: L
     type(active) ::ad_cost0
     integer N
-    N=30
+    N=2
   revStatsRevolveCPcount=N
   call oad_tape_init()
 !  call revStatsInit()

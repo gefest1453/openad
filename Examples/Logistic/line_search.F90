@@ -47,13 +47,18 @@ contains
     use OAD_rev
     use w2f__types
     use log_eq
+!    use revstats
+    implicit none
     doubleprecision ::dt,f,x(3),grad(3)
     type(active) :: X0
     type(active) :: K
     type(active) :: L
     type(active) ::ad_cost0
     integer N
-    N=30
+    N=2
+ ! revStatsRevolveCPcount=N
+!  call oad_tape_init()
+!  call revStatsInit()
     dt=0.01
     x0%v=x(1)
     x0%d=0
@@ -62,13 +67,13 @@ contains
     k%v=x(3)
     k%d=0
     AD_COST0%d=1.0
-    call tape_init()
-    our_rev_mode%tape=.TRUE.
-    call AD_COST(X0, K, L, DT, N, AD_COST0)
-    f=ad_cost0%v
+    AD_COST0%v=0.0
+     our_rev_mode%tape=.TRUE.
+     call AD_COST(X0, K, L, DT, N, AD_COST0)
     grad(1)=x0%d
-    grad(2)=l%d
-    grad(3)=k%d
+grad(2)=l%d
+grad(3)=k%d
+    f=AD_COST0%v
   end subroutine compute1
 
   subroutine compute2(nn,x0,f,grad,ctrlname,costname,direction)

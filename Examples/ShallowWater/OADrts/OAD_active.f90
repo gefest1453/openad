@@ -1,1 +1,0 @@
-/home/stas/OpenAD/runTimeSupport/scalar/OAD_active.f90

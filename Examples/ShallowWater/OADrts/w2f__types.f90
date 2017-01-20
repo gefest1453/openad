@@ -1,1 +1,0 @@
-/home/stas/OpenAD/runTimeSupport/all/w2f__types.f90

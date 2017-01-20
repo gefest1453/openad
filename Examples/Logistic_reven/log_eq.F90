@@ -34,17 +34,14 @@ do i=1,step
 read(111,*)time,xop0
 enddo
 close(111)
-if (step.eq.1) then
-summ=0.0
-endif
-if (step.eq.25) then
-summ=summ+(x-xop0)**2
-endif
 f(1)=logistic(x,k,l)
 f(2)=logistic(x+.5*dt*f(1),k,l)
 f(3)=logistic(x+.5*dt*f(2),k,l)
 f(4)=logistic(x+dt*f(3),k,l)
 x=x+(dt/6)*(f(1)+f(4)+2*(f(2)+f(3)))
+if (step.eq.2) then
+summ=x**2
+endif
 
 
 end subroutine
