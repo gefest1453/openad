@@ -1,16 +1,31 @@
+
      module log_eq
+     double precision:: xcurr,k_act,l_act,dt_act,summ
+     integer Nmax_act
+     private xcurr,k_act,l_act,dt_act,Nmax_act
    contains
-subroutine  ad_cost(x,k,l,dt,Nstep,summ)
+   subroutine setup_par(x0,l,k,dt,nmax)
+   double precision x0,k,l,dt
+   integer nmax
+   xcurr=0.0
+   xcurr=xcurr+x0
+   l_act=0
+   l_act=l_act+l
+   k_act=k
+   dt_act=dt
+   Nmax_act=nmax
+   end subroutine
+subroutine  ad_cost()
 implicit none
-doubleprecision x,k,l,dt,r,time,xop,summ,x1
-integer Nstep,step0
 
-!$openad INDEPENDENT(x)
-!$openad INDEPENDENT(k)
-!$openad INDEPENDENT(l)
+integer step0
 
-do step0=1,Nstep
-call ad_cost_work(x,k,l,dt,step0,summ)
+!$openad INDEPENDENT(x_act)
+!$openad INDEPENDENT(k_act)
+!$openad INDEPENDENT(l_act)
+
+do step0=1,Nmax_act
+call ad_cost_work(step0)
 !read (111,*) time,xop
 
 enddo
@@ -22,25 +37,23 @@ enddo
 
 end subroutine
 
-subroutine ad_cost_work(x,k,l,dt,step,summ)
+subroutine ad_cost_work(step)
 implicit none
-double precision :: x,k,l,dt,xop0,time
-double precision summ
 integer step,i,j
-doubleprecision f(4)
+double precision:: f(4),time,xop
 character*128,parameter::fnam="./out.txt"
 open(file=fnam,unit=111,action='read')
 do i=1,step
-read(111,*)time,xop0
+read(111,*)time,xop
 enddo
 close(111)
-f(1)=logistic(x,k,l)
-f(2)=logistic(x+.5*dt*f(1),k,l)
-f(3)=logistic(x+.5*dt*f(2),k,l)
-f(4)=logistic(x+dt*f(3),k,l)
-x=x+(dt/6)*(f(1)+f(4)+2*(f(2)+f(3)))
-if (step.eq.2) then
-summ=x**2
+f(1)=logistic(xcurr,k_act,l_act)
+f(2)=logistic(xcurr+.5*dt_act*f(1),k_act,l_act)
+f(3)=logistic(xcurr+.5*dt_act*f(2),k_act,l_act)
+f(4)=logistic(xcurr+dt_act*f(3),k_act,l_act)
+xcurr=xcurr+(dt_act/6)*(f(1)+f(4)+2*(f(2)+f(3)))
+if (step.eq.30) then
+summ=(xcurr-xop)**2
 endif
 
 
