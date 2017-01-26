@@ -61,7 +61,7 @@ module line_searchs
     call revStatsInit()
     
     call OAD_revPlain()
-    call zero_deriv(x_curr)
+    call zero_deriv(xcurr)
     call zero_deriv(k_act)
     call zero_deriv(l_act)
     call setup_par(x(1),x(2),x(3),dt,30)

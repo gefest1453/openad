@@ -23,15 +23,15 @@
       end if
       if (our_rev_mode%plain) then
          revStatsFCounters%__SRNAME__=revStatsFCounters%__SRNAME__+1
-         DO ILOOP = 1, N_MAX, 1
-            CALL box_forward(ILOOP)
+         DO ILOOP = 1, NMAX_act, 1
+            CALL COST_WORK(ILOOP)
          END DO
       end if 
       if (our_rev_mode%tape) then
          revStatsFCounters%__SRNAME__=revStatsFCounters%__SRNAME__+1
          currIter=0
          jointCPcount=cp_fNumber()
-         initialized=rvInit(n_max,revStatsRevolveCPcount,
+         initialized=rvInit(nmax_act,revStatsRevolveCPcount,
      +                      errorMsg,theAction)
          IF (.NOT.initialized) WRITE(*,'(A,A)') 'Error: ', errorMsg
          do while (theAction%actionFlag/=rvDone)
@@ -45,11 +45,11 @@
          case (rvForward)
             call OAD_revPlain
             do currIter=currIter,theAction%iteration-1
-               call box_forward(currIter+1)
+               call COST_WORK(currIter+1)
             end do
             call OAD_revTape
          case (rvFirstUTurn)
-            call box_forward(currIter+1)
+            call COST_WORK(currIter+1)
 ! get out now ...
             exit                
          end select   
@@ -61,7 +61,7 @@
            select case (theAction%actionFlag) 
            case (rvFirstUTurn)
 !we taped already ... see above
-              call box_forward(currIter+1)
+              call COST_WORK(currIter+1)
            case (rvStore)
               call cp_write_open(theAction%cpNum+jointCPCount)
               call revStatsUpdateCP(cp_fNumber()+1)
@@ -75,14 +75,14 @@
            case (rvForward)
               call OAD_revPlain
               do currIter=currIter,theAction%iteration-1
-                 call box_forward(currIter+1)
+                 call COST_WORK(currIter+1)
               end do
               call OAD_revAdjoint
            case (rvUTurn)
               call OAD_revTape
-              call box_forward(currIter+1)
+              call COST_WORK(currIter+1)
               call OAD_revAdjoint
-              call box_forward(currIter+1)
+              call COST_WORK(currIter+1)
            end select   
            theAction=rvNextAction()
         end do

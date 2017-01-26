@@ -2,30 +2,19 @@
      module log_eq
      double precision:: xcurr,k_act,l_act,dt_act,summ
      integer Nmax_act
-     private xcurr,k_act,l_act,dt_act,Nmax_act
+!     private xcurr,k_act,l_act,dt_act,Nmax_act
    contains
-   subroutine setup_par(x0,l,k,dt,nmax)
-   double precision x0,k,l,dt
-   integer nmax
-   xcurr=0.0
-   xcurr=xcurr+x0
-   l_act=0
-   l_act=l_act+l
-   k_act=k
-   dt_act=dt
-   Nmax_act=nmax
-   end subroutine
 subroutine  ad_cost()
 implicit none
 
-integer step0
+integer iloop
 
-!$openad INDEPENDENT(x_act)
+!$openad INDEPENDENT(xcurr)
 !$openad INDEPENDENT(k_act)
 !$openad INDEPENDENT(l_act)
 
-do step0=1,Nmax_act
-call ad_cost_work(step0)
+do iloop=1,Nmax_act
+call COST_WORK(iloop)
 !read (111,*) time,xop
 
 enddo
@@ -37,7 +26,19 @@ enddo
 
 end subroutine
 
-subroutine ad_cost_work(step)
+   subroutine setup_par(x0,l,k,dt,nmax)
+   double precision x0,k,l,dt
+   integer nmax
+   xcurr=0.0
+   xcurr=xcurr+x0
+   l_act=0
+   l_act=l_act+l
+   k_act=k
+   dt_act=dt
+   Nmax_act=nmax
+   end subroutine
+
+subroutine COST_WORK(step)
 implicit none
 integer step,i,j
 double precision:: f(4),time,xop

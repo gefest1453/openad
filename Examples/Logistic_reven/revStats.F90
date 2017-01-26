@@ -16,7 +16,12 @@ integer :: &
        box_robert_filter=0, &  
        box_cycle_fields=0, &
        box_update=0, &
-       box_timestep=0
+       box_timestep=0,&
+       oad_s_logistic=0,&
+       tabulate=0,&
+       COST_WORK=0,&
+       setup_par=0,&
+       AD_COST=0
 end type   
 
 type(fCountersType), save, public :: revStatsFCounters
