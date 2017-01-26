@@ -4,7 +4,7 @@
   <settings>
     <identity>
       <id>a259fa0a-1dd3-45bb-86c4-f9128a271219</id>
-      <revision>15</revision>
+      <revision>16</revision>
     </identity>
     <calculation>
       <precision>12</precision>
@@ -282,9 +282,18 @@
       </input>
     </math>
   </region>
-  <region id="14" left="63" top="729" width="380" height="47" color="#000000" bgColor="#ffffff" fontSize="14">
+  <region id="14" left="72" top="738" width="378" height="34" color="#000000" bgColor="#ffffff" fontSize="14">
     <math>
       <input>
+        <e type="operand">R0</e>
+        <e type="operand">2</e>
+        <e type="operand">dt</e>
+        <e type="operand">N</e>
+        <e type="operator" args="2">*</e>
+        <e type="operand">P0</e>
+        <e type="operand">r</e>
+        <e type="operand">K</e>
+        <e type="function" args="4">P</e>
         <e type="operand">dt</e>
         <e type="operand">N</e>
         <e type="operator" args="2">*</e>
@@ -292,17 +301,18 @@
         <e type="operand">r1</e>
         <e type="operand">K1</e>
         <e type="function" args="4">P</e>
-        <e type="operand">2</e>
-        <e type="operator" args="2">^</e>
+        <e type="operator" args="2">-</e>
+        <e type="bracket">(</e>
+        <e type="operator" args="2">*</e>
+        <e type="operator" args="1">-</e>
+        <e type="operator" args="2">:</e>
       </input>
-      <result action="numeric">
-        <e type="operand">33238.9305501796</e>
-      </result>
     </math>
   </region>
-  <region id="15" left="45" top="765" width="389" height="32" color="#000000" bgColor="#ffffff" fontSize="14">
+  <region id="15" left="72" top="810" width="414" height="32" color="#000000" bgColor="#ffffff" fontSize="14">
     <math>
       <input>
+        <e type="operand">R0</e>
         <e type="operand">dt</e>
         <e type="operand">N</e>
         <e type="operator" args="2">*</e>
@@ -310,32 +320,18 @@
         <e type="operand">r1</e>
         <e type="operand">K1</e>
         <e type="function" args="4">Pdr</e>
+        <e type="operator" args="2">*</e>
       </input>
       <result action="numeric">
-        <e type="operand">28.402685417526</e>
+        <e type="operand">349.80412681682</e>
         <e type="operator" args="1">-</e>
       </result>
     </math>
   </region>
-  <region id="16" left="27" top="837" width="369" height="32" color="#000000" bgColor="#ffffff" fontSize="14">
+  <region id="16" left="81" top="864" width="416" height="32" color="#000000" bgColor="#ffffff" fontSize="14">
     <math>
       <input>
-        <e type="operand">dt</e>
-        <e type="operand">N</e>
-        <e type="operator" args="2">*</e>
-        <e type="operand">P01</e>
-        <e type="operand">r1</e>
-        <e type="operand">K1</e>
-        <e type="function" args="4">PdK</e>
-      </input>
-      <result action="numeric">
-        <e type="operand">0.166786752759</e>
-      </result>
-    </math>
-  </region>
-  <region id="17" left="27" top="900" width="380" height="32" color="#000000" bgColor="#ffffff" fontSize="14">
-    <math>
-      <input>
+        <e type="operand">R0</e>
         <e type="operand">dt</e>
         <e type="operand">N</e>
         <e type="operator" args="2">*</e>
@@ -343,9 +339,28 @@
         <e type="operand">r1</e>
         <e type="operand">K1</e>
         <e type="function" args="4">PdP0</e>
+        <e type="operator" args="2">*</e>
       </input>
       <result action="numeric">
-        <e type="operand">0.854216102783</e>
+        <e type="operand">10.520424866671</e>
+      </result>
+    </math>
+  </region>
+  <region id="17" left="81" top="909" width="394" height="32" color="#000000" bgColor="#ffffff" fontSize="14">
+    <math>
+      <input>
+        <e type="operand">R0</e>
+        <e type="operand">dt</e>
+        <e type="operand">N</e>
+        <e type="operator" args="2">*</e>
+        <e type="operand">P01</e>
+        <e type="operand">r1</e>
+        <e type="operand">K1</e>
+        <e type="function" args="4">PdK</e>
+        <e type="operator" args="2">*</e>
+      </input>
+      <result action="numeric">
+        <e type="operand">2.054125993922</e>
       </result>
     </math>
   </region>
