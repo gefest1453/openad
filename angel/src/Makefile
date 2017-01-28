@@ -10,7 +10,7 @@
 
 # CXXFLAGS may be changed appropriately
 #CXXFLAGS+= -O3 
-CXXFLAGS+= -DNDEBUG
+CXXFLAGS+= -DNDEBUG --std=gnu++98
 #CXXFLAGS+= -g
 #CXXFLAGS+= -pg
 
