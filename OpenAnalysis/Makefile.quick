@@ -25,9 +25,9 @@ else
   OADIR:=$(OA_OADIR)
 endif
 ifndef OA_CXXFLAGS
-  CXXFLAGS:=$(CXXFLAGS)
+  CXXFLAGS:=$(CXXFLAGS) --std=gnu++98
 else
-  CXXFLAGS:=$(OA_CXXFLAGS)
+  CXXFLAGS:=$(OA_CXXFLAGS) --std=gnu++98
 endif
 ifndef OA_CCFLAGS
   CCFLAGS:=$(CCFLAGS)
