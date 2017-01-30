@@ -50,7 +50,7 @@ program hello
         X00=X0-(LAMBDA0*(BETA**I))*GRAD
         call compute(nn,x00,f0,grad0,ctrlname,costname,grad)
         ncomp=ncomp+1
-        write (0,*),'f=',f0,'|grad|=',norma(grad0),'alpha=',(grad/norma(grad).x.grad0/norma(grad0))
+        write (0,*)'f=',f0,'|grad|=',norma(grad0),'alpha=',(grad/norma(grad).x.grad0/norma(grad0))
         
         print *,f0,f,sigma*lambda0*(beta**i)*norma(grad)**2,beta**i
         if (f0.le.f-sigma*lambda0*(beta**i)*norma(grad)**2) then
@@ -302,37 +302,37 @@ subroutine load_state(nn,nmax,istart,grad,x0,d,x,g,rho,alpha,q,r,beta)
   doubleprecision,intent(inout):: grad(nn),x0(nn),d(nn),beta
   doubleprecision,intent(inout):: x(nmax+1,nn),g(nmax+1,nn),rho(nmax+1),alpha(nmax+1),q(nn),r(nn)
   open(file='main.sav',action='read',unit=177)
-  read(177,*),istart
-  read(177,*),nmax
-  read(177,*),grad
-  read(177,*),x0
-  read(177,*),d
-  read(177,*),x
-  read(177,*),g
-  read(177,*),rho
-  read(177,*),alpha
-  read(177,*),q
-  read(177,*),r
-  read(177,*),beta
+  read(177,*)istart
+  read(177,*)nmax
+  read(177,*)grad
+  read(177,*)x0
+  read(177,*)d
+  read(177,*)x
+  read(177,*)g
+  read(177,*)rho
+  read(177,*)alpha
+  read(177,*)q
+  read(177,*)r
+  read(177,*)beta
   close(177)
-end subroutine load_state
+  end subroutine load_state
 subroutine save_state(nn,nmax,istart,grad,x0,d,x,g,rho,alpha,q,r,beta)
   integer::nn,istart,nmax
   doubleprecision grad(nn),x0(nn),d(nn),beta
   doubleprecision x(nmax+1,nn),g(nmax+1,nn),rho(nmax+1),alpha(nmax+1),q(nn),r(nn)
   open(file='main.sav',status='REPLACE',action='write',unit=177)
-  write(177,*),istart
-  write(177,*),nmax
-  write(177,*),grad
-  write(177,*),x0
-  write(177,*),d
-  write(177,*),x
-  write(177,*),g
-  write(177,*),rho
-  write(177,*),alpha
-  write(177,*),q
-  write(177,*),r
-  write(177,*),beta
+  write(177,*)istart
+  write(177,*)nmax
+  write(177,*)grad
+  write(177,*)x0
+  write(177,*)d
+  write(177,*)x
+  write(177,*)g
+  write(177,*)rho
+  write(177,*)alpha
+  write(177,*)q
+  write(177,*)r
+  write(177,*)beta
   close(177)
   call system("sync")
   

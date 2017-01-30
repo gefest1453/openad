@@ -10,6 +10,11 @@ module norma0
   use ieee_arithmetic 
 
 #endif
+#ifdef __ABSOFT
+  use ieee_arithmetic 
+
+#endif
+
   !use ieee_arithmetic
   private norma3,norma1,norma116,norma216,norma316
   private norma2,scalarp2,scalarp3,scalarp,scalarp216,scalarp316,scalarp16
@@ -34,7 +39,7 @@ module norma0
   end interface ddot
   private my_is_nan_d,my_is_nan_q,MY_IS_NAN_R
 contains
-  
+
 
   function ddot1(n,dx,incx,dy,incy) result(ddot)
     !
@@ -79,13 +84,13 @@ contains
 40        mp1 = m + 1
           do 50 i = mp1,n,5
              dtemp = dtemp + dx(i)*dy(i) +&
-            & dx(i + 1)*dy(i + 1) +  dx(i + 2)*dy(i + 2)&
-           & + dx(i + 3)*dy(i + 3) + dx(i + 4)*dy(i + 4)
+                  & dx(i + 1)*dy(i + 1) +  dx(i + 2)*dy(i + 2)&
+                  & + dx(i + 3)*dy(i + 3) + dx(i + 4)*dy(i + 4)
 50           continue
 60           ddot = dtemp
              return
            end function
-           
+
 
            function ddot2(n,dx,incx,dy,incy) result(ddot)
              !
@@ -130,10 +135,10 @@ contains
 40                 mp1 = m + 1
                    do 50 i = mp1,n,5
                       dtemp = dtemp + dx(i)*dy(i) + &
-                 &dx(i + 1)*dy(i + 1)&
-                 & +  dx(i + 2)*dy(i + 2) &
-                 &+ dx(i + 3)*dy(i + 3) &
-                 &+ dx(i + 4)*dy(i + 4)
+                           &dx(i + 1)*dy(i + 1)&
+                           & +  dx(i + 2)*dy(i + 2) &
+                           &+ dx(i + 3)*dy(i + 3) &
+                           &+ dx(i + 4)*dy(i + 4)
 50                    continue
 60                    ddot = dtemp
                       return
@@ -298,7 +303,7 @@ contains
                     end function norma116
                     PURE REAL*8  FUNCTION NORMA3_INF(A)
                       REAL*8,INTENT(IN)::a(:,:,:)
-                      REAL*16::s
+                      REAL*8::s
                       integer i,j,k
                       s=0
                       do k=lbound(a,dim=3),ubound(a,dim=3)
@@ -335,30 +340,54 @@ contains
 
 
                     logical function my_is_nan_R(x)
-                      real,intent(in)::x
+#ifdef __ABSOFT
+  USE IEEE_ARITHMETIC
+
+#endif
+                      real*4,intent(in)::x
 #ifdef __PGI
                       my_is_nan_r= ieee_is_nan(x)
 #else
+#ifdef __ABSOFT
+                      my_is_nan_r= IEEE_IS_NAN(x)
+#else
                       my_is_nan_r= isnan(x)
+#endif
 #endif
                       return
                     end function my_is_nan_R
 
                     logical function my_is_nan_d(x)
+#ifdef __ABSOFT
+  USE IEEE_ARITHMETIC
+
+#endif
                       double precision,intent(in)::x
 #ifdef __PGI
                       my_is_nan_d= ieee_is_nan(x)
 #else
+#ifdef __ABSOFT
+                      my_is_nan_d= IEEE_IS_NAN(x)
+#else
                       my_is_nan_d= isnan(x)
+#endif
 #endif
                       return
                     end function my_is_nan_d
                     logical function my_is_nan_Q(x)
+#ifdef __ABSOFT
+                      USE IEEE_ARITHMETIC
+
+#endif
                       REAL*16,intent(in)::x
 #ifdef __PGI
                       my_is_nan_Q= ieee_is_nan(x)
 #else
+#ifdef __ABSOFT
+                      my_is_nan_q= IEEE_IS_NAN(x)
+#else
                       my_is_nan_Q= isnan(x)
+#endif
 #endif
                       return
                     end function my_is_nan_Q

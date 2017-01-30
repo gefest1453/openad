@@ -1,1 +1,1 @@
-char * mfef90_compiler_build_date = " Sat Jan 28 11:20:17 EST 2017 ";
+char * mfef90_compiler_build_date = " 29 янв 2017 г. 19:54:01 ";

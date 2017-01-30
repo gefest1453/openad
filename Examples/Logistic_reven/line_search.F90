@@ -64,7 +64,7 @@ module line_searchs
     call zero_deriv(xcurr)
     call zero_deriv(k_act)
     call zero_deriv(l_act)
-    call setup_par(x(1),x(2),x(3),dt,30)
+    call setup_par(x(1),x(2),x(3),dt,3000)
     
     summ%d=1.0
     summ%v=0.0
@@ -720,23 +720,23 @@ module line_searchs
     character(len=*)::pref
     
     open(unit=1943,file=pref//'_func_val.txt',action='write',status='replace')
-    write(1943,*),f
+    write(1943,*)f
     close(1943) 
     
     
     
     open(unit=1943,file=pref//'_func_grad.txt',action='write',status='replace')
-    write(1943,*),grad
+    write(1943,*)grad
     close(1943) 
     
     
     open(unit=1943,file=pref//'_func_x.txt',action='write',status='replace')
-    write(1943,*),x
+    write(1943,*)x
     close(1943) 
     
     
     open(unit=1943,file=pref//'_func_val.txt',action='write',status='replace')
-    write(1943,*),f
+    write(1943,*)f
     close(1943) 
     
   end subroutine dump_res
@@ -751,7 +751,7 @@ module line_searchs
        return
     endif
     open(unit=1943,file=pref//'_func_val.txt',action='read',ERR=100)
-    read(1943,*),f
+    read(1943,*)f
     close(1943) 
     
     inquire(file=pref//'_func_grad.txt',EXIST=ifsucc)
@@ -760,7 +760,7 @@ module line_searchs
     endif
     
     open(unit=1943,file=pref//'_func_grad.txt',action='read',ERR=100)
-    read(1943,*),grad
+    read(1943,*)grad
     close(1943) 
     
     
@@ -770,12 +770,12 @@ module line_searchs
     endif
     
     open(unit=1943,file=pref//'_func_x.txt',action='read',ERR=100)
-    read(1943,*),x
+    read(1943,*)x
     close(1943) 
     
     
     open(unit=1943,file=pref//'_func_val.txt',action='read')
-    read(1943,*),f
+    read(1943,*)f
     close(1943) 
     
     return
@@ -1240,7 +1240,7 @@ IMPLICIT NONE
  30   FORMAT(' F= ',1PD10.3,'   GNORM= ',1PD10.3)
  40   FORMAT(' VECTOR X= ')
  50   FORMAT(6(2X,1PD10.3))
- 60   FORMAT(' GRADIENT VECTOR G= ')
+ 60   FORMAT(' GRADIOBENT VECTOR G= ')
  70   FORMAT(/'   I   NFN',4X,'FUNC',8X,'GNORM',7X,'STEPLENGTH'/)
  80   FORMAT(2(I4,1X),3X,3(1PD10.3,2X))
  90   FORMAT(' FINAL POINT X= ')

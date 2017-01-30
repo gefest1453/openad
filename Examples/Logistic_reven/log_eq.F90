@@ -43,17 +43,19 @@ implicit none
 integer step,i,j
 double precision:: f(4),time,xop
 character*128,parameter::fnam="./out.txt"
-open(file=fnam,unit=111,action='read')
-do i=1,step
-read(111,*)time,xop
-enddo
-close(111)
+
+
 f(1)=logistic(xcurr,k_act,l_act)
 f(2)=logistic(xcurr+.5*dt_act*f(1),k_act,l_act)
 f(3)=logistic(xcurr+.5*dt_act*f(2),k_act,l_act)
 f(4)=logistic(xcurr+dt_act*f(3),k_act,l_act)
 xcurr=xcurr+(dt_act/6)*(f(1)+f(4)+2*(f(2)+f(3)))
-if (step.eq.30) then
+if (step.eq.Nmax_act) then
+open(file=fnam,unit=111,action='read')
+do i=1,step
+read(111,*)time,xop
+enddo
+close(111)
 summ=(xcurr-xop)**2
 endif
 

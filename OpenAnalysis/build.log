@@ -1,13 +1,13 @@
-Compiling OpenAnalysis on 01/15/17 at 08:52:28 AM EST
-Compile started by stas
-OADIR:='/home/stas/openad/OpenAnalysis'
-CXXFLAGS:=''
+Compiling OpenAnalysis on 01/29/17 at  8:19:53 +03
+Compile started by derger
+OADIR:='/home/derger/build/openad/OpenAnalysis'
+CXXFLAGS:=' --std=gnu++98'
 CCFLAGS:=''
 CXX:='g++'
 CC:='cc'
 CXXLD:=''
 CCLD:=''
-PLATFORM:='x86-Linux'
-CXX version => 'g++ (Debian 4.9.2-10) 4.9.2 Copyright (C) 2014 Free Software Foundation, Inc. This is free software; see the source for copying conditions.  There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.'
+PLATFORM:='x86-Cygwin'
+CXX version => 'g++ (GCC) 6.3.0 Copyright (C) 2016 Free Software Foundation, Inc. Это свободно распространяемое программное обеспечение. Условия копирования приведены в исходных текстах. Без гарантии каких-либо качеств, включая  коммерческую ценность и применимость для каких-либо целей.'
 COMPILE_SUCCESFUL='yes'
-Compilation finished on 01/15/17 at 09:01:48 AM EST
+Compilation finished on 01/29/17 at  8:21:24 +03

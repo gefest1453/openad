@@ -52,6 +52,8 @@ revolve.f90: ../revolve.F90
 		cat $< |cpp -traditional -P $(CPP_FLAGS) -D OPENAD > $@
 %.o : %.f
 	${F90C} -o $@ -c $< 
+	mkdir -p ./source
+	cp -f $< ./source 
 
 adjoint1:ad_template.split.f $(FILES:.f90=.o )  OAD_tape.f90 line_search.f90 OAD_cp.f90 revolve.f90
 		 $(LINK) $(FILES:.f90=.o) -o adjoint1
@@ -64,6 +66,8 @@ tabulate: log_eq.o Main.o ad_template.split.f ad_template.revolve.f
 %.o:%.f90 
 	$(F90C) $(F90FLAGS) $(FFLAGS) -M -cpp $<  > $(basename $<).d
 	$(F90C) $(F90FLAGS) $(FFLAGS) $(MODPATH) -c -o $@ $< 
+	mkdir -p ./source
+	cp -f $< ./source 
 
 %.d:%.F90
 	$(F90C) $(F90FLAGS) $(FFLAGS) -M -cpp $<  > $(basename $<).d
@@ -73,6 +77,9 @@ tabulate: log_eq.o Main.o ad_template.split.f ad_template.revolve.f
 %.o:%.F90 
 	$(F90C) $(F90FLAGS) $(FFLAGS) -M -cpp $<  > $(basename $<).d
 	$(F90C) $(F90FLAGS) $(FFLAGS) $(MODPATH) -c -o $@ $< 
+	mkdir -p ./source
+	cp -f $< ./source 
+
 ad_template.split.f:ad_template_split.F
 		cat $< |cpp -traditional -P $(CPP_FLAGS) -D OPENAD > $@
 ad_template.revolve.f:ad_template_revolve.F
