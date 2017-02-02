@@ -1,6 +1,6 @@
 Program bom
-  
-  
+
+
   use OAD_active
   use OAD_rev
   use OAD_tape
@@ -25,13 +25,13 @@ Program bom
   our_rev_mode%plain=.TRUE.
   our_rev_mode%tape=.FALSE.
   our_rev_mode%adjoint=.FALSE.
-  
+
   ! initialize the tape
-  
+
   ! initialize the checkpoint areas
   !      call cp_init()
   f%v=0;f%d=1;
-  
+
   vec%d=0.
   inquire(file=trim(adjustl(FILE_PREFIX_COST))//'inp.txt',EXIST=test)
   if (.not.test) then
@@ -67,11 +67,11 @@ Program bom
   our_rev_mode%adjoint=.TRUE.
   vec(1,1,1)%v=3.0
   call model_counter(vec, F)
-  
+
   do k=1,kb
      do i=1,im
         do j=1,jm
-	   
+
            ret0(i,j)=vec(i,j,k)%d
         end do
      end do
@@ -89,8 +89,8 @@ Program bom
   enddo
   close(9732)
   open (file=trim(adjustl(FILE_PREFIX_COST))//'val.txt',unit=9732,action='write')
-  
+
   write (9732,*)F%v
-  
+
   close(9732)
 end program bom

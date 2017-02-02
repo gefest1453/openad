@@ -3,7 +3,7 @@ program main
   use log_eq
   doubleprecision :: x0,l,k,dt
   integer N
-  N=4000
+  N=40000
   dt=0.01
   x0=175.0
   l=0.18

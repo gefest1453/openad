@@ -341,7 +341,7 @@ contains
 
                     logical function my_is_nan_R(x)
 #ifdef __ABSOFT
-  USE IEEE_ARITHMETIC
+                      USE IEEE_ARITHMETIC
 
 #endif
                       real*4,intent(in)::x
@@ -349,7 +349,7 @@ contains
                       my_is_nan_r= ieee_is_nan(x)
 #else
 #ifdef __ABSOFT
-                      my_is_nan_r= IEEE_IS_NAN(x)
+                      my_is_nan_r= .false.
 #else
                       my_is_nan_r= isnan(x)
 #endif
@@ -359,7 +359,7 @@ contains
 
                     logical function my_is_nan_d(x)
 #ifdef __ABSOFT
-  USE IEEE_ARITHMETIC
+                      USE IEEE_ARITHMETIC
 
 #endif
                       double precision,intent(in)::x
@@ -367,7 +367,7 @@ contains
                       my_is_nan_d= ieee_is_nan(x)
 #else
 #ifdef __ABSOFT
-                      my_is_nan_d= IEEE_IS_NAN(x)
+                      my_is_nan_d= .false.
 #else
                       my_is_nan_d= isnan(x)
 #endif
@@ -384,7 +384,7 @@ contains
                       my_is_nan_Q= ieee_is_nan(x)
 #else
 #ifdef __ABSOFT
-                      my_is_nan_q= IEEE_IS_NAN(x)
+                      my_is_nan_q= .false.
 #else
                       my_is_nan_Q= isnan(x)
 #endif

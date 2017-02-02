@@ -14,7 +14,7 @@ module OAD_tape
        pop_d0, pop_i0, pop_d1, pop_i1, & 
        push_d4, push_d6, & 
        pop_d4, pop_d6
-    
+
   public :: &
        oad_dt, oad_dt_ptr, oad_dt_sz, oad_dt_grow, &
        oad_it, oad_it_ptr, oad_it_sz, oad_it_grow, &
@@ -24,7 +24,7 @@ module OAD_tape
        oad_tape_init, &
        oad_dump_tapestats, & 
        oad_tape_push, oad_tape_pop
-       
+
   double precision, dimension(:), allocatable :: oad_dt, dtt
   integer, dimension(:), allocatable :: oad_it, itt
   logical, dimension(:), allocatable :: oad_lt, ltt
@@ -37,40 +37,40 @@ module OAD_tape
   integer :: oad_chunk_size
 
   interface oad_tape_init
-    module procedure init
-  end interface 
+     module procedure init
+  end interface oad_tape_init
 
   interface oad_dump_tapestats
      module procedure dump_tapestats
-  end interface
+  end interface oad_dump_tapestats
 
   interface oad_dt_grow
-    module procedure dt_grow
-  end interface
+     module procedure dt_grow
+  end interface oad_dt_grow
 
   interface oad_it_grow
-    module procedure it_grow
-  end interface
+     module procedure it_grow
+  end interface oad_it_grow
 
   interface oad_lt_grow
-    module procedure lt_grow
-  end interface
+     module procedure lt_grow
+  end interface oad_lt_grow
 
   interface oad_st_grow
-    module procedure st_grow
-  end interface
+     module procedure st_grow
+  end interface oad_st_grow
 
   interface oad_tape_push
      module procedure push_d0, push_i0
      module procedure push_d1, push_i1
      module procedure push_d4, push_d6
-  end interface
+  end interface oad_tape_push
 
   interface oad_tape_pop
      module procedure pop_d0, pop_i0
      module procedure pop_d1, pop_i1
      module procedure pop_d4, pop_d6
-  end interface
+  end interface oad_tape_pop
 
 contains
 
@@ -272,7 +272,7 @@ contains
     oad_dt_ptr=oad_dt_ptr-chunk    
     v=oad_dt(oad_dt_ptr:oad_dt_ptr+chunk-1)
   end subroutine pop_d1
-  
+
   subroutine pop_i1(v)
     implicit none
     integer :: v(:)
@@ -302,4 +302,4 @@ contains
     v=reshape(oad_dt(oad_dt_ptr:oad_dt_ptr+chunk-1),dims) 
   end subroutine pop_d6
 
-end module
+end module OAD_tape

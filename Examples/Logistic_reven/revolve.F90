@@ -18,15 +18,15 @@ MODULE revolve
   IMPLICIT NONE
 
   PUBLIC :: rvInit, rvVerbose, rvNextAction, &
-rvGuess, rvFactor, & 
-rvStore, rvRestore, &
-rvForward, rvFirstUTurn, rvUTurn, rvDone, &
-rvError, rvAdjust
+       rvGuess, rvFactor, & 
+       rvStore, rvRestore, &
+       rvForward, rvFirstUTurn, rvUTurn, rvDone, &
+       rvError, rvAdjust
 
   PRIVATE :: & 
-ourSteps, ourACP, ourCStart, ourCEnd, ourVerbosity, &
-ourNumFwd , ourNumInv, ourNumStore, ourRWCP, ourPrevCEnd, &
-ourFirstUTurned, chkRange, forwdCount
+       ourSteps, ourACP, ourCStart, ourCEnd, ourVerbosity, &
+       ourNumFwd , ourNumInv, ourNumStore, ourRWCP, ourPrevCEnd, &
+       ourFirstUTurned, chkRange, forwdCount
 
   !> store a checkpoint now
   !! equivalent to TAKESHOT in Alg. 799
@@ -96,7 +96,7 @@ ourFirstUTurned, chkRange, forwdCount
      !> if an error has occurred `actionFlag` will be set to `rvError` and this will contain an error message
      CHARACTER(80) :: errorMsg
   END TYPE rvAction
-  
+
   !> the number of iteration steps; set by calling \ref rvInit; not supposed to be set/used directly by the user;
   !! note that the iterations are expected to range in [0, ourSteps-1];
   !!
@@ -169,7 +169,7 @@ ourFirstUTurned, chkRange, forwdCount
 
 CONTAINS
 
-!--------------------------------------------------------------------*
+  !--------------------------------------------------------------------*
 
   !> method to initialize the internal state; must be called before any call to \ref rvNextAction
   !! @param steps  the total number of steps in the iteration; equivalent to `steps` in Alg. 799
@@ -250,7 +250,7 @@ CONTAINS
     END IF
   END FUNCTION rvInit
 
-!--------------------------------------------------------------------*
+  !--------------------------------------------------------------------*
 
   !> method to change the internal state for the total number of steps/checkpoints; must be called after \ref rvInit
   !! @param steps  the total number of steps in the iteration; equivalent to `steps` in Alg. 799
@@ -263,9 +263,9 @@ CONTAINS
     INTEGER, INTENT(IN) :: checkpoints
     CHARACTER(*), INTENT(OUT) :: errorMsg
     rvAdjust=.false.
-  END FUNCTION
+  END FUNCTION rvAdjust
 
-!--------------------------------------------------------------------*
+  !--------------------------------------------------------------------*
 
   !> method to set the verbosity to a level in [0-3] as described for `ourVerbosity`
   SUBROUTINE rvVerbose(level)
@@ -274,7 +274,7 @@ CONTAINS
     ourVerbosity=level
   END SUBROUTINE rvVerbose
 
-!--------------------------------------------------------------------*
+  !--------------------------------------------------------------------*
   !> the method to determine the next action; to be called in an unbound loop after \ref rvInit
   !! @return an instance of `rvAction` set to describe the next action (see the member documentation);
   !!
@@ -322,82 +322,82 @@ CONTAINS
              WRITE (*,'(A,I8)') ' rvNextAction calls    :', ourNumInv
           END IF
           rvNextAction%actionFlag = rvDone
-        ELSE
-           ourCStart = ourStepOf(ourRWCP)
-           ourPrevCEnd = ourCEnd
-           rvNextAction%actionFlag = rvRestore 
-        END IF
-     ELSE IF ((ourCEnd-ourCStart)==1) THEN
-        ourCEnd = ourCEnd - 1
-        ourPrevCEnd = ourCEnd
-        IF ((ourRWCP>=0)) THEN
-        IF( (ourStepOf(ourRWCP)==ourCStart)) THEN 
-        ourRWCP = ourRWCP - 1
-        ENDIF
-        ENDIF
-        IF (.NOT.ourFirstUTurned) THEN
-           rvNextAction%actionFlag = rvFirstUTurn
-           ourFirstUTurned = .TRUE.
-        ELSE
-           rvNextAction%actionFlag = rvUTurn
-        END IF
-     ELSE IF (rwcpTest) THEN
-        ourRWCP = ourRWCP + 1
-        IF (ourRWCP+1>ourACP) THEN
-           rvNextAction%actionFlag = rvError
-           rvNextAction%errorMsg='revolve::rvNextAction: insufficient allowed checkpoints'
-           RETURN
-        ELSE
-           ourStepOf(ourRWCP) = ourCStart
-           ourNumStore = ourNumStore + 1
-           ourPrevCEnd = ourCEnd
-           rvNextAction%actionFlag = rvStore
-        END IF
-     ELSE IF ((ourPrevCEnd<ourCEnd) .AND. (ourACP==ourRWCP+1)) THEN
-        rvNextAction%actionFlag = rvError
-        rvNextAction%errorMsg='revolve::rvNextAction: insufficient allowed checkpoints'
-     ELSE
-        availCP = ourACP - ourRWCP
-        IF (availCP<1) THEN
-           rvNextAction%actionFlag = rvError
-           rvNextAction%errorMsg='revolve::rvNextAction: insufficient allowed checkpoints'
-        ELSE
-           reps = 0
-           range = 1
-           DO WHILE (range<ourCEnd-ourCStart)
-              reps = reps + 1
-              range = range*(reps+availCP)/reps
-           END DO
-           bino1 = range*reps/(availCP+reps)
-           IF (availCP>1) THEN
-            bino2 = bino1*availCP/(availCP+reps-1)
+       ELSE
+          ourCStart = ourStepOf(ourRWCP)
+          ourPrevCEnd = ourCEnd
+          rvNextAction%actionFlag = rvRestore 
+       END IF
+    ELSE IF ((ourCEnd-ourCStart)==1) THEN
+       ourCEnd = ourCEnd - 1
+       ourPrevCEnd = ourCEnd
+       IF ((ourRWCP>=0)) THEN
+          IF( (ourStepOf(ourRWCP)==ourCStart)) THEN 
+             ourRWCP = ourRWCP - 1
+          ENDIF
+       ENDIF
+       IF (.NOT.ourFirstUTurned) THEN
+          rvNextAction%actionFlag = rvFirstUTurn
+          ourFirstUTurned = .TRUE.
+       ELSE
+          rvNextAction%actionFlag = rvUTurn
+       END IF
+    ELSE IF (rwcpTest) THEN
+       ourRWCP = ourRWCP + 1
+       IF (ourRWCP+1>ourACP) THEN
+          rvNextAction%actionFlag = rvError
+          rvNextAction%errorMsg='revolve::rvNextAction: insufficient allowed checkpoints'
+          RETURN
+       ELSE
+          ourStepOf(ourRWCP) = ourCStart
+          ourNumStore = ourNumStore + 1
+          ourPrevCEnd = ourCEnd
+          rvNextAction%actionFlag = rvStore
+       END IF
+    ELSE IF ((ourPrevCEnd<ourCEnd) .AND. (ourACP==ourRWCP+1)) THEN
+       rvNextAction%actionFlag = rvError
+       rvNextAction%errorMsg='revolve::rvNextAction: insufficient allowed checkpoints'
+    ELSE
+       availCP = ourACP - ourRWCP
+       IF (availCP<1) THEN
+          rvNextAction%actionFlag = rvError
+          rvNextAction%errorMsg='revolve::rvNextAction: insufficient allowed checkpoints'
+       ELSE
+          reps = 0
+          range = 1
+          DO WHILE (range<ourCEnd-ourCStart)
+             reps = reps + 1
+             range = range*(reps+availCP)/reps
+          END DO
+          bino1 = range*reps/(availCP+reps)
+          IF (availCP>1) THEN
+             bino2 = bino1*availCP/(availCP+reps-1)
           ELSE
-            bino2 = 1
+             bino2 = 1
           END IF
           IF (availCP==1) THEN
-            bino3 = 0
+             bino3 = 0
           ELSE IF (availCP>2) THEN
-            bino3 = bino2*(availCP-1)/(availCP+reps-2)
+             bino3 = bino2*(availCP-1)/(availCP+reps-2)
           ELSE
-            bino3 = 1
+             bino3 = 1
           END IF
           bino4 = bino2*(reps-1)/availCP
           IF (availCP<3) THEN
-            bino5 = 0
+             bino5 = 0
           ELSE IF (availCP>3) THEN
-            bino5 = bino3*(availCP-1)/reps
+             bino5 = bino3*(availCP-1)/reps
           ELSE
-            bino5 = 1
+             bino5 = 1
           END IF
           IF (ourCEnd-ourCStart<=bino1+bino3) THEN
-            ourCStart = int(ourCStart + bino4)
+             ourCStart = int(ourCStart + bino4)
           ELSE IF (ourCEnd-ourCStart>=range-bino5) THEN
-            ourCStart = int(ourCStart + bino1)
+             ourCStart = int(ourCStart + bino1)
           ELSE
-            ourCStart = int(ourCEnd - bino2 - bino3)
+             ourCStart = int(ourCEnd - bino2 - bino3)
           END IF
           IF (ourCStart==prevCStart) THEN
-            ourCStart = prevCStart + 1
+             ourCStart = prevCStart + 1
           END IF
           IF (ourCStart==ourSteps) THEN
              ourNumFwd = ourNumFwd + ((ourCStart-1) - prevCStart)*ourBundle + ourTail
@@ -405,206 +405,206 @@ CONTAINS
              ourNumFwd = ourNumFwd + (ourCStart - prevCStart)*ourBundle
           END IF
           rvNextAction%actionFlag = rvForward
-        END IF
-      END IF
-      rvNextAction%startIteration=prevCStart*ourBundle
-      IF (rvNextAction%actionFlag==rvFirstUTurn) THEN
-         rvNextAction%iteration=(ourCStart)*ourBundle+ourTail
-      ELSE IF (rvNextAction%actionFlag==rvUTurn) THEN
-         rvNextAction%iteration=(ourCStart+1)*ourBundle
-      ELSE
-         rvNextAction%iteration=(ourCStart)*ourBundle
-      END IF
-      IF (rvNextAction%actionFlag /= rvError) THEN
-         IF (ourVerbosity>2) THEN
-            SELECT CASE( rvNextAction%actionFlag)
-            CASE (rvForward)
-               WRITE (*,FMT='(A,I8,A,I8,A)') ' run forward iterations    [', &
-               rvNextAction%startIteration, ',', rvNextAction%iteration-1,']'
-            CASE (rvRestore)
-               WRITE (*,FMT='(A,I8)')        ' restore input of iteration ',&
+       END IF
+    END IF
+    rvNextAction%startIteration=prevCStart*ourBundle
+    IF (rvNextAction%actionFlag==rvFirstUTurn) THEN
+       rvNextAction%iteration=(ourCStart)*ourBundle+ourTail
+    ELSE IF (rvNextAction%actionFlag==rvUTurn) THEN
+       rvNextAction%iteration=(ourCStart+1)*ourBundle
+    ELSE
+       rvNextAction%iteration=(ourCStart)*ourBundle
+    END IF
+    IF (rvNextAction%actionFlag /= rvError) THEN
+       IF (ourVerbosity>2) THEN
+          SELECT CASE( rvNextAction%actionFlag)
+          CASE (rvForward)
+             WRITE (*,FMT='(A,I8,A,I8,A)') ' run forward iterations    [', &
+                  rvNextAction%startIteration, ',', rvNextAction%iteration-1,']'
+          CASE (rvRestore)
+             WRITE (*,FMT='(A,I8)')        ' restore input of iteration ',&
+                  rvNextAction%iteration
+          CASE (rvFirstUTurn)
+             WRITE (*,FMT='(A,I8,A,I8,A)') ' 1st uturn for iterations  [',&
+                  rvNextAction%startIteration, ',', rvNextAction%iteration-1,']'
+          CASE(rvUTurn)      
+             WRITE (*,FMT='(A,I8,A,I8,A)') ' uturn for iterations      [',&
+                  rvNextAction%startIteration, ',', rvNextAction%iteration-1,']'
+          END SELECT
+       END IF
+       IF ((ourVerbosity>1) .AND. (rvNextAction%actionFlag == rvStore)) THEN
+          WRITE (*,FMT='(A,I8)')        ' store input of iteration   ',&
                rvNextAction%iteration
-            CASE (rvFirstUTurn)
-               WRITE (*,FMT='(A,I8,A,I8,A)') ' 1st uturn for iterations  [',&
-               rvNextAction%startIteration, ',', rvNextAction%iteration-1,']'
-            CASE(rvUTurn)      
-               WRITE (*,FMT='(A,I8,A,I8,A)') ' uturn for iterations      [',&
-               rvNextAction%startIteration, ',', rvNextAction%iteration-1,']'
-            END SELECT
-         END IF
-         IF ((ourVerbosity>1) .AND. (rvNextAction%actionFlag == rvStore)) THEN
-                WRITE (*,FMT='(A,I8)')        ' store input of iteration   ',&
-                rvNextAction%iteration
-         END IF
-      END IF
-      rvNextAction%cpNum=ourRWCP
-    END FUNCTION rvNextAction
+       END IF
+    END IF
+    rvNextAction%cpNum=ourRWCP
+  END FUNCTION rvNextAction
 
-!--------------------------------------------------------------------*
-    !> estimates the number of checkpoints required; equivalent to `adjust` in Alg. 799
-    !! @param steps is the number of iterations
-    !! @param bundle is optional; detaults to 1, if specified indicates the number of iterations bundled in one tape/adjoint sweep
-    !! @return the number of checkpoints such that the growth in spatial complexity is balanced with the  growth in temporal complexity
-    !!
-    !! this method does not change the internal state and does not require \ref rvInit
-    FUNCTION rvGuess(steps,bundle)
+  !--------------------------------------------------------------------*
+  !> estimates the number of checkpoints required; equivalent to `adjust` in Alg. 799
+  !! @param steps is the number of iterations
+  !! @param bundle is optional; detaults to 1, if specified indicates the number of iterations bundled in one tape/adjoint sweep
+  !! @return the number of checkpoints such that the growth in spatial complexity is balanced with the  growth in temporal complexity
+  !!
+  !! this method does not change the internal state and does not require \ref rvInit
+  FUNCTION rvGuess(steps,bundle)
     IMPLICIT NONE
-      INTEGER, INTENT(IN) :: steps, bundle
-      OPTIONAL :: bundle
-      INTEGER :: reps, s, checkpoints, b, tail, bSteps
-      INTEGER :: rvGuess
-      b=1
-      bSteps=steps
-      IF (present(bundle)) THEN
-         b=bundle
-      END IF
-      IF (steps<1) THEN
-        WRITE (*,fmt=*) 'revolve::rvGuess: error: steps < 1'
-        rvGuess = -1
-      ELSE IF (b<1) THEN
-        WRITE (*,fmt=*) 'revolve::rvGuess: error: bundle < 1'
-        rvGuess = -1
-      ELSE
-        IF (b .gt. 1) THEN
+    INTEGER, INTENT(IN) :: steps, bundle
+    OPTIONAL :: bundle
+    INTEGER :: reps, s, checkpoints, b, tail, bSteps
+    INTEGER :: rvGuess
+    b=1
+    bSteps=steps
+    IF (present(bundle)) THEN
+       b=bundle
+    END IF
+    IF (steps<1) THEN
+       WRITE (*,fmt=*) 'revolve::rvGuess: error: steps < 1'
+       rvGuess = -1
+    ELSE IF (b<1) THEN
+       WRITE (*,fmt=*) 'revolve::rvGuess: error: bundle < 1'
+       rvGuess = -1
+    ELSE
+       IF (b .gt. 1) THEN
           tail=modulo(bSteps,b)
           bSteps=bSteps/b
           IF (tail>0) THEN
-            bSteps=bSteps+1
+             bSteps=bSteps+1
           END IF
-        END IF
-        IF (bSteps==1) THEN
+       END IF
+       IF (bSteps==1) THEN
           rvGuess=0
-        ELSE
+       ELSE
           checkpoints = 1
           reps = 1
           s = 0
           DO WHILE (chkRange(checkpoints+s,reps+s)>bSteps)
-            s = s - 1
+             s = s - 1
           END DO
           DO WHILE (chkRange(checkpoints+s,reps+s)<bSteps)
-            s = s + 1
+             s = s + 1
           END DO
           checkpoints = checkpoints + s
           reps = reps + s
           s = -1
           DO WHILE (chkRange(checkpoints,reps)>=bSteps)
-            IF (checkpoints>reps) THEN
-              checkpoints = checkpoints - 1
-              s = 0
-            ELSE
-              reps = reps - 1
-              s = 1
-            END IF
+             IF (checkpoints>reps) THEN
+                checkpoints = checkpoints - 1
+                s = 0
+             ELSE
+                reps = reps - 1
+                s = 1
+             END IF
           END DO
           IF (s==0) THEN
-            checkpoints = checkpoints + 1
+             checkpoints = checkpoints + 1
           END IF
           IF (s==1) reps = reps + 1
           rvGuess = checkpoints
-        END IF
-      END IF
-    END FUNCTION rvGuess
+       END IF
+    END IF
+  END FUNCTION rvGuess
 
-!--------------------------------------------------------------------*
-    !> computes the run time overhead factor; equivalent to `expense` in Alg. 799
-    !! @param steps is the number of iterations
-    !! @param checkpoints is the number of allowed checkpoints
-    !! @param bundle is optional; detaults to 1, if specified indicates the number of iterations bundled in one tape/adjoint sweep
-    !! @return the estimated runtime overhead factor (does not account for the time needed to write checkpoints)
-    !!
-    !! this method does not change the internal state and does not require \ref rvInit
-    FUNCTION rvFactor(steps,checkpoints,bundle)
+  !--------------------------------------------------------------------*
+  !> computes the run time overhead factor; equivalent to `expense` in Alg. 799
+  !! @param steps is the number of iterations
+  !! @param checkpoints is the number of allowed checkpoints
+  !! @param bundle is optional; detaults to 1, if specified indicates the number of iterations bundled in one tape/adjoint sweep
+  !! @return the estimated runtime overhead factor (does not account for the time needed to write checkpoints)
+  !!
+  !! this method does not change the internal state and does not require \ref rvInit
+  FUNCTION rvFactor(steps,checkpoints,bundle)
     IMPLICIT NONE
-      INTEGER, INTENT(IN) :: checkpoints, steps, bundle
-      OPTIONAL :: bundle
-      INTEGER :: b, f
-      DOUBLE PRECISION :: rvFactor
-      b=1
-      IF (present(bundle)) THEN
-         b=bundle
-      END IF
-      f=forwdCount(steps,checkpoints,b)
-      IF (f==-1)  THEN
-        WRITE (*,fmt=*) 'revolve::rvFactor: error returned by  revolve::forwdCount'
-        rvFactor=-1
-      ELSE
-        rvFactor = dble(f)/steps
-      END IF
-    END FUNCTION rvFactor
+    INTEGER, INTENT(IN) :: checkpoints, steps, bundle
+    OPTIONAL :: bundle
+    INTEGER :: b, f
+    DOUBLE PRECISION :: rvFactor
+    b=1
+    IF (present(bundle)) THEN
+       b=bundle
+    END IF
+    f=forwdCount(steps,checkpoints,b)
+    IF (f==-1)  THEN
+       WRITE (*,fmt=*) 'revolve::rvFactor: error returned by  revolve::forwdCount'
+       rvFactor=-1
+    ELSE
+       rvFactor = dble(f)/steps
+    END IF
+  END FUNCTION rvFactor
 
-!--------------------------------------------------------------------*
-    !> internal method not to be referenced by the user
-    FUNCTION chkRange(ss,tt)
+  !--------------------------------------------------------------------*
+  !> internal method not to be referenced by the user
+  FUNCTION chkRange(ss,tt)
     IMPLICIT NONE
-      INTEGER :: ss, tt
-      DOUBLE PRECISION :: res
-      INTEGER :: i
-      INTEGER :: chkRange
-      res = 1.
-      IF (tt<0 .OR. ss<0) THEN
-        WRITE (*,fmt=*) 'revolve::chkRange: error: negative parameter '
-        chkRange = -1
-      ELSE
-        DO i = 1, tt
+    INTEGER :: ss, tt
+    DOUBLE PRECISION :: res
+    INTEGER :: i
+    INTEGER :: chkRange
+    res = 1.
+    IF (tt<0 .OR. ss<0) THEN
+       WRITE (*,fmt=*) 'revolve::chkRange: error: negative parameter '
+       chkRange = -1
+    ELSE
+       DO i = 1, tt
           res = res*(ss+i)
           res = res/i
           IF (res>huge(chkrange)) EXIT
-        END DO
-        IF (res<huge(chkrange)) THEN
+       END DO
+       IF (res<huge(chkrange)) THEN
           chkRange = int(res)
-        ELSE
+       ELSE
           chkRange = huge(chkrange)
           WRITE (*,fmt=*) 'revolve::chkRange: warning: returning maximal integer ',&
-          chkRange
-        END IF
-      END IF
-    END FUNCTION chkRange
+               chkRange
+       END IF
+    END IF
+  END FUNCTION chkRange
 
-!--------------------------------------------------------------------*
+  !--------------------------------------------------------------------*
 
-    !> internal method not to be referenced by the user;
-    !> predicts the  number of recomputation-from-checkpoint forwards steps (overhead)
-    FUNCTION forwdCount(steps,checkpoints,bundle)
+  !> internal method not to be referenced by the user;
+  !> predicts the  number of recomputation-from-checkpoint forwards steps (overhead)
+  FUNCTION forwdCount(steps,checkpoints,bundle)
     IMPLICIT NONE
-      INTEGER, INTENT(IN) :: checkpoints, steps, bundle
-      INTEGER :: range, reps,s,tail
-      INTEGER :: forwdCount
-      IF (checkpoints<0) THEN
-        WRITE (*,fmt=*) 'revolve::forwdCount: error: checkpoints < 0'
-        forwdCount = -1
-      ELSE IF (steps<1) THEN
-        WRITE (*,fmt=*) 'revolve::forwdCount: error: steps < 1'
-        forwdCount = -1
-      ELSE IF (bundle<1) THEN
-        WRITE (*,fmt=*) 'revolve::forwdCount: error: bundle < 1'
-        forwdCount = -1
-      ELSE
-        s=steps
-        IF (bundle .gt. 1) THEN
+    INTEGER, INTENT(IN) :: checkpoints, steps, bundle
+    INTEGER :: range, reps,s,tail
+    INTEGER :: forwdCount
+    IF (checkpoints<0) THEN
+       WRITE (*,fmt=*) 'revolve::forwdCount: error: checkpoints < 0'
+       forwdCount = -1
+    ELSE IF (steps<1) THEN
+       WRITE (*,fmt=*) 'revolve::forwdCount: error: steps < 1'
+       forwdCount = -1
+    ELSE IF (bundle<1) THEN
+       WRITE (*,fmt=*) 'revolve::forwdCount: error: bundle < 1'
+       forwdCount = -1
+    ELSE
+       s=steps
+       IF (bundle .gt. 1) THEN
           tail=modulo(s,bundle)
           s=s/bundle
           IF (tail>0) THEN
-            s=s+1
+             s=s+1
           END IF
-        END IF
-        IF (s==1) THEN
+       END IF
+       IF (s==1) THEN
           forwdCount = 0
-        ELSE IF (checkpoints==0) THEN
+       ELSE IF (checkpoints==0) THEN
           WRITE (*,fmt=*) &
-          'revolve::forwdCount: error: given inputs require checkpoints>0'
+               'revolve::forwdCount: error: given inputs require checkpoints>0'
           forwdCount = -1
-        ELSE
+       ELSE
           reps = 0
           range = 1
           DO WHILE (range<s)
-            reps = reps + 1
-            range = range*(reps+checkpoints)/reps
+             reps = reps + 1
+             range = range*(reps+checkpoints)/reps
           END DO
           forwdCount = (reps*s - range*reps/(checkpoints+1))*bundle
-        END IF
-      END IF
-    END FUNCTION forwdCount
+       END IF
+    END IF
+  END FUNCTION forwdCount
 
-!--------------------------------------------------------------------*
+  !--------------------------------------------------------------------*
 
 END MODULE revolve

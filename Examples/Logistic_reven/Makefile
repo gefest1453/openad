@@ -100,4 +100,4 @@ log_eq.f90:log_eq.F90
 	mkdir -p source1
 	cp $< ./source1
 .PHONY. clean:
-		 rm -rf ./work ./*.o ./*.f  ./*.d ./*.mod ./*.exe ./*.f90  *.f95 ./oad_output ./oad_work *whirl adal* *.xaif *.B numericalCore*  ./tabulate
+		 rm -rf ./work ./*.o ./*.f  ./*.d ./*.mod ./*.exe ./*.f90  *.f95 ./oad_output ./oad_work *whirl adal* *.xaif *.B numericalCore*  ./tabulate ./oad_cp.*

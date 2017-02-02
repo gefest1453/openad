@@ -1,32 +1,32 @@
 module RevStats
 
-public :: revStatsInit, revStatsUpdateTape, revStatsUpdateCP, revStatsDump
-public :: revStatsRevolveCPcount
+  public :: revStatsInit, revStatsUpdateTape, revStatsUpdateCP, revStatsDump
+  public :: revStatsRevolveCPcount
 
-type fCountersType   
-integer :: & 
-       box_forward=0, &
-       box_final_state=0, &
-       box_ini_fields=0, &
-       box_ini_params=0, &
-       box_model_body=0, &
-       box_model_loop=0, &
-       box_density=0, &
-       box_transport=0, &
-       box_robert_filter=0, &  
-       box_cycle_fields=0, &
-       box_update=0, &
-       box_timestep=0,&
-       oad_s_logistic=0,&
-       tabulate=0,&
-       COST_WORK=0,&
-       setup_par=0,&
-       AD_COST=0
-end type   
+  type fCountersType   
+     integer :: & 
+          box_forward=0, &
+          box_final_state=0, &
+          box_ini_fields=0, &
+          box_ini_params=0, &
+          box_model_body=0, &
+          box_model_loop=0, &
+          box_density=0, &
+          box_transport=0, &
+          box_robert_filter=0, &  
+          box_cycle_fields=0, &
+          box_update=0, &
+          box_timestep=0,&
+          oad_s_logistic=0,&
+          tabulate=0,&
+          COST_WORK=0,&
+          setup_par=0,&
+          AD_COST=0
+  end type fCountersType
 
-type(fCountersType), save, public :: revStatsFCounters
+  type(fCountersType), save, public :: revStatsFCounters
 
-integer :: maxCP, maxTape, revStatsRevolveCPcount=0
+  integer :: maxCP, maxTape, revStatsRevolveCPcount=0
 
 contains
 
@@ -46,18 +46,18 @@ contains
     revStatsFCounters%box_update=0
     revStatsFCounters%box_timestep=0
   end subroutine revStatsInit
-  
+
   subroutine revStatsUpdateCP(cpPointer) 
     integer :: cpPointer
     if (cpPointer>maxCP) maxCP=cpPointer
   end subroutine revStatsUpdateCP
-  
+
   subroutine revStatsupdateTape( tapePointer) 
     implicit none
     integer :: tapePointer
     if (tapePointer>maxTape) maxTape=tapePointer
   end subroutine revStatsupdateTape
-  
+
   subroutine revStatsDump()
     print *,'revStats: '
     print *," maxCP=",maxCP, " maxTape=", maxTape

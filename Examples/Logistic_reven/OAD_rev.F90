@@ -9,8 +9,8 @@ module OAD_rev
 
   private
   public :: modeType, our_rev_mode, OAD_revInit, &
-OAD_revPlain, OAD_revTape, OAD_revAdjoint, & 
-OAD_revStorePlain, OAD_revRestoreTape
+       OAD_revPlain, OAD_revTape, OAD_revAdjoint, & 
+       OAD_revStorePlain, OAD_revRestoreTape
 
   type modeType
      logical :: arg_store=.FALSE.
@@ -26,28 +26,28 @@ OAD_revStorePlain, OAD_revRestoreTape
 
   interface OAD_revInit
      module procedure init
-  end interface
-  
+  end interface OAD_revInit
+
   interface OAD_revPlain
      module procedure plain
-  end interface
-  
+  end interface OAD_revPlain
+
   interface OAD_revTape
      module procedure tape
-  end interface
-  
+  end interface OAD_revTape
+
   interface OAD_revAdjoint
      module procedure adjoint
-  end interface
-  
+  end interface OAD_revAdjoint
+
   interface OAD_revStorePlain
      module procedure storePlain
-  end interface
-  
+  end interface OAD_revStorePlain
+
   interface OAD_revRestoreTape
      module procedure restoreTape
-  end interface
-  
+  end interface OAD_revRestoreTape
+
 contains
 
   subroutine init()
@@ -58,7 +58,7 @@ contains
     our_rev_mode%plain=.TRUE.
     our_rev_mode%tape=.FALSE.
     our_rev_mode%adjoint=.FALSE.
-  end subroutine 
+  end subroutine init
 
   subroutine plain()
     our_rev_mode%arg_store=.FALSE.
@@ -68,7 +68,7 @@ contains
     our_rev_mode%plain=.TRUE.
     our_rev_mode%tape=.FALSE.
     our_rev_mode%adjoint=.FALSE.
-  end subroutine 
+  end subroutine plain
 
   subroutine tape()
     our_rev_mode%arg_store=.FALSE.
@@ -78,7 +78,7 @@ contains
     our_rev_mode%plain=.FALSE.
     our_rev_mode%tape=.TRUE.
     our_rev_mode%adjoint=.FALSE.
-  end subroutine 
+  end subroutine tape
 
   subroutine adjoint()
     our_rev_mode%arg_store=.FALSE.
@@ -88,7 +88,7 @@ contains
     our_rev_mode%plain=.FALSE.
     our_rev_mode%tape=.FALSE.
     our_rev_mode%adjoint=.TRUE.
-  end subroutine 
+  end subroutine adjoint
 
   subroutine storePlain()
     our_rev_mode%arg_store=.TRUE.
@@ -98,7 +98,7 @@ contains
     our_rev_mode%plain=.TRUE.
     our_rev_mode%tape=.FALSE.
     our_rev_mode%adjoint=.FALSE.
-  end subroutine 
+  end subroutine storePlain
 
   subroutine restoreTape()
     our_rev_mode%arg_store=.FALSE.
@@ -108,6 +108,6 @@ contains
     our_rev_mode%plain=.FALSE.
     our_rev_mode%tape=.TRUE.
     our_rev_mode%adjoint=.FALSE.
-  end subroutine 
+  end subroutine restoreTape
 
 end module OAD_rev

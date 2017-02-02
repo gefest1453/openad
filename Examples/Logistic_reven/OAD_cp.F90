@@ -15,66 +15,66 @@ module OAD_cp
 
   interface cp_init
      module procedure init_i
-  end interface
+  end interface cp_init
 
   interface cp_open
      module procedure open_i
-  end interface
+  end interface cp_open
 
   interface cp_write_open
      module procedure write_open_i
      module procedure write_openX_i
-  end interface
+  end interface cp_write_open
 
   interface cp_read_open
      module procedure read_open_i
      module procedure read_openX_i
-  end interface
+  end interface cp_read_open
 
   interface cp_close
      module procedure close_i
-  end interface
+  end interface cp_close
 
   interface cp_findunit
      module procedure findunit_i
-  end interface
-  
+  end interface cp_findunit
+
 contains
 
   subroutine init_i
     implicit none
     cp_file_number=1
-  end subroutine
+  end subroutine init_i
 
   subroutine write_open_i()
     implicit none
     call cp_open()
-!    print *, 'writing ', cp_file_number
+    !    print *, 'writing ', cp_file_number
     cp_file_number=cp_file_number+1
-  end subroutine 
+  end subroutine write_open_i
 
   subroutine write_openX_i(X)
     implicit none
     integer X
     cp_file_number=X
-!    print *, 'writing ', cp_file_number
+    !    print *, 'writing ', cp_file_number
     call cp_open()
-  end subroutine 
+  end subroutine write_openX_i
 
   subroutine read_open_i()
     implicit none
     cp_file_number=cp_file_number-1
-!    print *, 'reading ', cp_file_number
+    !    print *, 'reading ', cp_file_number
     call cp_open()
-  end subroutine 
+  end subroutine read_open_i
 
   subroutine read_openX_i(X)
     implicit none
     integer X
     cp_file_number=X
-!    print *, 'reading ', cp_file_number
+    !    print *, 'reading ', cp_file_number
     call cp_open()
-  end subroutine 
+  end subroutine read_openX_i
 
   subroutine open_i()
     implicit none
@@ -85,14 +85,14 @@ contains
     call cp_findunit()
     ! construct the file name
     write(fname,'(A,I9.9)') 'oad_cp.',cp_file_number
-    print *,fname
+!    print *,fname
     open( UNIT=cp_io_unit,FILE=TRIM(fname),FORM="UNFORMATTED",STATUS='UNKNOWN' )
-  end subroutine 
+  end subroutine open_i
 
   subroutine close_i()
     implicit none
     close( UNIT=cp_io_unit)
-  end subroutine
+  end subroutine close_i
 
   subroutine findunit_i()
     ! returns a valid, unused unit number for Fortran I/O
@@ -107,7 +107,7 @@ contains
     ! Sweep through a valid range of unit numbers
     cp_io_unit=-1
     do jj=9,999
-    ii=jj*2+1
+       ii=jj*2+1
        if (cp_io_unit.eq.-1) then
           inquire(unit=ii,iostat=ios,opened=op)
           if (ios.ne.0) then
@@ -128,11 +128,11 @@ contains
        print *, msgBuf
        stop 'ABNORMAL END: S/R OAD_cp:findunit_i'
     endif
-  end subroutine
+  end subroutine findunit_i
 
   function cp_fNumber()
     integer cp_fNumber
     cp_fNumber=cp_file_number
-  end function 
+  end function cp_fNumber
 
-end module 
+end module OAD_cp
