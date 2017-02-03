@@ -22,7 +22,7 @@ program hello
 
 
 
-  nmax=40;eps0=1e-6;beta=0.1;sigma=0.0000005;istart=1
+  nmax=4;eps0=1e-6;beta=0.1;sigma=0.0000005;istart=1
 
   nn=3
   ncomp=0;
@@ -54,6 +54,7 @@ program hello
         if (iflag.eq.1) then
            goto 110
         endif
+          call save_res(nn,grad,x0,f)
      else
         if ((istart.eq.big_iter).or.if_exceed) then
            x00=x0;grad0=grad;f0=f;direct=-1.0*grad0
