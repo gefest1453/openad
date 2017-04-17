@@ -1,1 +1,1 @@
-/home/derger/build/openad/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../linux/include/sgidefs.h
+/home/mopper/openad/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../linux/include/sgidefs.h

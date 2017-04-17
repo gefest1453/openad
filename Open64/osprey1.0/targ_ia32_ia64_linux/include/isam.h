@@ -1,1 +1,1 @@
-/home/derger/build/openad/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../include/isam.h
+/home/mopper/openad/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../include/isam.h
