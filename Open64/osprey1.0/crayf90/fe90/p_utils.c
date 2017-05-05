@@ -2575,7 +2575,7 @@ void  label_ref_semantics(int		attr_idx,
    int			lbl_blk_idx;
    stmt_type_type	lbl_stmt_type;
    int			line_num;
-   char                 stmt_str[10];
+   char                 stmt_str[11];/*FIX ENDFORALL*/
    boolean		valid_branch_target = TRUE;
 
 
