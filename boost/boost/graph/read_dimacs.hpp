@@ -45,7 +45,6 @@ int read_dimacs_max_flow_internal(Graph& g,
   const int NODE_FIELDS = 2;    /* no of fields in node line  */
   const int P_FIELDS = 3;       /* no of fields in problem line */
 
-  typedef typename graph_traits<Graph>::vertices_size_type vertices_size_type;
   typedef typename graph_traits<Graph>::vertex_descriptor vertex_descriptor;
   typedef typename graph_traits<Graph>::edge_descriptor edge_descriptor;
 
@@ -90,7 +89,7 @@ int read_dimacs_max_flow_internal(Graph& g,
   const int EN20 = 19;
   const int EN22 = 20;
 
-  static char *err_message[] =
+  static const char *err_message[] =
   {
     /* 0*/    "more than one problem line.",
     /* 1*/    "wrong number of parameters in the problem line.",
@@ -281,8 +280,7 @@ int read_dimacs_max_flow_internal(Graph& g,
   std::printf ( "\nline %ld of input - %s\n",
                 no_lines, err_message[err_no] );
 
-  std::exit (1);
-  return (0); /* to avoid warning */
+  return -1;
 }
 /* --------------------   end of parser  -------------------*/
 

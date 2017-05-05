@@ -1,6 +1,6 @@
 /*=============================================================================
     Copyright (c) 2009 Francois Barel
-    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -202,7 +202,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             // do down-stream transformation, provides attribute for 
             // rhs parser
             typedef traits::transform_attribute<
-                typename make_attribute::type, subrule_attr_type, domain> 
+                typename make_attribute::type, subrule_attr_type, spirit::qi::domain> 
             transform;
 
             typename make_attribute::type made_attr = make_attribute::call(attr);
@@ -256,7 +256,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
             // do down-stream transformation, provides attribute for 
             // rhs parser
             typedef traits::transform_attribute<
-                typename make_attribute::type, subrule_attr_type, domain> 
+                typename make_attribute::type, subrule_attr_type, spirit::qi::domain> 
             transform;
 
             typename make_attribute::type made_attr = make_attribute::call(attr);
@@ -440,7 +440,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi
 
             // create Defs map with only one entry: (ID -> def)
             typedef typename
+#ifndef BOOST_FUSION_HAS_VARIADIC_MAP
                 fusion::result_of::make_map<id_type, def_type>::type
+#else
+                fusion::result_of::make_map<id_type>::template apply<def_type>::type
+#endif
             defs_type;
 
             typedef subrule_group<defs_type> type;
@@ -529,7 +533,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         {
             // If you are seeing a compilation error here, you are trying
             // to use a subrule as a parser outside of a subrule group.
-            BOOST_SPIRIT_ASSERT_MSG(false
+            BOOST_SPIRIT_ASSERT_FAIL(Iterator
               , subrule_used_outside_subrule_group, (id_type));
 
             return false;
@@ -558,7 +562,7 @@ namespace boost { namespace spirit { namespace repository { namespace qi
         {
             // If you are seeing a compilation error here, you are trying
             // to use a subrule as a parser outside of a subrule group.
-            BOOST_SPIRIT_ASSERT_MSG(false
+            BOOST_SPIRIT_ASSERT_FAIL(Iterator
               , subrule_used_outside_subrule_group, (id_type));
 
             return false;

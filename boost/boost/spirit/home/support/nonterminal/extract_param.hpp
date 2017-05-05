@@ -1,6 +1,6 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
-    Copyright (c) 2001-2010 Hartmut Kaiser
+    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c) 2009 Francois Barel
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -29,6 +29,8 @@
 #include <boost/mpl/find_if.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/or.hpp>
+#include <boost/mpl/and.hpp>
 #include <boost/mpl/placeholders.hpp>
 #include <boost/type_traits/is_same.hpp>
 
@@ -78,14 +80,37 @@ namespace boost { namespace spirit { namespace detail
     {};
 
     ///////////////////////////////////////////////////////////////////////////
-    template <typename Types>
+    template <typename T>
+    struct make_function_type : mpl::identity<T()> {};
+
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Types, typename Encoding, typename Domain>
     struct extract_sig
-      : extract_param<
-            Types
-          , function_types::is_function<mpl::_>
-          , void()
-        >
-    {};
+    {
+        typedef typename
+            extract_param<
+                Types
+              , mpl::or_<
+                    function_types::is_function<mpl::_>
+                  , mpl::and_<
+                        mpl::not_<is_locals<mpl::_> >
+                      , mpl::not_<is_same<mpl::_, Encoding> >
+                      , mpl::not_<traits::matches<Domain, mpl::_> >
+                      , mpl::not_<is_same<mpl::_, unused_type> >
+                    >
+                >
+              , void()
+            >::type
+        attr_of_ftype;
+
+        typedef typename
+            mpl::eval_if<
+                function_types::is_function<attr_of_ftype>
+              , mpl::identity<attr_of_ftype>
+              , make_function_type<attr_of_ftype>
+            >::type
+        type;
+    };
 
     template <typename Sig>
     struct attr_from_sig

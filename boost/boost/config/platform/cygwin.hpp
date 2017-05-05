@@ -23,7 +23,7 @@
 #  define BOOST_HAS_SCHED_YIELD
 #  define BOOST_HAS_GETTIMEOFDAY
 #  define BOOST_HAS_PTHREAD_MUTEXATTR_SETTYPE
-#  define BOOST_HAS_SIGACTION
+//#  define BOOST_HAS_SIGACTION
 #else
 #  if !defined(BOOST_HAS_WINTHREADS)
 #     define BOOST_HAS_WINTHREADS
@@ -39,6 +39,9 @@
 #define BOOST_HAS_STDINT_H
 #endif
 
+/// Cygwin has no fenv.h
+#define BOOST_NO_FENV_H
+
 // boilerplate code:
 #include <boost/config/posix_features.hpp>
 
@@ -48,7 +51,6 @@
 #ifdef BOOST_HAS_NL_TYPES_H
 #  undef BOOST_HAS_NL_TYPES_H
 #endif
- 
 
 
 

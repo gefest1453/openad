@@ -6,7 +6,7 @@
  * Boost Software License, Version 1.0. (See accompanying
  * file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
  * Author: Jeff Garland, Bart Garst
- * $Date: 2010-01-10 21:17:23 +0200 (Вс, 10 янв 2010) $
+ * $Date$
  */
 
 #include <boost/date_time/gregorian/gregorian.hpp>

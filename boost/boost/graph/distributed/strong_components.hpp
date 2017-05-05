@@ -16,6 +16,7 @@
 
 // #define PBGL_SCC_DEBUG
 
+#include <boost/assert.hpp>
 #include <boost/property_map/property_map.hpp>
 #include <boost/property_map/parallel/distributed_property_map.hpp>
 #include <boost/property_map/parallel/caching_property_map.hpp>
@@ -69,8 +70,6 @@ void
 marshal_set( std::vector<std::vector<typename graph_traits<Graph>::vertex_descriptor> > in,
              std::vector<typename graph_traits<Graph>::vertex_descriptor>& out )
 {
-  typedef typename graph_traits<Graph>::vertex_descriptor vertex_descriptor;
-
   for( std::size_t i = 0; i < in.size(); ++i ) {
     out.insert( out.end(), graph_traits<Graph>::null_vertex() );
     out.insert( out.end(), in[i].begin(), in[i].end() );
@@ -84,7 +83,6 @@ unmarshal_set( std::vector<typename graph_traits<Graph>::vertex_descriptor> in,
                std::vector<std::vector<typename graph_traits<Graph>::vertex_descriptor> >& out )
 {
   typedef typename graph_traits<Graph>::vertex_descriptor vertex_descriptor;
-  typedef typename graph_traits<Graph>::vertex_iterator vertex_iterator;
 
   while( !in.empty() ) {
     typename std::vector<vertex_descriptor>::iterator end 
@@ -511,7 +509,7 @@ namespace boost { namespace graph { namespace distributed {
 
         // Receive predecessor and successor messages and handle them
         while (optional<std::pair<process_id_type, int> > m = probe(pg)) {
-          assert(m->second == fhp_succ_size_msg || m->second == fhp_pred_size_msg);
+          BOOST_ASSERT(m->second == fhp_succ_size_msg || m->second == fhp_pred_size_msg);
           std::size_t num_requests;
           receive(pg, m->first, m->second, num_requests);
           VertexPairVec requests(num_requests);
@@ -692,7 +690,7 @@ namespace boost { namespace graph { namespace distributed {
              if (estart != eend) {
                boost::tie(restart, reend) = out_edges(get(fr, v), gr);
                while (restart != reend && find(vertex_sets[i].begin(), vertex_sets[i].end(),
-                                               get(rf, target(*restart,g))) == vertex_sets[i].end()) restart++;
+                                               get(rf, target(*restart,gr))) == vertex_sets[i].end()) restart++;
                if (restart != reend)
                  new_set.push_back(v);
              }
@@ -730,8 +728,6 @@ namespace boost { namespace graph { namespace distributed {
       typedef typename boost::graph::parallel::process_group_type<Graph>::type process_group_type;
       typedef typename process_group_type::process_id_type process_id_type;
       typedef std::vector<std::pair<vertex_descriptor, vertex_descriptor> > VertexPairVec;
-
-      typedef typename graph_traits<Graph>::directed_category directed_category;
 
       typename property_map<Graph, vertex_owner_t>::const_type
         owner = get(vertex_owner, g);
@@ -791,7 +787,7 @@ namespace boost { namespace graph { namespace distributed {
 
       // Receive edge addition requests and handle them
       while (optional<std::pair<process_id_type, int> > m = probe(pg)) {
-        assert(m->second == fhp_edges_size_msg);
+        BOOST_ASSERT(m->second == fhp_edges_size_msg);
         std::size_t num_requests;
         receive(pg, m->first, m->second, num_requests);
         VertexPairVec requests(num_requests);
@@ -861,7 +857,6 @@ namespace boost { namespace graph { namespace distributed {
        VertexIndexMap vertex_index_map,
        incidence_graph_tag)
     {
-      typedef typename graph_traits<Graph>::vertex_iterator vertex_iterator;
       typedef typename graph_traits<Graph>::vertex_descriptor vertex_descriptor;
       typedef iterator_property_map<typename std::vector<vertex_descriptor>::iterator,
                                     VertexIndexMap> IsoMap;

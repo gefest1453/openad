@@ -2,7 +2,7 @@
 // strand.hpp
 // ~~~~~~~~~~
 //
-// Copyright (c) 2003-2010 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,6 +16,8 @@
 #endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
 
 #include <boost/asio/detail/config.hpp>
+#include <boost/asio/async_result.hpp>
+#include <boost/asio/detail/handler_type_requirements.hpp>
 #include <boost/asio/detail/strand_service.hpp>
 #include <boost/asio/detail/wrapped_handler.hpp>
 #include <boost/asio/io_service.hpp>
@@ -71,6 +73,9 @@ namespace asio {
  * happens-before the other. Therefore none of the above conditions are met and
  * no ordering guarantee is made.
  *
+ * @note The implementation makes no guarantee that handlers posted or
+ * dispatched through different @c strand objects will be invoked concurrently.
+ *
  * @par Thread Safety
  * @e Distinct @e objects: Safe.@n
  * @e Shared @e objects: Safe.
@@ -104,21 +109,6 @@ public:
    */
   ~strand()
   {
-    service_.destroy(impl_);
-  }
-
-  /// (Deprecated: use get_io_service().) Get the io_service associated with
-  /// the strand.
-  /**
-   * This function may be used to obtain the io_service object that the strand
-   * uses to dispatch handlers for asynchronous operations.
-   *
-   * @return A reference to the io_service object that the strand will use to
-   * dispatch handlers. Ownership is not transferred to the caller.
-   */
-  boost::asio::io_service& io_service()
-  {
-    return service_.get_io_service();
   }
 
   /// Get the io_service associated with the strand.
@@ -153,10 +143,21 @@ public:
    * handler object as required. The function signature of the handler must be:
    * @code void handler(); @endcode
    */
-  template <typename Handler>
-  void dispatch(Handler handler)
+  template <typename CompletionHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE(CompletionHandler, void ())
+  dispatch(BOOST_ASIO_MOVE_ARG(CompletionHandler) handler)
   {
-    service_.dispatch(impl_, handler);
+    // If you get an error on the following line it means that your handler does
+    // not meet the documented type requirements for a CompletionHandler.
+    BOOST_ASIO_COMPLETION_HANDLER_CHECK(CompletionHandler, handler) type_check;
+
+    detail::async_result_init<
+      CompletionHandler, void ()> init(
+        BOOST_ASIO_MOVE_CAST(CompletionHandler)(handler));
+
+    service_.dispatch(impl_, init.handler);
+
+    return init.result.get();
   }
 
   /// Request the strand to invoke the given handler and return
@@ -175,10 +176,21 @@ public:
    * handler object as required. The function signature of the handler must be:
    * @code void handler(); @endcode
    */
-  template <typename Handler>
-  void post(Handler handler)
+  template <typename CompletionHandler>
+  BOOST_ASIO_INITFN_RESULT_TYPE(CompletionHandler, void ())
+  post(BOOST_ASIO_MOVE_ARG(CompletionHandler) handler)
   {
-    service_.post(impl_, handler);
+    // If you get an error on the following line it means that your handler does
+    // not meet the documented type requirements for a CompletionHandler.
+    BOOST_ASIO_COMPLETION_HANDLER_CHECK(CompletionHandler, handler) type_check;
+
+    detail::async_result_init<
+      CompletionHandler, void ()> init(
+        BOOST_ASIO_MOVE_CAST(CompletionHandler)(handler));
+
+    service_.post(impl_, init.handler);
+
+    return init.result.get();
   }
 
   /// Create a new handler that automatically dispatches the wrapped handler
@@ -206,11 +218,23 @@ public:
 #if defined(GENERATING_DOCUMENTATION)
   unspecified
 #else
-  detail::wrapped_handler<strand, Handler>
+  detail::wrapped_handler<strand, Handler, detail::is_continuation_if_running>
 #endif
   wrap(Handler handler)
   {
-    return detail::wrapped_handler<io_service::strand, Handler>(*this, handler);
+    return detail::wrapped_handler<io_service::strand, Handler,
+        detail::is_continuation_if_running>(*this, handler);
+  }
+
+  /// Determine whether the strand is running in the current thread.
+  /**
+   * @return @c true if the current thread is executing a handler that was
+   * submitted to the strand using post(), dispatch() or wrap(). Otherwise
+   * returns @c false.
+   */
+  bool running_in_this_thread() const
+  {
+    return service_.running_in_this_thread(impl_);
   }
 
 private:
@@ -218,7 +242,8 @@ private:
   boost::asio::detail::strand_service::implementation_type impl_;
 };
 
-/// Typedef for backwards compatibility.
+/// (Deprecated: Use boost::asio::io_service::strand.) Typedef for backwards
+/// compatibility.
 typedef boost::asio::io_service::strand strand;
 
 } // namespace asio

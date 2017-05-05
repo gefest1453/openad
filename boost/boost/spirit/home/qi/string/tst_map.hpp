@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -11,14 +11,13 @@
 #pragma once
 #endif
 
+#include <boost/spirit/home/qi/string/tst.hpp>
 #include <boost/spirit/home/qi/string/detail/tst.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/pool/object_pool.hpp>
 
 namespace boost { namespace spirit { namespace qi
 {
-    struct tst_pass_through; // declared in tst.hpp
-
     template <typename Char, typename T>
     struct tst_map
     {
@@ -54,16 +53,20 @@ namespace boost { namespace spirit { namespace qi
                 Iterator save = first;
                 typename map_type::const_iterator
                     i = map.find(filter(*first++));
-                if (i == map.end())
+
+                if (i != map.end())
                 {
-                    first = save;
-                    return 0;
+                    if (T* p = node::find(i->second.root, first, last, filter))
+                    {
+                        return p;
+                    }
+                   
+                    if (i->second.data)
+                    {
+                        return i->second.data;
+                    }
                 }
-                if (T* p = node::find(i->second.root, first, last, filter))
-                {
-                    return p;
-                }
-                return i->second.data;
+                first = save;
             }
             return 0;
         }

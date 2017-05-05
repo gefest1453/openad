@@ -21,7 +21,7 @@
 #include <utility>
 #include <algorithm>
 #include <climits>
-#include <cassert>
+#include <boost/assert.hpp>
 #include <iterator>
 #if 0
 #include <iostream> // For some debugging code below
@@ -44,7 +44,6 @@
 #include <boost/graph/graph_selectors.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/functional/hash.hpp>
-#include <boost/utility.hpp>
 
 namespace boost {
 
@@ -219,8 +218,6 @@ namespace detail {
       // the user has supplied the number of edges.
       edges_size_type numedges = numedges_or_zero;
       if (numedges == 0) {
-        typedef typename std::iterator_traits<InputIterator>::iterator_category
-          category;
         numedges = boost::graph::detail::reserve_count_for_single_pass(edge_begin, edge_end);
       }
       m_column.clear();
@@ -255,7 +252,7 @@ namespace detail {
                                            std::vector<vertex_descriptor>& targets,
                                            vertices_size_type numverts,
                                            GlobalToLocal global_to_local) {
-      assert (sources.size() == targets.size());
+      BOOST_ASSERT (sources.size() == targets.size());
       // Do an in-place histogram sort (at least that's what I think it is) to
       // sort sources and targets
       m_rowstart.clear();
@@ -281,8 +278,8 @@ namespace detail {
                                            std::vector<typename inherited_edge_properties::edge_bundled>& edge_props,
                                            vertices_size_type numverts,
                                            GlobalToLocal global_to_local) {
-      assert (sources.size() == targets.size());
-      assert (sources.size() == edge_props.size());
+      BOOST_ASSERT (sources.size() == targets.size());
+      BOOST_ASSERT (sources.size() == edge_props.size());
       // Do an in-place histogram sort (at least that's what I think it is) to
       // sort sources and targets
       m_rowstart.clear();
@@ -314,7 +311,6 @@ namespace detail {
       inherited_edge_properties::resize(numedges);
       EdgeIndex current_edge = 0;
       typedef typename boost::graph_traits<Graph>::vertex_descriptor g_vertex;
-      typedef typename boost::graph_traits<Graph>::edge_descriptor g_edge;
       typedef typename boost::graph_traits<Graph>::out_edge_iterator
         g_out_edge_iter;
 
@@ -348,7 +344,6 @@ namespace detail {
       // Flip sequence
       BidirectionalIterator first(last_sorted);
       BidirectionalIterator last(first_sorted);
-      typedef Vertex vertex_t;
       typedef Vertex vertex_num;
       typedef EdgeIndex edge_num;
       edge_num new_edge_count = std::distance(first, last);

@@ -63,7 +63,7 @@ public:
     std_file_iterator()
     {}
 
-    explicit std_file_iterator(std::string fileName)
+    explicit std_file_iterator(std::string const& fileName)
     {
         using namespace std;
         FILE* f = fopen(fileName.c_str(), "rb");
@@ -177,9 +177,11 @@ public:
     typedef CharT value_type;
 
     mmap_file_iterator()
+      : m_filesize(0), m_curChar(0)
     {}
 
-    explicit mmap_file_iterator(std::string fileName)
+    explicit mmap_file_iterator(std::string const& fileName)
+      : m_filesize(0), m_curChar(0)
     {
         HANDLE hFile = ::CreateFileA(
             fileName.c_str(),
@@ -283,11 +285,7 @@ public:
     }
 
 private:
-#ifndef BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
     typedef boost::remove_pointer<HANDLE>::type handle_t;
-#else
-    typedef void handle_t;
-#endif
 
     boost::shared_ptr<CharT> m_mem;
     std::size_t m_filesize;
@@ -334,9 +332,11 @@ public:
     typedef CharT value_type;
 
     mmap_file_iterator()
+      : m_curChar(0)
     {}
 
-    explicit mmap_file_iterator(std::string file_name)
+    explicit mmap_file_iterator(std::string const& file_name)
+      : m_curChar(0)
     {
         // open the file
        int fd = open(file_name.c_str(),

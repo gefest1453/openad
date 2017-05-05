@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2010 Joel de Guzman
+    Copyright (c) 2001-2011 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -76,9 +76,9 @@ namespace boost { namespace spirit { namespace qi
             )>
         function_type;
 
-        error_handler(function_type subject, F f)
-          : subject(subject)
-          , f(f)
+        error_handler(function_type subject_, F f_)
+          : subject(subject_)
+          , f(f_)
         {
         }
 
@@ -125,12 +125,12 @@ namespace boost { namespace spirit { namespace qi
                         case fail: 
                             BOOST_ASSERT(
                                 !traits::is_multi_pass<Iterator>::value ||
-                                (action != retry && action != fail));
+                                    action == retry || action == fail);
                             return false;
                         case retry: 
                             BOOST_ASSERT(
                                 !traits::is_multi_pass<Iterator>::value ||
-                                (action != retry && action != fail));
+                                    action == retry || action == fail);
                             continue;
                         case accept: return true;
                         case rethrow: boost::throw_exception(x);

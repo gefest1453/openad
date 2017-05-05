@@ -39,11 +39,12 @@
 #include <boost/graph/iteration_macros.hpp>
 #include <boost/optional.hpp>
 #include <utility> // for std::pair
-#include <cassert>
+#include <boost/assert.hpp>
 #include <algorithm> // for std::find, std::mismatch
 #include <vector>
 #include <boost/graph/parallel/algorithm.hpp>
 #include <boost/graph/distributed/connected_components.hpp>
+#include <boost/concept/assert.hpp>
 
 namespace boost { namespace graph { namespace distributed {
 
@@ -136,9 +137,9 @@ namespace hohberg_detail {
   template<typename T>
   T branch_point(const std::vector<T>& p1, const std::vector<T>& p2)
   {
-    assert(!p1.empty());
-    assert(!p2.empty());
-    assert(p1.front() == p2.front());
+    BOOST_ASSERT(!p1.empty());
+    BOOST_ASSERT(!p2.empty());
+    BOOST_ASSERT(p1.front() == p2.front());
 
     typedef typename std::vector<T>::const_iterator iterator;
 
@@ -162,7 +163,7 @@ namespace hohberg_detail {
     typedef typename std::vector<T>::const_iterator iterator;
     iterator first = parent_path.begin(), last = parent_path.end();
 
-#if defined(PBGL_HOHBERG_DEBUG) and PBGL_HOHBERG_DEBUG > 2
+#if defined(PBGL_HOHBERG_DEBUG) && PBGL_HOHBERG_DEBUG > 2
     std::cerr << "infimum(";
     for (iterator i = first; i != last; ++i) {
       if (i != first) std::cerr << ' ';
@@ -197,7 +198,7 @@ namespace hohberg_detail {
     // Try to find b (which may originally have been a)
     while (*last != b) {
       if (last == first) {
-#if defined(PBGL_HOHBERG_DEBUG) and PBGL_HOHBERG_DEBUG > 2
+#if defined(PBGL_HOHBERG_DEBUG) && PBGL_HOHBERG_DEBUG > 2
         std::cerr << local(*first) << '@' << owner(*first) << std::endl;
 #endif
         return *first;
@@ -385,7 +386,7 @@ class hohberg_vertex_processor
   template<typename Archiver>
   void serialize(Archiver&, const unsigned int /*version*/)
   {
-    assert(false);
+    BOOST_ASSERT(false);
   }
 };
 
@@ -523,7 +524,7 @@ hohberg_vertex_processor<Graph>::operator()(Edge e, path_t& path,
 
   default:
 //    std::cerr << "Phase is " << int(phase) << "\n";
-    assert(false);
+    BOOST_ASSERT(false);
   }
 }
 
@@ -579,7 +580,7 @@ hohberg_vertex_processor<Graph>::operator()(Edge e, Vertex gamma,
     break;
 
   default:
-    assert(false);
+    BOOST_ASSERT(false);
   }
 }
 
@@ -596,7 +597,7 @@ hohberg_vertex_processor<Graph>::operator()(Edge e, edges_size_type name,
             << name << "), phase = " << (int)phase << std::endl;
 #endif
 
-  assert(phase == 4);
+  BOOST_ASSERT(phase == 4);
 
   typename property_map<Graph, vertex_owner_t>::const_type
     owner = get(vertex_owner, g);
@@ -684,7 +685,7 @@ start_naming_phase(Vertex alpha, const Graph& g, edges_size_type offset)
 {
   using namespace hohberg_detail;
 
-  assert(phase == 4);
+  BOOST_ASSERT(phase == 4);
 
   typename property_map<Graph, vertex_owner_t>::const_type
     owner = get(vertex_owner, g);
@@ -870,7 +871,7 @@ hohberg_vertex_processor<Graph>::get_edge_index(Edge e, const Graph& g)
     if (source(e, g) == target(oe, g)) return result;
     ++result;
   }
-  assert(false);
+  BOOST_ASSERT(false);
 }
 
 template<typename Graph>
@@ -883,7 +884,7 @@ hohberg_vertex_processor<Graph>::get_incident_edge_index(Vertex u, Vertex v,
     if (target(e, g) == v) return result;
     ++result;
   }
-  assert(false);
+  BOOST_ASSERT(false);
 }
 
 template<typename Graph, typename InputIterator, typename ComponentMap,
@@ -908,10 +909,9 @@ hohberg_biconnected_components
                     undirected_tag>::value));
 
   // The graph must model Incidence Graph
-  function_requires< IncidenceGraphConcept<Graph> >();
+  BOOST_CONCEPT_ASSERT(( IncidenceGraphConcept<Graph> ));
 
   typedef typename graph_traits<Graph>::edges_size_type edges_size_type;
-  typedef typename graph_traits<Graph>::degree_size_type degree_size_type;
   typedef typename graph_traits<Graph>::vertex_descriptor vertex_descriptor;
   typedef typename graph_traits<Graph>::edge_descriptor edge_descriptor;
 
@@ -941,7 +941,6 @@ hohberg_biconnected_components
   std::size_t path_length = 1;
 
   typedef std::vector<vertex_descriptor> path_t;
-  typedef typename path_t::iterator path_iterator;
 
   unsigned char minimum_phase = 5;
   do {
@@ -952,7 +951,7 @@ hohberg_biconnected_components
           // Receive the path header
           path_header<edge_descriptor> header;
           receive(pg, msg->first, msg->second, header);
-          assert(path_length == header.path_length);
+          BOOST_ASSERT(path_length == header.path_length);
 
           // Receive the path itself
           path_t path(path_length);
@@ -966,7 +965,7 @@ hohberg_biconnected_components
       case msg_path_vertices:
         // Should be handled in msg_path_header case, unless we're going
         // stateless.
-        assert(false);
+        BOOST_ASSERT(false);
         break;
 
       case msg_tree_header:
@@ -989,7 +988,7 @@ hohberg_biconnected_components
       case msg_tree_vertices:
         // Should be handled in msg_tree_header case, unless we're
         // going stateless.
-        assert(false);
+        BOOST_ASSERT(false);
         break;
 
       case msg_name:
@@ -1002,7 +1001,7 @@ hohberg_biconnected_components
         break;
 
       default:
-        assert(false);
+        BOOST_ASSERT(false);
       }
     }
     ++path_length;

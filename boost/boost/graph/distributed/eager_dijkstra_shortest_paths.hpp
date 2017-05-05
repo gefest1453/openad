@@ -22,6 +22,7 @@
 #error "Parallel BGL files should not be included unless <boost/graph/use_mpi.hpp> has been included"
 #endif
 
+#include <boost/assert.hpp>
 #include <boost/graph/distributed/detail/dijkstra_shortest_paths.hpp>
 #include <boost/property_map/parallel/caching_property_map.hpp>
 #include <boost/pending/indirect_cmp.hpp>
@@ -284,7 +285,7 @@ template <class UniformCostVisitor, class Queue,
         eager_dijkstra_shortest_paths_stats.deleted_vertices
           .push_back(deletions);
       local_deletions = 0;
-      assert(deletions > 0);
+      BOOST_ASSERT(deletions > 0);
 #endif
 
       return min_distance == (std::numeric_limits<distance_type>::max)();
@@ -348,13 +349,6 @@ eager_dijkstra_shortest_paths
    Compare compare, Combine combine, DistInf inf, DistZero zero,
    DijkstraVisitor vis)
 {
-  typedef typename boost::graph::parallel::process_group_type<DistributedGraph>::type
-    process_group_type;
-  typedef typename graph_traits<DistributedGraph>::vertex_descriptor
-    Vertex;
-  typedef typename graph_traits<DistributedGraph>::vertices_size_type
-    vertices_size_type;
-
 #ifdef PBGL_ACCOUNTING
   eager_dijkstra_shortest_paths_stats.deleted_vertices.clear();
   eager_dijkstra_shortest_paths_stats.lookahead = lookahead;

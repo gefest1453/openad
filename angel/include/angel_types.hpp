@@ -150,7 +150,7 @@ public:
        pure_c_graph_t (X_+Y_+Z_), X (X_), next_edge_number (0) {
     // last Y vertices are dependent if nothing else is specified
     vi_t      vi, v_end;
-    tie(vi, v_end)= vertices(*this);
+     boost::tie(vi, v_end)= vertices(*this);
     for (int c= 0; c < X_+Z_; c++, ++vi);
     for (; vi != v_end; ++vi)
       dependents.push_back (*vi);
@@ -200,7 +200,7 @@ public:
    */
   void clear_edges () {
     vi_t vi, v_end;
-    for (tie (vi, v_end)= vertices (*this); vi != v_end; ++vi)
+    for (boost::tie (vi, v_end)= vertices (*this); vi != v_end; ++vi)
       clear_vertex (*vi, *this); }
 
   /// Remove all vertices that are not connected to dependent and inpedendent vertices
@@ -369,7 +369,7 @@ public:
    */
   void clear_edges () {
     ei_t ei, e_end;
-    for (tie (ei, e_end)= vertices (*this); ei != e_end; ++ei)
+    for (boost::tie (ei, e_end)= vertices (*this); ei != e_end; ++ei)
       clear_vertex (*ei, *this); }
 
   /// Remove all vertices that are not connected to dependent and inpedendent vertices
@@ -486,7 +486,7 @@ public:
 
   predecessor_t (const Ad_graph_t& _adg) : adg (_adg) {
     vi_t      vi, v_end;
-    tie (vi, v_end)= vertices (adg);
+    boost::tie (vi, v_end)= vertices (adg);
     for (int c= 0; c < adg.x(); c++, vi++)
       independents.push_back(*vi);
   }
@@ -534,7 +534,7 @@ public:
 
   successor_t (const Ad_graph_t& _adg) : adg (_adg) {
     vi_t      vi, v_end;
-    tie (vi, v_end)= vertices (adg);
+    boost::tie (vi, v_end)= vertices (adg);
     for (int c= 0; c < adg.x(); c++, vi++)
       independents.push_back(*vi);
   }

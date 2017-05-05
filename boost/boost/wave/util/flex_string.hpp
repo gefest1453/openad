@@ -30,6 +30,10 @@
 // #HK090523:
 //      - Incorporated the changes from latest version of flex_string as 
 //        maintained in Loki
+//
+// #HK130910:
+//      - Removed the getline implementation which was borrowed from the SGI
+//        STL as the license for this code is not compatible with Boost.
 
 #ifndef FLEX_STRING_INC_
 #define FLEX_STRING_INC_
@@ -102,7 +106,8 @@ class StoragePolicy
 #include <functional>
 #include <limits>
 #include <stdexcept>
-#include <iosfwd>
+#include <ios>
+
 #include <cstddef>
 #include <cstring>
 #include <cstdlib>
@@ -138,13 +143,13 @@ namespace flex_string_details
         case 0:
             while (b != e)
             {
-                *b = c; ++b;
-        case 7: *b = c; ++b;
-        case 6: *b = c; ++b;
-        case 5: *b = c; ++b;
-        case 4: *b = c; ++b;
-        case 3: *b = c; ++b;
-        case 2: *b = c; ++b;
+                *b = c; ++b; BOOST_FALLTHROUGH;
+        case 7: *b = c; ++b; BOOST_FALLTHROUGH;
+        case 6: *b = c; ++b; BOOST_FALLTHROUGH;
+        case 5: *b = c; ++b; BOOST_FALLTHROUGH;
+        case 4: *b = c; ++b; BOOST_FALLTHROUGH;
+        case 3: *b = c; ++b; BOOST_FALLTHROUGH;
+        case 2: *b = c; ++b; BOOST_FALLTHROUGH;
         case 1: *b = c; ++b;
             }
         }
@@ -343,7 +348,7 @@ private:
             // 11-17-2000: comment added: 
             //     No need to allocate (capacity + 1) to 
             //     accommodate the terminating 0, because Data already
-            //     has one one character in there
+            //     has one character in there
             pData_ = static_cast<Data*>(
                 malloc(sizeof(Data) + capacity * sizeof(E)));
             if (!pData_) boost::throw_exception(std::bad_alloc());
@@ -1818,7 +1823,7 @@ private:
 #ifndef NDEBUG
         Invariant checker(*this); 
 #endif
-        assert(begin() <= p && p <= end());
+        BOOST_ASSERT(begin() <= p && p <= end());
         const size_type insertOffset(p - begin());
         const size_type originalSize(size());
         if(n < originalSize - insertOffset)
@@ -1884,16 +1889,16 @@ private:
         const typename std::iterator_traits<FwdIterator>::difference_type n2 = 
             std::distance(s1, s2);
 
-        assert(n2 >= 0);
+        BOOST_ASSERT(n2 >= 0);
         using namespace flex_string_details;
-        assert(pos <= size());
+        BOOST_ASSERT(pos <= size());
 
         const typename std::iterator_traits<FwdIterator>::difference_type maxn2 = 
             capacity() - size();
         if (maxn2 < n2)
         {
             // Reallocate the string.
-            assert(!IsAliasedRange(s1, s2));
+            BOOST_ASSERT(!IsAliasedRange(s1, s2));
             reserve(size() + n2);
             i = begin() + pos;
         }
@@ -1910,7 +1915,7 @@ private:
             FwdIterator t = s1;
             const size_type old_size = size();
             std::advance(t, old_size - pos);
-            assert(std::distance(t, s2) >= 0);
+            BOOST_ASSERT(std::distance(t, s2) >= 0);
             Storage::append(t, s2);
             Storage::append(data() + pos, data() + old_size);
             std::copy(s1, t, i);
@@ -2011,9 +2016,9 @@ private:
     flex_string& ReplaceImplDiscr(iterator i1, iterator i2, 
         const value_type* s, size_type n, Selector<2>)
     { 
-        assert(i1 <= i2);
-        assert(begin() <= i1 && i1 <= end());
-        assert(begin() <= i2 && i2 <= end());
+        BOOST_ASSERT(i1 <= i2);
+        BOOST_ASSERT(begin() <= i1 && i1 <= end());
+        BOOST_ASSERT(begin() <= i2 && i2 <= end());
         return replace(i1, i2, s, s + n); 
     }
     
@@ -2052,10 +2057,10 @@ private:
 #endif
         const typename std::iterator_traits<iterator>::difference_type n1 = 
             i2 - i1;
-        assert(n1 >= 0);
+        BOOST_ASSERT(n1 >= 0);
         const typename std::iterator_traits<FwdIterator>::difference_type n2 = 
         std::distance(s1, s2);
-        assert(n2 >= 0);
+        BOOST_ASSERT(n2 >= 0);
 
         if (IsAliasedRange(s1, s2))
         {
@@ -2523,78 +2528,6 @@ operator<<(
     typename flex_string<E, T, A, S>::traits_type>& os,
     const flex_string<E, T, A, S>& str)
 { return os << str.c_str(); }
-
-
-// The getline below implementations are from the SGI STL (http://www.sgi.com/tech/stl/) 
-// and come with the following copyright:
-// 
-// Permission to use, copy, modify, distribute and sell this software and its 
-// documentation for any purpose is hereby granted without fee, provided that 
-// the below copyright notice appears in all copies and that both the copyright 
-// notice and this permission notice appear in supporting documentation. Silicon 
-// Graphics makes no representations about the suitability of this software for 
-// any purpose. It is provided "as is" without express or implied warranty.
-// 
-// Copyright (c) 1997-1999
-// Silicon Graphics Computer Systems, Inc.
-// 
-// Copyright (c) 1994
-// Hewlett-Packard Company 
-
-template <typename E, class T, class A, class S>
-std::basic_istream<typename flex_string<E, T, A, S>::value_type,
-    typename flex_string<E, T, A, S>::traits_type>&
-getline(
-    std::basic_istream<typename flex_string<E, T, A, S>::value_type, 
-        typename flex_string<E, T, A, S>::traits_type>& is,
-    flex_string<E, T, A, S>& str,
-    typename flex_string<E, T, A, S>::value_type delim)
-{
-    size_t nread = 0;
-    typename std::basic_istream<typename flex_string<E, T, A, S>::value_type,
-        typename flex_string<E, T, A, S>::traits_type>::sentry sentry(is, true);
-
-    if (sentry) {
-        std::basic_streambuf<typename flex_string<E, T, A, S>::value_type,
-            typename flex_string<E, T, A, S>::traits_type>* buf = is.rdbuf();
-        str.clear();
-
-        while (nread < str.max_size()) {
-            int c1 = buf->sbumpc();
-            if (flex_string<E, T, A, S>::traits_type::eq_int_type(c1,
-                flex_string<E, T, A, S>::traits_type::eof()))
-            {
-                is.setstate(std::ios_base::eofbit);
-                break;
-            }
-            else {
-                ++nread;
-                typename flex_string<E, T, A, S>::value_type c =
-                    flex_string<E, T, A, S>::traits_type::to_char_type(c1);
-
-                if (!flex_string<E, T, A, S>::traits_type::eq(c, delim))
-                    str.push_back(c);
-                else
-                    break;         // Character is extracted but not appended.
-            }
-        }
-    }
-    if (nread == 0 || nread >= str.max_size())
-        is.setstate(std::ios_base::failbit);
-
-    return is;
-}
-
-template <typename E, class T, class A, class S>
-std::basic_istream<typename flex_string<E, T, A, S>::value_type, 
-    typename flex_string<E, T, A, S>::traits_type>&
-getline(
-    std::basic_istream<typename flex_string<E, T, A, S>::value_type, 
-        typename flex_string<E, T, A, S>::traits_type>& is,
-    flex_string<E, T, A, S>& str)
-{
-    return getline(is, str, is.widen('\n'));
-}
 
 template <typename E1, class T, class A, class S>
 const typename flex_string<E1, T, A, S>::size_type

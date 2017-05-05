@@ -1,5 +1,5 @@
 //  Copyright (c) 2001 Daniel C. Nuffer
-//  Copyright (c) 2001-2010 Hartmut Kaiser
+//  Copyright (c) 2001-2011 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,29 +17,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace detail
 {
-#if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
-    ///////////////////////////////////////////////////////////////////////////
-    //  Meta-function to generate a std::iterator<> base class for multi_pass. 
-    //  This is used mainly to improve conformance of compilers not supporting 
-    //  PTS and thus relying on inheritance to recognize an iterator.
-    //
-    //  We are using boost::iterator<> because it offers an automatic 
-    //  workaround for broken std::iterator<> implementations.
-    ///////////////////////////////////////////////////////////////////////////
-    template <typename T, typename InputPolicy>
-    struct iterator_base_creator
-    {
-        typedef typename InputPolicy::BOOST_NESTED_TEMPLATE unique<T> input_type;
-
-        typedef boost::iterator <
-            std::forward_iterator_tag
-          , typename input_type::value_type
-          , typename input_type::difference_type
-          , typename input_type::pointer
-          , typename input_type::reference
-        > type;
-    };
-#endif
 
     ///////////////////////////////////////////////////////////////////////////
     //  Default implementations of the different policies to be used with a 

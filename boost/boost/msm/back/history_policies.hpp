@@ -49,6 +49,12 @@ public:
          }
          return *this;
     }
+    // this policy deletes all waiting deferred events
+    template <class Event>
+    bool process_deferred_events(Event const&)const
+    {
+        return false;
+    }
     template<class Archive>
     void serialize(Archive & ar, const unsigned int)
     {
@@ -90,6 +96,13 @@ public:
          }
          return *this;
     }
+    // the history policy keeps all deferred events until next reentry
+    template <class Event>
+    bool process_deferred_events(Event const&)const
+    {
+        return true;
+    }
+
     template<class Archive>
     void serialize(Archive & ar, const unsigned int)
     {
@@ -139,6 +152,12 @@ public:
          }
          return *this;
     }
+    // the history policy keeps deferred events until next reentry if coming from our history event
+    template <class Event>
+    bool process_deferred_events(Event const&)const
+    {
+        return ::boost::mpl::contains<Events,Event>::value;
+    }
     template<class Archive>
     void serialize(Archive & ar, const unsigned int)
     {
@@ -152,6 +171,7 @@ private:
 
 struct NoHistory
 {
+    typedef int history_policy;
     template <int NumberOfRegions>
     struct apply
     {
@@ -160,6 +180,7 @@ struct NoHistory
 };
 struct AlwaysHistory
 {
+    typedef int history_policy;
     template <int NumberOfRegions>
     struct apply
     {
@@ -169,6 +190,7 @@ struct AlwaysHistory
 template <class Events>
 struct ShallowHistory
 {
+    typedef int history_policy;
     template <int NumberOfRegions>
     struct apply
     {

@@ -8,13 +8,14 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 // $Source$
-// $Date: 2004-09-02 18:41:37 +0300 (Чт, 02 сен 2004) $
-// $Revision: 24874 $
+// $Date$
+// $Revision$
 
 #undef BOOST_TT_AUX_BOOL_TRAIT_VALUE_DECL
 #undef BOOST_TT_AUX_BOOL_C_BASE
 #undef BOOST_TT_AUX_BOOL_TRAIT_DEF1
 #undef BOOST_TT_AUX_BOOL_TRAIT_DEF2
+#undef BOOST_TT_AUX_BOOL_TRAIT_DEF3
 #undef BOOST_TT_AUX_BOOL_TRAIT_SPEC1
 #undef BOOST_TT_AUX_BOOL_TRAIT_SPEC2
 #undef BOOST_TT_AUX_BOOL_TRAIT_IMPL_SPEC1
