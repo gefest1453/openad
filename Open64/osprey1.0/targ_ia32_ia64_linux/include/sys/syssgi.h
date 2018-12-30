@@ -1,1 +1,1 @@
-/home/mopper/build/openad/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../linux/include/sys/syssgi.h
+/home/mopper/openad/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../linux/include/sys/syssgi.h

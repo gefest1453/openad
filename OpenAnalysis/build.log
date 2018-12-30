@@ -1,6 +1,6 @@
-Compiling OpenAnalysis on 12/16/18 at  4:10:15 MSK
+Compiling OpenAnalysis on 12/30/18 at  4:20:25 MSK
 Compile started by mopper
-OADIR:='/home/mopper/build/openad/OpenAnalysis'
+OADIR:='/home/mopper/openad/OpenAnalysis'
 CXXFLAGS:=' --std=gnu++98'
 CCFLAGS:=''
 CXX:='g++'
@@ -8,6 +8,6 @@ CC:='cc'
 CXXLD:=''
 CCLD:=''
 PLATFORM:='x86-Cygwin'
-CXX version => 'g++ (GCC) 7.3.0 Copyright (C) 2017 Free Software Foundation, Inc. Это свободно распространяемое программное обеспечение. Условия копирования приведены в исходных текстах. Без гарантии каких-либо качеств, включая  коммерческую ценность и применимость для каких-либо целей.'
+CXX version => 'g++ (GCC) 8.2.0 Copyright (C) 2018 Free Software Foundation, Inc. Это свободно распространяемое программное обеспечение. Условия копирования приведены в исходных текстах. Без гарантии каких-либо качеств, включая  коммерческую ценность и применимость для каких-либо целей.'
 COMPILE_SUCCESFUL='yes'
-Compilation finished on 12/16/18 at  4:12:13 MSK
+Compilation finished on 12/30/18 at  4:24:51 MSK
