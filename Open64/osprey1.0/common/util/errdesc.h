@@ -97,8 +97,8 @@ typedef enum {
 
 /* Define an error message descriptor: */
 typedef struct {
-    mINT16	ecode;		/* The error code */
-    mINT16	flags;		/* Miscellaneous flags */
+    int	ecode;		/* The error code */
+    int	flags;		/* Miscellaneous flags */
     Rag_Err_Num rag_errnum;	/* External error/warning number */
     const char	*emsg;		/* The message format */
     mUINT8	parms;		/* The parameter count */
