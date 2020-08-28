@@ -1,5 +1,5 @@
 # -*-Mode: m4;-*-
-# $Header: /Volumes/cvsrep/developer/shared/config/hpc-cxxutils.m4,v 1.10 2008/02/06 20:42:56 utke Exp $
+# $Header: /Volumes/cvsrep/developer/shared/config/hpc-cxxutils.m4,v 1.7 2006/05/29 21:18:59 eraxxon Exp $
 
 ## * BeginRiceCopyright *****************************************************
 ## 

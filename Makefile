@@ -127,8 +127,10 @@ build_OpenAnalysis:
 	@if [ -d $(OPENANALYSIS_BASE) ]; then \
 	  echo "*** Building OA ***" ; \
 	  if [ -d $(OPENANALYSIS_BASE)/build-$(PLATFORM) ]; then \
+	  echo "install" && \
 	    cd $(OPENANALYSIS_BASE) && $(MAKE) $(OA_OPT) install ; \
 	  else \
+	  	  echo "all" && echo $(MAKE) $(OA_OPT) all  &&\
 	    cd $(OPENANALYSIS_BASE) && $(MAKE) $(OA_OPT) all; \
 	  fi \
 	else \
