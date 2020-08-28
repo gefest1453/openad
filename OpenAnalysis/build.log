@@ -1,4 +1,4 @@
-Compiling OpenAnalysis on 08/28/20 at  6:25:31 MSK
+Compiling OpenAnalysis on 08/28/20 at  8:18:27 MSK
 Compile started by stas
 OADIR:='/home/stas/github/openad/OpenAnalysis'
 CXXFLAGS:=' --std=gnu++98'
@@ -10,4 +10,4 @@ CCLD:=''
 PLATFORM:='x86_64-Linux'
 CXX version => 'g++ (GCC) 9.3.0 Copyright (C) 2019 Free Software Foundation, Inc. Это свободно распространяемое программное обеспечение. Условия копирования приведены в исходных текстах.    Без гарантии каких-либо качеств, включая  коммерческую ценность и применимость для каких-либо целей.'
 COMPILE_SUCCESFUL='yes'
-Compilation finished on 08/28/20 at  6:28:04 MSK
+Compilation finished on 08/28/20 at  8:21:02 MSK

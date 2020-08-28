@@ -239,7 +239,7 @@ FileHandle XMLPlatformUtils::openFile(const XMLCh* const fileName
     ArrayJanitor<char> janText((char*)tmpFileName, manager);
 
 	char posix_name[PATH_MAX + 1];
-	cygwin_conv_path('CPP_WIN_A_TO_POSIX',tmpFileName, posix_name);
+	cygwin_conv_path('CPP_WIN_A_TO_POSIX',tmpFileName, posix_name,PATH_MAX+1);
 
     FileHandle retVal = (FILE*)fopen( posix_name , "rb" );
 
@@ -252,7 +252,7 @@ FileHandle XMLPlatformUtils::openFile(const char* const fileName
                                       , MemoryManager* const manager)
 {
 	char posix_name[PATH_MAX + 1];
-	cygwin_conv_to_posix_path(fileName, posix_name);
+	cygwin_conv_path('CPP_WIN_A_TO_POSIX',fileName, posix_name,PATH_MAX+1);
 
     FileHandle retVal = (FILE*)fopen( posix_name , "rb" );
 
@@ -268,7 +268,7 @@ FileHandle XMLPlatformUtils::openFileToWrite(const XMLCh* const fileName
     ArrayJanitor<char> janText((char*)tmpFileName, manager);
 
 	char posix_name[PATH_MAX + 1];
-	cygwin_conv_to_posix_path(tmpFileName, posix_name);
+	cygwin_conv_path('CPP_WIN_A_TO_POSIX',tmpFileName, posix_name,PATH_MAX+1);
 
     return fopen( posix_name , "wb" );
 }
@@ -277,7 +277,7 @@ FileHandle XMLPlatformUtils::openFileToWrite(const char* const fileName
                                              , MemoryManager* const manager)
 {
 	char posix_name[PATH_MAX + 1];
-	cygwin_conv_to_posix_path(fileName, posix_name);
+	cygwin_conv_path('CPP_WIN_A_TO_POSIX',fileName, posix_name,PATH_MAX+1);
 
     return fopen( posix_name , "wb" );
 }
@@ -367,7 +367,7 @@ XMLCh* XMLPlatformUtils::getFullPath(const XMLCh* const srcPath,
     // Use a local buffer that is big enough for the largest legal path
 	char posix_name[PATH_MAX + 1];
     // get the absolute path
-    if (0 != cygwin_conv_to_full_posix_path(newSrc, posix_name))
+    if (0 != cygwin_conv_path (CCP_WIN_A_TO_POSIX | CCP_ABSOLUTE, newSrc, posix_name,PATH_MAX+1))
     {
         ThrowXMLwithMemMgr(XMLPlatformUtilsException, XMLExcepts::File_CouldNotGetBasePathName, manager);
     }
