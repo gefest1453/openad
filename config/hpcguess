@@ -127,6 +127,10 @@ case $1 in
     cononical_host="ia64-Linux" ;;
   x86_64*-*-linux*)
     cononical_host="x86_64-Linux" ;;
+  x86_64*-*-cygwin*)
+    cononical_host="x86_64-Linux" ;;
+    
+
   mips64el*-*-linux*)
     cononical_host="mips64el-Linux" ;; 
 
