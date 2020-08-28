@@ -1,13 +1,13 @@
-Compiling OpenAnalysis on 12/30/18 at  4:20:25 MSK
-Compile started by mopper
-OADIR:='/home/mopper/openad/OpenAnalysis'
+Compiling OpenAnalysis on 08/28/20 at  6:25:31 MSK
+Compile started by stas
+OADIR:='/home/stas/github/openad/OpenAnalysis'
 CXXFLAGS:=' --std=gnu++98'
 CCFLAGS:=''
 CXX:='g++'
 CC:='cc'
 CXXLD:=''
 CCLD:=''
-PLATFORM:='x86-Cygwin'
-CXX version => 'g++ (GCC) 8.2.0 Copyright (C) 2018 Free Software Foundation, Inc. Это свободно распространяемое программное обеспечение. Условия копирования приведены в исходных текстах. Без гарантии каких-либо качеств, включая  коммерческую ценность и применимость для каких-либо целей.'
+PLATFORM:='x86_64-Linux'
+CXX version => 'g++ (GCC) 9.3.0 Copyright (C) 2019 Free Software Foundation, Inc. Это свободно распространяемое программное обеспечение. Условия копирования приведены в исходных текстах.    Без гарантии каких-либо качеств, включая  коммерческую ценность и применимость для каких-либо целей.'
 COMPILE_SUCCESFUL='yes'
-Compilation finished on 12/30/18 at  4:24:51 MSK
+Compilation finished on 08/28/20 at  6:28:04 MSK

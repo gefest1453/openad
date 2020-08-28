@@ -239,7 +239,7 @@ FileHandle XMLPlatformUtils::openFile(const XMLCh* const fileName
     ArrayJanitor<char> janText((char*)tmpFileName, manager);
 
 	char posix_name[PATH_MAX + 1];
-	cygwin_conv_to_posix_path(tmpFileName, posix_name);
+	cygwin_conv_path('CPP_WIN_A_TO_POSIX',tmpFileName, posix_name);
 
     FileHandle retVal = (FILE*)fopen( posix_name , "rb" );
 
