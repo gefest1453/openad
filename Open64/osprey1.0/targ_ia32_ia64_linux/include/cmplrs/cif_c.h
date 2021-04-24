@@ -1,1 +1,1 @@
-/home/mopper/openad/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../include/cmplrs/cif_c.h
+/home/stas/openad/Open64/osprey1.0/targ_ia32_ia64_linux/include/../../include/cmplrs/cif_c.h
