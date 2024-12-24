@@ -74,9 +74,9 @@ class NoRepository(Repository):
   def instanceFrom(dir,subDir):
     if (not NoRepository.isRepo(dir,subDir)):
       if subDir:
-        raise RepositoryException, os.path.join(dir,subDir)+" is not a directory"
+        raise (RepositoryException, os.path.join(dir,subDir)+" is not a directory")
       else:
-        raise RepositoryException, dir+" is not a directory"
+        raise (RepositoryException, dir+" is not a directory")
     (localPath,localName)=os.path.split(dir)   
     return NoRepository('n/a', localPath, localName,  subDir, None, None)
 
@@ -101,7 +101,7 @@ class CVSRepository(Repository):
   @staticmethod
   def instanceFrom(dir,subDir):
     if (not CVSRepository.isRepo(dir,subDir)):
-      raise RepositoryException, dir+" is not a CVS repository"   
+      raise (RepositoryException, dir+" is not a CVS repository"   )
     rootFile=open(os.path.join(dir,'CVS','Root'))
     rootString=rootFile.readline()
     rootFile.close()
@@ -164,7 +164,7 @@ class CVSRepository(Repository):
   
   def update(self):
     if not os.path.exists(os.path.join(self.getLocalRepoPath(),'CVS')):
-      raise RepositoryException("directory "+self.getLocalRepoPath()+" has no CVS data")
+      raise (RepositoryException("directory "+self.getLocalRepoPath()+" has no CVS data"))
     self.cmdDesc.setCmd("cd "+self.getLocalRepoPath()+" && "+self.env+"  cvs " + self.opt + " " + self.getUrl() + " update -d")
     self.cmdDesc.setDesc("updating "+self.getLocalRepoPath())
 
@@ -188,7 +188,7 @@ class SVNRepository(Repository):
   @staticmethod
   def instanceFrom(dir,subDir):
     if (not SVNRepository.isRepo(dir,subDir)):
-      raise RepositoryException, dir+" is not an SVN repository"   
+      raise (RepositoryException, dir+" is not an SVN repository"   )
     fName=tempfile.mktemp()
     path=dir
     if subDir:
@@ -205,12 +205,12 @@ class SVNRepository(Repository):
           urlString=infoString[5:].strip()
         if (infoString[:17]=='Repository Root: '):
           urlRoot=infoString[17:].strip()
-        if (urlString!='' and urlRoot!=''):
+        if (urlString !='' and urlRoot!=''):
           break
     infoFile.close()
     os.remove(fName)
     if (urlString==''): 
-      raise RepositoryException, "cannot find url for "+dir   
+      raise (RepositoryException, "cannot find url for "+dir   )
     if (urlRoot==''): 
       trunkIdx=urlString.find('/trunk')
       tagsIdx=urlString.find('/tags')
@@ -219,7 +219,7 @@ class SVNRepository(Repository):
       elif tagsIdx>0 :
          urlRoot=urlString[:tagsIdx]
       else:
-         raise RepositoryException, "cannot find url root for "+dir
+         raise (RepositoryException, "cannot find url root for "+dir)
     (localPath,localName)=os.path.split(dir)
     tag=urlString[len(urlRoot)+1:]
     if subDir:
@@ -269,10 +269,10 @@ class SVNRepository(Repository):
 
   def update(self):
     if not os.path.exists(os.path.join(self.getLocalRepoPath(),'.svn')):
-      raise RepositoryException("directory "+self.getLocalRepoPath()+" has no SVN data")
+      raise (RepositoryException("directory "+self.getLocalRepoPath()+" has no SVN data"))
     cmd="cd "+self.getLocalRepoPath()+" && svn update"
     if self.force: 
-	cmd+=" --accept theirs-full"
+        cmd+=" --accept theirs-full"
     if self.rev:
       cmd+=" -r "+str(self.rev)
     self.cmdDesc.setCmd(cmd)
@@ -302,7 +302,7 @@ class MercurialRepository(Repository):
   @staticmethod
   def instanceFrom(dir,subDir):
     if (not MercurialRepository.isRepo(dir,subDir)):
-      raise RepositoryException, dir+" is not a Mercurial repository"   
+      raise (RepositoryException, dir+" is not a Mercurial repository"   )
     fName=tempfile.mktemp()
     os.system('cd '+dir+'; hg show > '+fName+'; cd ../')
     infoFile=open(fName)
@@ -315,7 +315,7 @@ class MercurialRepository(Repository):
     infoFile.close()
     os.remove(fName)
     if (infoString[:len(headAttribute)]!=headAttribute):
-        raise RepositoryException, "cannot find url for "+ dir  
+        raise (RepositoryException, "cannot find url for "+ dir  )
     url=infoString[len(headAttribute):].strip()
     (localPath,localName)=os.path.split(dir)
     return MercurialRepository(url,localPath,localName,None,None,None)
@@ -423,12 +423,12 @@ class Detect:
         matches+=1
         repo=MercurialRepository.instanceFrom(dir,subDir)
     if (matches>1):
-        raise RepositoryException, "more than one possible repository type for "+dir   
+        raise (RepositoryException, "more than one possible repository type for "+dir   )
     if (matches<1):
         if (NoRepository.isRepo(dir,subDir)):
            repo=NoRepository.instanceFrom(dir,subDir)
         else : 
-           raise RepositoryException, "cannot determine type for "+dir
+           raise (RepositoryException, "cannot determine type for "+dir)
     return repo
 
     

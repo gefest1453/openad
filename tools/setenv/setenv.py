@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python
 ##########################################################
 # This file is part of OpenAD released under the LGPL.   #
 # The full COPYRIGHT notice can be found in the top      #
@@ -54,37 +54,37 @@ class setenv:
     config=openadConfig.openadConfig()
     OpenADRepos = config.getRepos()
     # BASE environment variables
-    print self.libsetenv_instance.genSetEnvVar('OPENAD_BASE',OpenADRoot)
+    print (self.libsetenv_instance.genSetEnvVar('OPENAD_BASE',OpenADRoot))
     for key,repoPair in (OpenADRepos.items()):
       if repoPair[0].getVar() is not None:
-        print self.libsetenv_instance.genSetEnvVar(repoPair[0].getVar(),os.path.join(repoPair[0].getLocalPath(),repoPair[0].getLocalName()))
+        print (self.libsetenv_instance.genSetEnvVar(repoPair[0].getVar(),os.path.join(repoPair[0].getLocalPath(),repoPair[0].getLocalName())))
     # ROOT environment variables
-    print self.libsetenv_instance.genSetEnvVar('OPENADROOT', OpenADRoot)
+    print (self.libsetenv_instance.genSetEnvVar('OPENADROOT', OpenADRoot))
     for var,val in config.RootEnvVars.items():
       try:
-        print self.libsetenv_instance.genSetEnvVar(var,val)
-      except NameError, e:
-        print e
+        print (self.libsetenv_instance.genSetEnvVar(var,val))
+      except (NameError, e):
+        print (e)
         pass
     # PATH and LD_LIBRARY_PATH
-    print self.libsetenv_instance.genAppendEnvVar('PATH',os.path.join(os.environ['OPENADFORTTK']+'bin'))
-    print self.libsetenv_instance.genAppendEnvVar('PATH',os.path.join(os.environ['OPENADROOT'],'bin'))
+    print (self.libsetenv_instance.genAppendEnvVar('PATH',os.path.join(os.environ['OPENADFORTTK']+'bin')))
+    print (self.libsetenv_instance.genAppendEnvVar('PATH',os.path.join(os.environ['OPENADROOT'],'bin')))
     if(config.platform=='i686-Cygwin' or config.platform=='x86-Cygwin'):
       path = os.environ['XERCESCROOT']+'/bin:'+os.environ['XERCESCROOT']+'/lib:'+os.environ['OPEN64ROOT']+'/be:'+os.environ['OPEN64ROOT']+'/whirl2f:'+os.environ['PATH']
-      print self.libsetenv_instance.genAppendEnvVar('PATH', path)
+      print (self.libsetenv_instance.genAppendEnvVar('PATH', path))
     else:
       ldlib=os.environ['OPEN64ROOT']+'/whirl2f'
       ldPathName='LD_LIBRARY_PATH'
       if (config.platform=='x86-MacOS'):
         ldPathName='DY'+ldPathName
-      print self.libsetenv_instance.genAppendEnvVar(ldPathName, ldlib)
+      print (self.libsetenv_instance.genAppendEnvVar(ldPathName, ldlib))
     # aliases
     for var,val in config.Aliases.items():
       try:
         command = self.libsetenv_instance.genSetAlias(var, val)
-        print command
-      except NameError, e:
-        print e
+        print (command)
+      except (NameError, e):
+        print (e)
         pass
 
 # parseCmdLine: process args and assign self.opt_shell variable, or print error message
@@ -99,8 +99,8 @@ class setenv:
     # Get optional arguments: help
       try:
         self.printUsageAndExit()
-      except RuntimeError, e:
-        print e
+      except (RuntimeError, e):
+        print (e)
         pass
 
   # ----------------------------------------------------------
@@ -120,11 +120,11 @@ class setenv:
 
 
   def printUsageAndExit(self):
-    print self.the_usage
+    print (self.the_usage)
     sys.exit()
 
   def printErrorAndExit(self,msg=help):
-    print msg
+    print (msg)
     sys.exit()
 
 

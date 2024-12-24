@@ -42,7 +42,7 @@ class Runner:
            continue
       try:  
         self.__doSingle(desc.getCmd(), desc.getDesc())
-      except RunnerException, e:
+      except (RunnerException, e):
         if self.keepGoing:
           sys.stderr.write('ERROR: '+str(e)+'... continuing\n')
         else:
@@ -61,8 +61,8 @@ class Runner:
         logfh.write("*****************************************************************************\n\n")
         logfh.write(cmd+"\n")
         logfh.close()
-      except IOError, e:
-        print e
+      except (IOError, e):
+        print (e)
         sys.stderr.write("Unable to open logfh\n")
     if self.verbose >= 1:
       sys.stdout.write(desc+"\n")
@@ -71,8 +71,8 @@ class Runner:
     try:
       ret=os.system(cmd)
       if ret!=0 : 
-	raise RunnerException(cmd+" return value "+str(ret))
-    except Exception, e:
+        raise RunnerException(cmd+" return value "+str(ret))
+    except (Exception, e):
       self.__appendOutfileToLogfile(outfnm)
       os.system("cat "+outfnm)
       raise e
