@@ -21,3 +21,4 @@ BUILD_SB       = NO
 #MAKE = gmake
 
 PLATFORM_DIRTS_SPECIFIC = # SunWS_*
+CXXFLAGS += -Wl,--allow-multiple-definition -std=gnu++98

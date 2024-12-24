@@ -49,3 +49,4 @@ include $(BUILD_AREA)/Makefile.platform
 
 include $(BUILD_TOT)/Makefile.gsetup
 
+LDFLAGS += -Wl,--allow-multiple-definition
