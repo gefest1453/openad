@@ -65,7 +65,7 @@ CURDIR  = .
 #  Include the usual commondefs
 #----------------------------------------------------------------------
 include $(COMMONDEFS)
-
+LDFLAGS += --allow-multiple-definition
 #----------------------------------------------------------------------
 #  Set environment variables
 #
