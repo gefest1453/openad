@@ -86,33 +86,33 @@ class openadConfig:
 
     self.setPythonOpenADEnvVars()
     
-    platformToOpen64TargTable = {'alpha-OSFI'  : 'targ_alpha_tru64',
-                                 'x86-Linux'   : 'targ_ia32_ia64_linux',
-                                 'x86-MacOS'   : 'targ_ia32_ia64_linux',
-                                 'x86_64-Linux': 'targ_ia64_ia64_linux',
-                                 'x86-Cygwin'  : 'targ_ia32_ia64_linux',
-                                 'ia64-Linux'  : 'targ_ia64_ia64_linux',
-                                 'mips-IRIX64' : 'targ_mips_irix',
-                                 'sparc-SunOS' : 'targ_sparc_solaris'}
+    platformToOpen64TargTable = {str('alpha-OSFI')  : str('targ_alpha_tru64'),
+                                 str('x86-Linux')   : str('targ_ia32_ia64_linux'),
+                                 str('x86-MacOS')   : str('targ_ia32_ia64_linux'),
+                                 str('x86_64-Linux'): str('targ_ia64_ia64_linux'),
+                                 str('x86-Cygwin')  : str('targ_ia32_ia64_linux'),
+                                 str('ia64-Linux')  : str('targ_ia64_ia64_linux'),
+                                 str('mips-IRIX64') : str('targ_mips_irix'),
+                                 str('sparc-SunOS') : str('targ_sparc_solaris')}
     
     #Generate canonical platform
     get_platform = 'cd '+OpenADRoot+'/config && ./hpcplatform'
     p = subprocess.Popen(get_platform, shell=True,stdout=subprocess.PIPE)
     self.platform=(p.stdout.read()).rstrip()
-    o64targ = platformToOpen64TargTable[self.platform]
+    o64targ = platformToOpen64TargTable[self.platform.decode("utf-8")]
     self.RootEnvVars = {
        'OPEN64ROOT':os.path.join(os.environ['OPEN64_BASE'],'osprey1.0',o64targ),
        'OPEN64TARG':o64targ,
-       'OPENADFORTTKROOT':os.path.join(os.environ['OPENADFORTTK_BASE'],'OpenADFortTk-'+self.platform),
+       'OPENADFORTTKROOT':os.path.join(os.environ['OPENADFORTTK_BASE'],'OpenADFortTk-'+self.platform.decode("utf-8")),
        'OPENADPLATFORM':self.platform,
-       'OPENANALYSISROOT':os.path.join(os.environ['OPENANALYSIS_BASE'],self.platform),
-       'XERCESCROOT':os.path.join(os.environ['XERCESC_BASE'],self.platform),
+       'OPENANALYSISROOT':os.path.join(os.environ['OPENANALYSIS_BASE'],self.platform.decode("utf-8")),
+       'XERCESCROOT':os.path.join(os.environ['XERCESC_BASE'],self.platform.decode("utf-8")),
        'XAIFBOOSTERROOT':os.path.join(os.environ['XAIFBOOSTER_BASE'],'..'),
        'BOOSTROOT':os.environ['BOOST_BASE'],
        'ANGELROOT':os.environ['ANGEL_BASE'],
        'XAIFSCHEMAROOT':os.environ['XAIFSCHEMA_BASE'],
        'REVOLVEF9XROOT':os.path.join(OpenADRoot,'RevolveF9X'),
-       'OPENADFORTTK':os.path.join(os.environ['OPENADFORTTK_BASE'],'OpenADFortTk-'+self.platform)}
+       'OPENADFORTTK':os.path.join(os.environ['OPENADFORTTK_BASE'],'OpenADFortTk-'+self.platform.decode("utf-8"))}
 
     self.setPythonRootEnvVars()
 
@@ -144,7 +144,9 @@ class openadConfig:
     # set Root environment variables in python environment (called in __init__)
   def setPythonRootEnvVars(self):
     for var,val in self.RootEnvVars.items():
-      os.environ[var] = os.path.abspath(val)
+      val00=str(val)
+      var00=str(var)
+      os.environ[var00] = os.path.abspath(val00)
     os.environ['OPENADROOT'] = os.environ['OPENAD_BASE']
 
     # set paths for python environment

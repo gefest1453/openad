@@ -41,19 +41,19 @@ class libsetenv:
   def genSetEnvVar(self, var, value):
     # Return an unset of $value is undefined
     try:
-      str = ""
+      str00 = ""
       if (self.is_sh()):
-        str += var+"=\""+value+"\";\n"
-        str += "export "+var+";\n"
+        str00 += var+"=\""+str(value)+"\";\n"
+        str00 += "export "+str(var)+";\n"
       elif(self.is_csh()):
-        str += "setenv "+var+" \""+value+"\";"
+        str00 += "setenv "+str(var)+" \""+str(value)+"\";"
       else:
         sys.stderr.write("Programming Error!")
         sys.exit()
     
     except NameError:
       return self.genUnSetEnvVar(var)
-    return str
+    return str00
  
 # genAppendEnvVar: Given a variable name 'var', its value 'value' and
 #   a shell type (sh or csh), generate a string that will append that
