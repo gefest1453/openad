@@ -1,4 +1,4 @@
-LDFLAGS += --allow-multiple-definition
+LDFLAGS += -Wl,--allow-multiple-definition
 #----------------------------------------------------------------------
 # Makeinclude provides a cross-platform mechanism for file dependency
 #----------------------------------------------------------------------

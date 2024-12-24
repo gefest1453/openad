@@ -115,7 +115,7 @@
 #  GNU is cygnus gcc, VENDOR is host machine's own cc. It is default
 #  to VENDOR compiler.
 #
-LDFLAGS += --allow-multiple-definition
+LDFLAGS += -Wl,--allow-multiple-definition
 ifndef BUILD_COMPILER
   BUILD_COMPILER = VENDOR
 endif
