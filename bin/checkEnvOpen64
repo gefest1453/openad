@@ -7,8 +7,10 @@
 
 import os
 import sys
+import pprint 
+pprint.pprint(os.environ,width=1) 
 for e in ["CFLAGS","CXXFLAGS"]: 
-    if (os.environ.has_key(e)):
+    if (e in os.environ):
         msg="ERROR: the environment variable "+e+" is set to "
         if (os.environ[e]=="") : 
             msg += "an empty string"
